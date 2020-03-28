@@ -1,0 +1,27 @@
+/* Structure */
+.member-container {
+  position: relative;
+  padding: 5px;
+}
+
+.member-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.member-full-width {
+  width: 100%;
+}
+
+.member-full-width:nth-last-child(0) {
+  margin-bottom: 10px;
+}
+
+.button-row {
+  margin: 10px 0;
+}
+
+.mat-flat-button {
+  margin: 5px;
+}

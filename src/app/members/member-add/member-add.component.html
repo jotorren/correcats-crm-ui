@@ -1,0 +1,165 @@
+<div class="member-container mat-elevation-z8">
+  <div class="member-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div>
+    <a mat-flat-button color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']"><mat-icon>list</mat-icon></a>
+  </div>
+  <form [formGroup]="memberForm" (ngSubmit)="onFormSubmit()">
+    <mat-horizontal-stepper [linear]="isLinear" labelPosition="bottom">
+
+    <mat-step [stepControl]="memberForm">
+      <ng-template matStepLabel>Inici</ng-template>
+      <strong>Dades principals</strong>
+      <mat-form-field class="member-full-width">
+        <mat-label>Nom</mat-label>
+        <input #nom matInput placeholder="Nom" formControlName="nom"
+                [errorStateMatcher]="matcher" required maxlength="255">
+        <mat-hint align="end">{{nom.value.length}} / 255</mat-hint>
+        <mat-error>
+          <span *ngIf="!memberForm.get('nom').valid && memberForm.get('nom').touched">Si us plau introdueix el nom</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>Cognoms</mat-label>
+        <input #cognoms matInput placeholder="Cognoms" formControlName="cognoms"
+                [errorStateMatcher]="matcher" required maxlength="255">
+        <mat-hint align="end">{{cognoms.value.length}} / 255</mat-hint>
+        <mat-error>
+          <span *ngIf="!memberForm.get('cognoms').valid && memberForm.get('cognoms').touched">Si us plau els cognoms</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>Nick</mat-label>
+        <input #nick matInput placeholder="Nick" formControlName="nick"
+                [errorStateMatcher]="matcher" required maxlength="32">
+        <mat-hint align="end">{{nick.value.length}} / 32</mat-hint>
+        <mat-error>
+          <span *ngIf="!memberForm.get('nick').valid && memberForm.get('nick').touched">Si us plau introdueix el nick</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>eMail</mat-label>
+        <input #email matInput placeholder="Ex. me@example.com" formControlName="email"
+                [errorStateMatcher]="matcher" required maxlength="100">
+        <mat-hint align="end">{{email.value.length}} / 100</mat-hint>
+        <mat-error>
+          <span *ngIf="!memberForm.get('email').valid && memberForm.get('email').touched">
+            Si us plau introdueix una adreça de correu vàlida
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button mat-raised-button color="primary" matStepperNext type="button">Següent</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="memberForm">
+      <ng-template matStepLabel>Quota</ng-template>
+      <strong>Dades cobrament</strong>  
+      <mat-form-field class="member-full-width">
+        <mat-label>NIF</mat-label>
+        <input #nif matInput placeholder="00000000T" formControlName="nif" 
+          pattern="[0-9]{8}[a-zA-Z]{1}" maxlength="9">
+        <mat-hint align="end">{{nif.value.length}} / 9</mat-hint>
+        <mat-error>
+          <span *ngIf="!memberForm.get('nif').valid && memberForm.get('nif').touched">
+            Si us plau introdueix un NIF amb el format 00000000T
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>IBAN</mat-label>
+        <input #iban matInput placeholder="ESCC BBBB SSSS ZZZZ ZZZZ ZZZZ" formControlName="iban"
+          pattern="[a-zA-Z]{2}[0-9]{2}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}"
+          maxlength="32">
+        <mat-hint align="end">{{iban.value.length}} / 32</mat-hint>
+        <mat-error>
+          <span *ngIf="!memberForm.get('iban').valid && memberForm.get('iban').touched">
+            Si us plau introdueix un IBAN amb el format 'ES00 1111 2222 3333 4444 5555'
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>Quota pagada al TPV</mat-label>
+        <input matInput placeholder="Quota" formControlName="quotaAlta" pattern="[0-9]*(\.[0-9]*)?">
+        <mat-icon matSuffix>euro</mat-icon>
+        <mat-error *ngIf="!memberForm.get('quotaAlta').valid">Si us plau introdueix un número</mat-error>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>Data del pagament</mat-label>
+        <input #dataAlta matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" formControlName="dataAlta" maxlength="10">
+        <mat-hint align="start">Selecciona o escriu dia o dia/mes</mat-hint>
+        <mat-hint align="end">{{dataAlta.value.length}} / 10</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+          <span *ngIf="!memberForm.get('dataAlta').valid && memberForm.get('dataAlta').touched">
+            Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
+        <button mat-button mat-raised-button color="primary" matStepperNext type="button">Següent</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="memberForm" [optional]="secondStepisOptional">
+      <ng-template matStepLabel>Més</ng-template>
+      <strong>Dades contacte</strong>
+      <mat-form-field class="member-full-width">
+        <mat-label>Telèfon</mat-label>
+        <input #telefon matInput formControlName="telefon" placeholder="Ex. 655123456" maxlength="32">
+        <mat-hint align="end">{{telefon.value.length}} / 32</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>Adreça</mat-label>
+        <input #adreca matInput placeholder="Adreça" formControlName="adreca" maxlength="255">
+        <mat-hint align="end">{{adreca.value.length}} / 255</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>Codi Postal</mat-label>
+        <input #codiPostal matInput [matAutocomplete]="auto1" placeholder="Ex. 08001" formControlName="codiPostal" maxlength="32"
+          (change)="onCodiPostalChange($event)">
+        <mat-hint align="end">{{codiPostal.value.length}} / 32</mat-hint>
+        <mat-autocomplete #auto1="matAutocomplete"> 
+          <mat-option *ngFor="let pc of filteredCodes | async" [value]="pc.valor" [id]="pc.internalId">
+            {{pc.valor}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="member-full-width">
+        <mat-label>Població</mat-label>
+        <input #poblacio matInput [matAutocomplete]="auto2" placeholder="Població" formControlName="poblacio" maxlength="255"
+          (focus) = "onFocusPoblacio($event)">
+        <mat-hint align="start">Escriu com a mínim tres lletres del nom</mat-hint>
+        <mat-hint align="end">{{poblacio.value.length}} / 255</mat-hint>
+        <mat-autocomplete #auto2="matAutocomplete">
+          <mat-option *ngFor="let city of filteredCities | async" [value]="city.nom" [id]="city.codi">
+            {{city.nom}}
+          </mat-option>
+        </mat-autocomplete>
+        
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
+        <button mat-button mat-raised-button color="primary" matStepperNext type="button">Següent</button>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="memberForm">
+      <ng-template matStepLabel>Fi</ng-template>
+      <strong>Confirmació</strong>
+      <mat-form-field class="member-full-width">
+        <mat-label>Observacions</mat-label>
+        <textarea #observacions matInput rows="15" formControlName="observacions" placeholder="Observacions" maxlength="1024"></textarea>
+        <mat-hint align="end">{{observacions.value.length}} / 1024</mat-hint>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
+        <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit" [disabled]="!memberForm.valid"><mat-icon>save</mat-icon></button>
+      </div>
+    </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</div>

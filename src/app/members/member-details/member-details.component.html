@@ -1,0 +1,61 @@
+<div class="member-container mat-elevation-z8">
+  <div class="member-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']"><mat-icon>list</mat-icon></a>
+  </div>
+  <mat-card class="member-card">
+    <mat-card-header>
+      <div mat-card-avatar class="member-header-image"></div>
+      <mat-card-title>{{member.nick}}</mat-card-title>
+      <mat-card-subtitle>{{member.cognoms}}, {{member.nom}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group>
+      <mat-tab label="Bàsica">
+      <dl>
+        <dt>eMail:</dt>
+        <dd>{{member.email}}</dd>
+        <dt>NIF:</dt>
+        <dd>{{member.nif}}</dd>
+        <dt>IBAN:</dt>
+        <dd>{{member.iban}}</dd>
+        <dt>&nbsp;</dt>
+        <dd>&nbsp;</dd>
+      </dl>
+      </mat-tab>
+
+      <mat-tab label="Contacte">
+      <dl>
+        <dt>Telèfon:</dt>
+        <dd>{{member.telefon}}</dd>
+        <dt>Adreça:</dt>
+        <dd>{{member.adreca}}</dd>
+        <dt>Codi postal:</dt>
+        <dd>{{member.codiPostal}}</dd>
+        <dt>Població:</dt>
+        <dd>{{member.poblacio}}</dd>
+      </dl>
+      </mat-tab>
+
+      <mat-tab label="Altra">
+        <dl>
+          <dt>Quota pagada al TPV:</dt>
+          <dd>{{member.quotaAlta}} €</dd>
+          <dt>Data del pagament:</dt>
+          <dd>{{member.dataAlta}}</dd>
+          <dt>Observacions:</dt>
+          <dd>{{member.observacions}}</dd>
+          <dt>&nbsp;</dt>
+          <dd>&nbsp;</dd>
+        </dl>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-flat-button color="primary" disabled="true" [routerLink]="['/member-details', member.id]" ><mat-icon>edit</mat-icon> Edita</a>
+      <a mat-flat-button color="accent" (click)="unregisterMember(member.id)"><mat-icon>delete</mat-icon> Baixa</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

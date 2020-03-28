@@ -1,0 +1,35 @@
+.header {
+  display: inline-block; 
+  width: 100%;
+  position: relative
+}
+
+.header-actions {
+  position: absolute; 
+  top: 0;
+  right: 0;
+}
+
+@media all and (min-width: 640px){
+  .logo {
+    width: 20%;
+  }
+}
+
+@media all and (max-width: 640px){
+  .logo {
+    width: 50%;
+  }
+}
+
+.container {
+  padding: 20px;
+  float: none;
+}
+
+.mat-divider {
+  display: block;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+

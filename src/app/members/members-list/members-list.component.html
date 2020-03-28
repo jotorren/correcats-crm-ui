@@ -1,0 +1,49 @@
+<div class="member-container mat-elevation-z8">
+  <h2>correcats</h2>
+  <div class="button-row">
+    <a mat-flat-button color="primary" [routerLink]="['/member-add']"><mat-icon>add</mat-icon> Nou / Nova</a>
+    <a mat-flat-button color="primary" [routerLink]="['/members-list']"><mat-icon>save_alt</mat-icon> Exporta</a>
+  </div>
+  <div class="mat-elevation-z8">
+    <div class="toolbar">
+      <mat-form-field class="search">
+        <mat-icon matPrefix>search</mat-icon>
+        <input #in (input)="inputChanged({search: in.value})" type="text" matInput placeholder="Search">
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="data" class="member-table"
+           matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
+
+      <ng-container matColumnDef="cognoms">
+        <th mat-header-cell *matHeaderCellDef>Cognoms</th>
+        <td mat-cell *matCellDef="let row">{{row.cognoms}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let row">{{row.nom}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nick">
+        <th mat-header-cell *matHeaderCellDef>nick</th>
+        <td mat-cell *matCellDef="let row">{{row.nick}}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="disclaimer">
+        <td mat-footer-cell *matFooterCellDef colspan="3" class="footer-row">
+          Fer click a sobre un registre per veure'n els detalls
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+        [routerLink]="['/member-details/', row.id]"></tr>
+        <tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr>
+    </table>
+    <mat-paginator *ngIf="data.page$ | async as page"
+      [length]="page.totalElements" [pageSize]="page.size"
+      [pageIndex]="page.number" [hidePageSize]="true"
+      (page)="data.fetch($event.pageIndex)">
+    </mat-paginator>
+  </div>
+</div>

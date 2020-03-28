@@ -1,0 +1,10 @@
+.alert {
+    width:40%;
+    left: 0;
+    margin: auto; // Centers alert component
+    position: absolute; // So that it will display relative to the entire page
+    right: 0;
+    // text-align: center; // Centers 'Alert Test' text
+    top: 1em;
+    // z-index: 1; // Displays over app and bootstrap Navbar 
+ }
