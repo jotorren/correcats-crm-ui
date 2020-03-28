@@ -8,11 +8,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AlertComponent } from './alert/alert.component';
 import { AlertService } from './alert/alert.service';
 import { ErrorListComponent } from './error/error.component';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog.component';
+import { PostalCodesDialogComponent } from './dialog/postalcodes-dialog.component';
 import { AuthenticationService } from './security/authentication.service';
 import { AuthorizatorGuard } from './security/authorizator.guard';
 import { TokenInterceptor } from './security/token.interceptor';
@@ -33,7 +37,10 @@ const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule];
     MatInputModule,
     MatDialogModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatGridListModule,
+    FlexLayoutModule
   ],
   exports: [
     CommonModule,
@@ -42,6 +49,7 @@ const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule];
     AlertComponent,
     ErrorListComponent,
     ConfirmDialogComponent,
+    PostalCodesDialogComponent,
     LoginComponent
   ],
   declarations: [
@@ -49,6 +57,7 @@ const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule];
     AlertComponent,
     ErrorListComponent,
     ConfirmDialogComponent,
+    PostalCodesDialogComponent,
     LoginComponent
   ],
   providers: [

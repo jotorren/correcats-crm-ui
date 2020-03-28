@@ -2,14 +2,16 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { from, Subject } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Observable, from, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap, finalize, map, startWith, filter } from 'rxjs/operators';
 import { MemberErrorStateMatcher } from '../../shared/error.state.matcher';
 import { ErrorListComponent } from '../../shared/error/error.component';
 import { AlertService } from '../../shared/alert/alert.service';
 import { CatalogService, Municipi, CodiPostal } from '../../shared/catalog.service';
+import { PostalCodesDialogComponent } from '../../shared/dialog/postalcodes-dialog.component';
 import { MemberService } from '../member.service';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-member-add',
@@ -34,6 +36,7 @@ export class MemberAddComponent implements OnInit {
   cities: Municipi[] = [];
   filteredCities: Observable<Municipi[]> = from([]);
   emptyCitiesList = [{codi: '00000', nom: 'Introdueix 3 lletres qualsevols del nom'}];
+  selectedCityCode: string;
   postalCodes: CodiPostal[] = [];
   filteredCodes: Observable<CodiPostal[]> = from([]);
 
@@ -48,7 +51,8 @@ export class MemberAddComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alerter: AlertService,
     private snackBar: MatSnackBar,
-    private catalog: CatalogService) { }
+    private catalog: CatalogService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     // this.memberForm = this.formBuilder.group({
@@ -187,6 +191,10 @@ export class MemberAddComponent implements OnInit {
     }
   }
 
+  onPoblacioSelected(event) {
+    this.selectedCityCode = event.option.id;
+  }
+
   onFocusPoblacio(event)  {
     this.memberForm.get('poblacio').updateValueAndValidity({ onlySelf: true, emitEvent: true });
   }
@@ -258,6 +266,22 @@ export class MemberAddComponent implements OnInit {
           // });
           this.isLoadingResults = false;
         });
+  }
+
+  openCitiesAndPostalCodesDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {};
+
+    const dialogRef = this.dialog.open(PostalCodesDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.memberForm.get('codiPostal').setValue(dialogResult);
+        this.postalCode2City.next(this.memberForm.value.codiPostal);
+      }
+    });
   }
 
   private debugPostalCodes() {

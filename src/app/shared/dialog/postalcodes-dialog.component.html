@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Cercador de poblacions i codis postals</h2>
+
+<div mat-dialog-content>
+    <div [formGroup]="searchForm">
+        <mat-form-field class="pc-full-width" appearance="fill">
+            <input #city matInput placeholder="Població" formControlName="city" maxlength="255">
+            <mat-hint align="start">Escriu com a mínim tres lletres del nom</mat-hint>
+            <mat-hint align="end">{{city.value.length}} / 255</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+        <mat-card class="pc-column"> 
+            <mat-card-header>
+                <mat-card-subtitle>Poblacions</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item *ngFor="let city of potentialCities | async">
+                        <mat-icon matListIcon>location_city</mat-icon>
+                        <p matLine>{{city.nom}}</p>
+                        <button mat-mini-fab color="primary" (click)="searchPostalCodes(city.codi)">
+                            <mat-icon> mail</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="pc-column">
+            <mat-card-content>
+                <mat-card-header>
+                    <mat-card-subtitle>Codis Postals</mat-card-subtitle>
+                </mat-card-header>
+                <mat-selection-list [(ngModel)]="postalCode" [multiple]="false">
+                    <div fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+                        <ng-container *ngFor="let pc of postalCodesList">
+                            <mat-list-option [value]="pc.valor" fxFlex="0 1 calc(33.3% - 32px)">
+                                {{pc.valor}}
+                            </mat-list-option>
+                        </ng-container>
+                    </div>
+                </mat-selection-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="onDismiss()">Cancel.la</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">Ok</button>
+</div>
+
+

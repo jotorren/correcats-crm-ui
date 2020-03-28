@@ -121,7 +121,8 @@
       <mat-form-field class="member-full-width">
         <mat-label>Codi Postal</mat-label>
         <input #codiPostal matInput [matAutocomplete]="auto1" placeholder="Ex. 08001" formControlName="codiPostal" maxlength="32"
-          (change)="onCodiPostalChange($event)">
+          (change)="onCodiPostalChange($event)">     
+        <mat-icon matSuffix matTooltip="Asistent poblacions/codis postals" (click)="openCitiesAndPostalCodesDialog()" class="member-cpc">list</mat-icon>
         <mat-hint align="end">{{codiPostal.value.length}} / 32</mat-hint>
         <mat-autocomplete #auto1="matAutocomplete"> 
           <mat-option *ngFor="let pc of filteredCodes | async" [value]="pc.valor" [id]="pc.internalId">
@@ -135,7 +136,7 @@
           (focus) = "onFocusPoblacio($event)">
         <mat-hint align="start">Escriu com a mínim tres lletres del nom</mat-hint>
         <mat-hint align="end">{{poblacio.value.length}} / 255</mat-hint>
-        <mat-autocomplete #auto2="matAutocomplete">
+        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="onPoblacioSelected($event)">
           <mat-option *ngFor="let city of filteredCities | async" [value]="city.nom" [id]="city.codi">
             {{city.nom}}
           </mat-option>

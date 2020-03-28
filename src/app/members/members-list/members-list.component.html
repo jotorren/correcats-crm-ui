@@ -37,7 +37,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
-        [routerLink]="['/member-details/', row.id]"></tr>
+        [routerLink]="['/member-details/', row.id]" class="members-list-row"></tr>
         <tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr>
     </table>
     <mat-paginator *ngIf="data.page$ | async as page"

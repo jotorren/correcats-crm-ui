@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
-import { Config, Result, PageBean } from '.';
-import { PageRequest, Page } from './domain/datasource-page';
+import { Config } from './config/config';
+import { Result } from './domain/result';
 
 export interface Municipi {
   codi: string;
@@ -58,7 +58,7 @@ export class CatalogService {
       );
   }
 
-  getPostalCodes(municipi: string) {
+  getPostalCodes(municipi: string): Observable<CodiPostal[]> {
     return this.http.get<Result>(Config.api.catalog.base +
       Config.api.catalog.postalCodes + municipi, httpOptions)
       .pipe(
