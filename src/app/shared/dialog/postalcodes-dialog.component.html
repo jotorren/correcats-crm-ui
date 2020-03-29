@@ -12,13 +12,13 @@
     <div fxLayout="row wrap" fxLayout.xs="column">
         <mat-card class="pc-column"> 
             <mat-card-header>
-                <mat-card-subtitle>Poblacions</mat-card-subtitle>
+                <mat-card-subtitle>Població</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <mat-list>
                     <mat-list-item *ngFor="let city of potentialCities | async">
                         <p matLine><span class="font-data">{{city.nom}}</span></p>
-                        <button mat-mini-fab color="primary" (click)="searchPostalCodes(city.codi)">
+                        <button mat-mini-fab color="primary" (click)="searchPostalCodes(city.codi, city.nom)">
                             <mat-icon> mail</mat-icon>
                         </button>
                     </mat-list-item>

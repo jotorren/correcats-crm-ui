@@ -49,7 +49,9 @@ export class PostalCodesDialogComponent implements OnInit {
             );
     }
 
-    searchPostalCodes(codi) {
+    searchPostalCodes(codi, nom) {
+        this.searchForm.get('city').setValue(nom);
+        this.searchForm.get('city').updateValueAndValidity({ onlySelf: true, emitEvent: true });
         this.catalog.getPostalCodes(codi)
             .subscribe(data => {
                 this.postalCodesList = data;
