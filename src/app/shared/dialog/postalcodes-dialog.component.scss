@@ -2,8 +2,12 @@
     width: 100%;
 }
 
+.pc-action {
+    cursor: pointer;
+}
+
 @media all and (max-width: 599px){
-    .nohint {
+    .xs-nodisplay {
         display: none;
     }
 
@@ -11,7 +15,7 @@
         width: 100%;
     }
     
-    .font-data {
+    .pc-data {
         font-size: small;
     }
 
@@ -25,7 +29,7 @@
         width: 50%;
     }
 
-    .font-data {
+    .pc-data {
         font-size: 14px;
     }
 

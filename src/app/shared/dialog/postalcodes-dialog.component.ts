@@ -12,6 +12,7 @@ import { CatalogService, Municipi, CodiPostal } from '../../shared/catalog.servi
 })
 export class PostalCodesDialogComponent implements OnInit {
     searchForm: FormGroup;
+    selectedOption: Municipi;
 
     potentialCities: Observable<Municipi[]>;
 
@@ -39,7 +40,11 @@ export class PostalCodesDialogComponent implements OnInit {
                 }),
                 debounceTime(500),
                 switchMap(value => {
-                    if (value && value.length > 2) {
+                    if (this.selectedOption) {
+                        const res = from([[this.selectedOption]]);
+                        this.selectedOption = null;
+                        return res;
+                    } else if (value && value.length > 2) {
                         return this.catalog.getCities(value + '');
                     } else {
                         console.log('filter does not fire query');
@@ -49,13 +54,17 @@ export class PostalCodesDialogComponent implements OnInit {
             );
     }
 
-    searchPostalCodes(codi, nom) {
-        this.searchForm.get('city').setValue(nom);
+    searchPostalCodes(city: Municipi) {
+        this.selectedOption = city;
         this.searchForm.get('city').updateValueAndValidity({ onlySelf: true, emitEvent: true });
-        this.catalog.getPostalCodes(codi)
+        this.catalog.getPostalCodes(city.codi)
             .subscribe(data => {
                 this.postalCodesList = data;
             });
+    }
+
+    onFocus(event) {
+        this.searchForm.get('city').updateValueAndValidity({ onlySelf: true, emitEvent: true });
     }
 
     onDismiss() {
