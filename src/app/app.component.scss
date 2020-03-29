@@ -10,13 +10,13 @@
   right: 0;
 }
 
-@media all and (min-width: 640px){
+@media all and (min-width: 600px){
   .logo {
     width: 20%;
   }
 }
 
-@media all and (max-width: 640px){
+@media all and (max-width: 599px){
   .logo {
     width: 50%;
   }

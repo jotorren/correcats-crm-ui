@@ -2,6 +2,36 @@
     width: 100%;
 }
 
-.pc-column {
-    width: 50%;
+@media all and (max-width: 599px){
+    .nohint {
+        display: none;
+    }
+
+    .pc-column {
+        width: 100%;
+    }
+    
+    .font-data {
+        font-size: small;
+    }
+
+    .mat-list-base .mat-list-option {
+        font-size: small !important;
+    }
 }
+
+@media all and (min-width: 600px){
+    .pc-column {
+        width: 50%;
+    }
+
+    .font-data {
+        font-size: 14px;
+    }
+
+    .mat-list-base .mat-list-option {
+        font-size: 14px !important;
+    }
+
+}
+
