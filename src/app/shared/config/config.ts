@@ -35,7 +35,7 @@ export let Config = {
         },
         catalog: {
             // base: 'https://localhost:8290/cataleg',
-			base: 'https://backoffice.corredors.cat:8090/cataleg',
+            base: 'https://backoffice.corredors.cat:8090/cataleg',
             municipis: '/municipi/search?v=1&search=',
             municipisambCP: '/municipi/codipostal?v=1&codiPostal=',
             postalCodes: '/codipostal?v=1&municipi=',
@@ -43,8 +43,10 @@ export let Config = {
     },
 
     ui: {
+        debounceTime: 50,
         members: {
             list: {
+                debounceTime: 500,
                 pageSize: 4
             }
         }

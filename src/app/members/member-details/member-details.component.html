@@ -5,14 +5,14 @@
   <div class="button-row">
     <a mat-flat-button color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']"><mat-icon>list</mat-icon></a>
   </div>
-  <mat-card class="member-card">
+  <mat-card class="member-card" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
     <mat-card-header>
       <div mat-card-avatar class="member-header-image"></div>
       <mat-card-title>{{member.nick}}</mat-card-title>
       <mat-card-subtitle>{{member.cognoms}}, {{member.nom}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <mat-tab-group>
+      <mat-tab-group #usertabs>
       <mat-tab label="Bàsica">
       <dl>
         <dt>eMail:</dt>

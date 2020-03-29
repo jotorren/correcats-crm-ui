@@ -3,15 +3,16 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatStepper } from '@angular/material/stepper';
 import { Observable, from, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap, finalize, map, startWith, filter } from 'rxjs/operators';
+import { Config } from '../../shared';
 import { MemberErrorStateMatcher } from '../../shared/error.state.matcher';
 import { ErrorListComponent } from '../../shared/error/error.component';
 import { AlertService } from '../../shared/alert/alert.service';
 import { CatalogService, Municipi, CodiPostal } from '../../shared/catalog.service';
 import { PostalCodesDialogComponent } from '../../shared/dialog/postalcodes-dialog.component';
 import { MemberService } from '../member.service';
-
 
 @Component({
   selector: 'app-member-add',
@@ -21,9 +22,11 @@ import { MemberService } from '../member.service';
 export class MemberAddComponent implements OnInit {
 
   private postalCode2City = new Subject<string>();
+  private pan = new Subject<string>();
 
   memberForm: FormGroup;
   @ViewChild('codiPostal') cp: ElementRef;
+  @ViewChild('stepper') stepper: MatStepper;
 
   // firstFormGroup: FormGroup;
   // secondFormGroup: FormGroup;
@@ -55,6 +58,18 @@ export class MemberAddComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.pan
+      .pipe(
+        debounceTime(Config.ui.debounceTime)
+      )
+      .subscribe(action => {
+        if (action === 'previous') {
+          this.stepper.previous();
+        } else {
+          this.stepper.next();
+        }
+      });
+
     // this.memberForm = this.formBuilder.group({
     //   formArray: this.formBuilder.array([
     //     this.formBuilder.group({
@@ -197,6 +212,14 @@ export class MemberAddComponent implements OnInit {
 
   onFocusPoblacio(event)  {
     this.memberForm.get('poblacio').updateValueAndValidity({ onlySelf: true, emitEvent: true });
+  }
+
+  onPanLeft(event) {
+    this.pan.next('next');
+  }
+
+  onPanRight(event) {
+    this.pan.next('previous');
   }
 
   onFormSubmit() {

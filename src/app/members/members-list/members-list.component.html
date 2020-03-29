@@ -4,6 +4,7 @@
     <a mat-flat-button color="primary" [routerLink]="['/members-list']"><mat-icon>save_alt</mat-icon> Exporta</a>
   </div>
   <div class="mat-elevation-z8">
+    <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
     <div class="toolbar">
       <mat-form-field class="search">
         <mat-icon matPrefix>search</mat-icon>
@@ -37,12 +38,13 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
         [routerLink]="['/member-details/', row.id]" class="members-list-row"></tr>
-        <tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr>
+      <!-- tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr -->
     </table>
-    <mat-paginator *ngIf="data.page$ | async as page"
+    <mat-paginator #paginator *ngIf="data.page$ | async as page"
       [length]="page.totalElements" [pageSize]="page.size"
       [pageIndex]="page.number" [hidePageSize]="true"
       (page)="data.fetch($event.pageIndex)">
     </mat-paginator>
+    </mat-card>
   </div>
 </div>

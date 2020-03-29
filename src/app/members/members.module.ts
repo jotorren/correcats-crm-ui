@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
+import * as Hammer from 'hammerjs';
+import { HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -32,6 +33,8 @@ import { MembersListComponent } from './members-list/members-list.component';
 import { MemberService } from './member.service';
 import { MemberDetailsResolve } from './member-details/member-details.resolve';
 
+import { SharedModule } from '../shared';
+
 export const MY_FORMATS = {
     parse: {
       dateInput: 'DD/MM/YYYY',
@@ -44,8 +47,16 @@ export const MY_FORMATS = {
     },
   };
 
+export class MyHammerConfig extends HammerGestureConfig  {
+    overrides = {
+        // override hammerjs default configuration
+        pan: { direction: Hammer.DIRECTION_HORIZONTAL }
+    } as any;
+  }
+
 @NgModule({
     imports: [
+        HammerModule,
         MatInputModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
@@ -88,6 +99,7 @@ export const MY_FORMATS = {
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
         },
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+        { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
         MemberService,
         MemberDetailsResolve
     ],

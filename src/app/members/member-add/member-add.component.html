@@ -6,11 +6,12 @@
     <a mat-flat-button color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']"><mat-icon>list</mat-icon></a>
   </div>
   <form [formGroup]="memberForm" (ngSubmit)="onFormSubmit()">
-    <mat-horizontal-stepper [linear]="isLinear" labelPosition="bottom">
+    <mat-horizontal-stepper [linear]="isLinear" labelPosition="bottom" #stepper>
 
     <mat-step [stepControl]="memberForm">
       <ng-template matStepLabel>Inici</ng-template>
       <strong>Dades principals</strong>
+      <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
       <mat-form-field class="member-full-width">
         <mat-label>Nom</mat-label>
         <input #nom matInput placeholder="Nom" formControlName="nom"
@@ -49,6 +50,7 @@
           </span>
         </mat-error>
       </mat-form-field>
+      </mat-card>
       <div class="button-row">
         <button mat-button mat-raised-button color="primary" matStepperNext type="button">Següent</button>
       </div>
@@ -56,7 +58,8 @@
 
     <mat-step [stepControl]="memberForm">
       <ng-template matStepLabel>Quota</ng-template>
-      <strong>Dades cobrament</strong>  
+      <strong>Dades cobrament</strong>
+      <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
       <mat-form-field class="member-full-width">
         <mat-label>NIF</mat-label>
         <input #nif matInput placeholder="00000000T" formControlName="nif" 
@@ -99,6 +102,7 @@
           </span>
         </mat-error>
       </mat-form-field>
+      </mat-card>
       <div class="button-row">
         <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
         <button mat-button mat-raised-button color="primary" matStepperNext type="button">Següent</button>
@@ -108,6 +112,7 @@
     <mat-step [stepControl]="memberForm" [optional]="secondStepisOptional">
       <ng-template matStepLabel>Més</ng-template>
       <strong>Dades contacte</strong>
+      <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
       <mat-form-field class="member-full-width">
         <mat-label>Telèfon</mat-label>
         <input #telefon matInput formControlName="telefon" placeholder="Ex. 655123456" maxlength="32">
@@ -141,21 +146,24 @@
             {{city.nom}}
           </mat-option>
         </mat-autocomplete>
-        
       </mat-form-field>
+      </mat-card>
       <div class="button-row">
         <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
         <button mat-button mat-raised-button color="primary" matStepperNext type="button">Següent</button>
       </div>
     </mat-step>
+
     <mat-step [stepControl]="memberForm">
       <ng-template matStepLabel>Fi</ng-template>
       <strong>Confirmació</strong>
+      <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
       <mat-form-field class="member-full-width">
         <mat-label>Observacions</mat-label>
         <textarea #observacions matInput rows="15" formControlName="observacions" placeholder="Observacions" maxlength="1024"></textarea>
         <mat-hint align="end">{{observacions.value.length}} / 1024</mat-hint>
       </mat-form-field>
+      </mat-card>
       <div class="button-row">
         <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
         <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit" [disabled]="!memberForm.valid"><mat-icon>save</mat-icon></button>
