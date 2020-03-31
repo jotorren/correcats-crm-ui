@@ -7,6 +7,8 @@ import { debounceTime, tap, map, filter } from 'rxjs/operators';
 import { MemberService } from '../member.service';
 import { Associada } from '../associada';
 import { Config, Result, ConfirmDialogModel, ConfirmDialogComponent } from '../../shared';
+import { handle } from '../../shared/error/error-handlers';
+import { AlertService } from '../../shared/alert/alert.service';
 
 @Component({
   selector: 'app-member-details',
@@ -22,11 +24,14 @@ export class MemberDetailsComponent implements OnInit {
   member: Associada;
   isLoadingResults = false;
 
+  durationInSeconds = 2;
+
   constructor(
     private route: ActivatedRoute,
     private api: MemberService,
     private router: Router,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private alerter: AlertService) { }
 
   ngOnInit(): void {
     this.route.data.forEach((data: { api: Result }) => {
@@ -75,7 +80,7 @@ export class MemberDetailsComponent implements OnInit {
               this.isLoadingResults = false;
               this.router.navigate(['/members-list']);
             }, (err) => {
-              console.log(err);
+              handle(err, this.durationInSeconds, this.alerter);
               this.isLoadingResults = false;
             }
         );

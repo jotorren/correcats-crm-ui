@@ -9,10 +9,12 @@ import { debounceTime, distinctUntilChanged, tap, switchMap, finalize, map, star
 import { Config } from '../../shared';
 import { MemberErrorStateMatcher } from '../../shared/error.state.matcher';
 import { ErrorListComponent } from '../../shared/error/error.component';
+import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
 import { CatalogService, Municipi, CodiPostal } from '../../shared/catalog.service';
 import { PostalCodesDialogComponent } from '../../shared/dialog/postalcodes-dialog.component';
 import { MemberService } from '../member.service';
+import { MemberValidatorService } from '../member-validator.service';
 
 @Component({
   selector: 'app-member-add',
@@ -55,7 +57,8 @@ export class MemberAddComponent implements OnInit {
     private alerter: AlertService,
     private snackBar: MatSnackBar,
     private catalog: CatalogService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private validators: MemberValidatorService) { }
 
   ngOnInit(): void {
     this.pan
@@ -123,11 +126,11 @@ export class MemberAddComponent implements OnInit {
     this.memberForm = this.formBuilder.group({
       nom : [null, Validators.required],
       cognoms : [null, Validators.required],
-      nick : [null, Validators.required],
+      nick : [null, Validators.required, this.validators.nickValidator],
       email : [null, [
         Validators.required,
         Validators.email
-      ]],
+      ], this.validators.emailValidator],
       nif : [null, Validators.pattern],
       iban : [null, Validators.pattern],
 
@@ -139,7 +142,7 @@ export class MemberAddComponent implements OnInit {
       dataAlta : [null],
 
       observacions: [null, Validators.maxLength],
-    });
+    }, { updateOn: 'blur' });
 
     this.filteredCodes = this.memberForm.get('codiPostal').valueChanges
       .pipe(
@@ -238,8 +241,6 @@ export class MemberAddComponent implements OnInit {
           this.router.navigate(['/member-details', resok.result]);
         }, (resko: any) => {
 
-          const myduration = this.durationInSeconds;
-
           // let messages = '';
           // if (resko.error.errors) {
           //   resko.error.errors.map(item => item.message).forEach(item => {
@@ -255,27 +256,6 @@ export class MemberAddComponent implements OnInit {
           //   keepAfterRouteChange: false
           // });
 
-          let messages;
-          if (resko.error.errors) {
-            messages = resko.error.errors.map(item => item.message);
-          } else {
-            messages = [JSON.stringify(resko.error)];
-          }
-          if (messages.length === 1) {
-            this.alerter.error(messages[0], {
-              autoClose: true,
-              duration: (myduration + 1) * 1000,
-              keepAfterRouteChange: false
-            });
-          } else {
-            messages.forEach(item => {
-              this.alerter.error('<li>' + item + '</li>', {
-                autoClose: false,
-                keepAfterRouteChange: false
-              });
-            });
-          }
-
           // let messages;
           // if (resko.error.errors) {
           //   messages = resko.error.errors.map(item => item.message);
@@ -287,6 +267,8 @@ export class MemberAddComponent implements OnInit {
           //     duration: myduration * 1000,
           //     data: messages
           // });
+
+          handle(resko, this.durationInSeconds, this.alerter);
           this.isLoadingResults = false;
         });
   }
