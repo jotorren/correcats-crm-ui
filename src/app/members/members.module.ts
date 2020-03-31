@@ -31,6 +31,7 @@ import { MemberDetailsComponent } from './member-details/member-details.componen
 import { MemberEditComponent } from './member-edit/member-edit.component';
 import { MembersListComponent } from './members-list/members-list.component';
 import { MemberService } from './member.service';
+import { MemberValidatorService } from './member-validator.service';
 import { MemberDetailsResolve } from './member-details/member-details.resolve';
 
 import { SharedModule } from '../shared';
@@ -101,6 +102,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
         { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
         MemberService,
+        MemberValidatorService,
         MemberDetailsResolve
     ],
     entryComponents: []

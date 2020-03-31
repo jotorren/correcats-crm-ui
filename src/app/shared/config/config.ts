@@ -24,7 +24,7 @@ export let Config = {
 
     api: {
         members: {
-            // base: 'http://localhost:8290/api',
+            // base: 'https://localhost:8290/api',
             // base: 'https://82.98.146.11:8090/api',
             base: 'https://backoffice.corredors.cat:8090/api',
             list: '/?v=1&offset={offset}&limit={limit}',
@@ -32,6 +32,8 @@ export let Config = {
             register: '/register/{id}?v=1',
             unregister: '/unregister/{id}?v=1',
             create: '/?v=1',
+            nick: '/nick?v=1&nick=',
+            email: '/email?v=1&email=',
         },
         catalog: {
             // base: 'https://localhost:8290/cataleg',

@@ -36,7 +36,9 @@
                 [errorStateMatcher]="matcher" required maxlength="32">
         <mat-hint align="end">{{nick.value.length}} / 32</mat-hint>
         <mat-error>
-          <span *ngIf="!memberForm.get('nick').valid && memberForm.get('nick').touched">Si us plau introdueix el nick</span>
+          <span *ngIf="memberForm.get('nick').hasError('required') && memberForm.get('nick').touched">Si us plau introdueix el nick</span>
+          <span *ngIf="memberForm.get('nick').hasError('api') && memberForm.get('nick').touched">
+            {{memberForm.get('nick').getError('api')}}</span>
         </mat-error>
       </mat-form-field>
       <mat-form-field class="member-full-width">
@@ -45,9 +47,14 @@
                 [errorStateMatcher]="matcher" required maxlength="100">
         <mat-hint align="end">{{email.value.length}} / 100</mat-hint>
         <mat-error>
-          <span *ngIf="!memberForm.get('email').valid && memberForm.get('email').touched">
+          <span *ngIf="memberForm.get('email').hasError('required') && memberForm.get('email').touched">
             Si us plau introdueix una adreça de correu vàlida
           </span>
+          <span *ngIf="memberForm.get('email').hasError('email') && memberForm.get('email').touched">
+            El valor introduït no té el format correcte
+          </span>
+          <span *ngIf="memberForm.get('email').hasError('api') && memberForm.get('email').touched">
+            {{memberForm.get('email').getError('api')}}</span>
         </mat-error>
       </mat-form-field>
       </mat-card>
