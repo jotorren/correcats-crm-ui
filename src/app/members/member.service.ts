@@ -62,7 +62,7 @@ export class MemberService {
 
   getMemberById(id: string): Observable<Result> {
     const url = Config.api.members.base + Config.api.members.item.replace('{id}', id);
-    return this.http.get<Result>(url).pipe(
+    return this.http.get<Result>(url, httpOptions).pipe(
       tap(_ => console.log(`fetched member id=${id}`)),
       catchError(this.handleError<Result>(`getMemberById id=${id}`, this.emptyResult))
     );
