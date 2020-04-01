@@ -32,6 +32,7 @@ export let Config = {
             register: '/register/{id}?v=1',
             unregister: '/unregister/{id}?v=1',
             create: '/?v=1',
+            verify: '/consistency?v=1&nick={nick}&email={email}',
             nick: '/nick?v=1&nick=',
             email: '/email?v=1&email=',
         },

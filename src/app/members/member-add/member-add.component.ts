@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { Observable, from, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap, finalize, map, startWith, filter } from 'rxjs/operators';
-import { Config } from '../../shared';
+import { Config, Result } from '../../shared';
 import { MemberErrorStateMatcher } from '../../shared/error.state.matcher';
 import { ErrorListComponent } from '../../shared/error/error.component';
 import { handle } from '../../shared/error/error-handlers';
@@ -223,6 +223,30 @@ export class MemberAddComponent implements OnInit {
 
   onPanRight(event) {
     this.pan.next('previous');
+  }
+
+  onVerifyData() {
+    if (!this.memberForm.value.nick || !this.memberForm.value.email){
+      return;
+    }
+
+    this.isLoadingResults = true;
+
+    this.api.verifyMember(this.memberForm.value.nick, this.memberForm.value.email)
+      .subscribe((resok: Result) => {
+        this.isLoadingResults = false;
+        if (resok.result) {
+          const messages: string[] = resok.result;
+          let observacions = '';
+          messages.forEach(msg => {
+            observacions = observacions.concat(msg).concat('\n');
+          });
+          this.memberForm.get('observacions').setValue(observacions);
+        }
+      }, (resko: any) => {
+        this.isLoadingResults = false;
+        handle(resko, this.durationInSeconds, this.alerter);
+      });
   }
 
   onFormSubmit() {

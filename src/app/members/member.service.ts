@@ -83,6 +83,12 @@ export class MemberService {
     return this.http.put<Result>(url, httpOptions);
   }
 
+  verifyMember(nick: string, email: string): Observable<Result> {
+    const url = Config.api.members.base +
+      Config.api.members.verify.replace('{nick}', nick).replace('{email}', email);
+    return this.http.get<Result>(url, httpOptions);
+  }
+
   addMember(form: any): Observable<Result> {
     const url = Config.api.members.base + Config.api.members.create;
     return this.http.post<Result>(url, form, httpOptions);

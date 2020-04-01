@@ -11,7 +11,7 @@
     <mat-step [stepControl]="memberForm">
       <ng-template matStepLabel>Inici</ng-template>
       <strong>Dades principals</strong>
-      <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+      <mat-card (panleft)="onPanLeft($event)">
       <mat-form-field class="member-full-width">
         <mat-label>Nom</mat-label>
         <input #nom matInput placeholder="Nom" formControlName="nom"
@@ -164,7 +164,7 @@
     <mat-step [stepControl]="memberForm">
       <ng-template matStepLabel>Fi</ng-template>
       <strong>Confirmació</strong>
-      <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+      <mat-card (panright)="onPanRight($event)">
       <mat-form-field class="member-full-width">
         <mat-label>Observacions</mat-label>
         <textarea #observacions matInput rows="15" formControlName="observacions" placeholder="Observacions" maxlength="1024"></textarea>
@@ -173,6 +173,9 @@
       </mat-card>
       <div class="button-row">
         <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
+        <button mat-button mat-raised-button color="primary" type="button" matTooltip="Verifica al fòrum el nick i l'email"
+          (click)="onVerifyData()" [disabled]="!memberForm.get('nick').valid || !memberForm.get('email').valid">
+          <mat-icon>verified_user</mat-icon></button>
         <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit" [disabled]="!memberForm.valid"><mat-icon>save</mat-icon></button>
       </div>
     </mat-step>
