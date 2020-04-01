@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { Observable, from, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, switchMap, finalize, map, startWith, filter } from 'rxjs/operators';
+import { debounceTime, tap, switchMap, finalize, map, startWith, filter } from 'rxjs/operators';
 import { Config, Result } from '../../shared';
 import { MemberErrorStateMatcher } from '../../shared/error.state.matcher';
 import { ErrorListComponent } from '../../shared/error/error.component';
@@ -238,9 +238,13 @@ export class MemberAddComponent implements OnInit {
         if (resok.result) {
           const messages: string[] = resok.result;
           let observacions = '';
-          messages.forEach(msg => {
-            observacions = observacions.concat(msg).concat('\n');
-          });
+          if (messages.length > 0) {
+            messages.forEach(msg => {
+              observacions = observacions.concat(msg).concat('\n');
+            });
+          } else {
+            this.snackBar.open('Nick/eMail comprobats', 'OK', {duration: 2000});
+          }
           this.memberForm.get('observacions').setValue(observacions);
         }
       }, (resko: any) => {
