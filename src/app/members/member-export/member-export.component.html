@@ -1,0 +1,27 @@
+<div class="member-container mat-elevation-z8">
+    <div class="member-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+      <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home"><mat-icon>home</mat-icon></a>
+      <span class="mat-title">Genera un fitxer d'associats</span>
+    </div>
+    <mat-card class="member-card">
+      <mat-card-content>
+        <mat-selection-list [(ngModel)]="selectedFields" name="exporter">
+          <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill">Totes</mat-list-option>
+          <br/>
+          <div fxLayout="row wrap" fxLayout.xs="column">
+            <ng-container *ngFor="let item of availableFields">
+              <mat-list-option [value]="item" fxFlex="0 1 33.3%">
+                <span>{{item}}</span>
+              </mat-list-option>
+            </ng-container>
+          </div>
+      </mat-selection-list>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"><mat-icon>cloud_download</mat-icon></button>
+    </mat-card-actions>
+    </mat-card>
+</div>

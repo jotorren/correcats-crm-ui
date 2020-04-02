@@ -42,3 +42,28 @@
   max-width: 500px;
   width: 100%;
 }
+
+.fill {
+  background-color: rgba(0,0,0,.04);
+  font-weight: bold;
+}
+
+@media all and (max-width: 599px){
+  .xs-nodisplay {
+      display: none;
+  }
+
+  .mat-list-base .mat-list-option {
+      font-size: 14px !important;
+      height: 32px;
+  }
+}
+
+@media all and (min-width: 600px){
+  .mat-list-base .mat-list-option {
+    font-size: 14px !important;
+    height: 24px;
+  }
+
+}
+

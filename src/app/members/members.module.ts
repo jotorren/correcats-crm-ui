@@ -22,8 +22,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatListModule } from '@angular/material/list';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { MemberAddComponent } from './member-add/member-add.component';
@@ -33,7 +35,7 @@ import { MembersListComponent } from './members-list/members-list.component';
 import { MemberService } from './member.service';
 import { MemberValidatorService } from './member-validator.service';
 import { MemberDetailsResolve } from './member-details/member-details.resolve';
-
+import { MemberExportComponent } from './member-export/member-export.component';
 import { SharedModule } from '../shared';
 
 export const MY_FORMATS = {
@@ -78,6 +80,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
         MatTabsModule,
         MatDatepickerModule,
         MatAutocompleteModule,
+        MatListModule,
+        FlexLayoutModule,
         AppRoutingModule,
         SharedModule
     ],
@@ -85,7 +89,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
         MemberAddComponent,
         MemberDetailsComponent,
         MemberEditComponent,
-        MembersListComponent
+        MembersListComponent,
+        MemberExportComponent
     ],
     exports: [
         MemberAddComponent,

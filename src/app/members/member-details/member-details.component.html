@@ -3,7 +3,8 @@
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
   <div class="button-row">
-    <a mat-flat-button color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']"><mat-icon>list</mat-icon></a>
+    <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home"><mat-icon>home</mat-icon></a>
+    <span class="mat-title">Detalls d'un associat</span>
   </div>
   <mat-card class="member-card" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
     <mat-card-header>

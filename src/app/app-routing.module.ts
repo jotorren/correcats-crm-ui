@@ -7,6 +7,7 @@ import { MemberDetailsResolve } from './members/member-details/member-details.re
 import { MembersListComponent } from './members/members-list/members-list.component';
 import { MemberDetailsComponent } from './members/member-details/member-details.component';
 import { MemberAddComponent } from './members/member-add/member-add.component';
+import { MemberExportComponent } from './members/member-export/member-export.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 const routes: Routes = [
@@ -56,6 +57,15 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'Add New Member',
+      roles: []
+    }
+  },
+  {
+    path: 'members-export',
+    component: MemberExportComponent,
+    canActivate: [ AuthorizatorGuard ],
+    data: {
+      title: 'Export data to CSV',
       roles: []
     }
   },
