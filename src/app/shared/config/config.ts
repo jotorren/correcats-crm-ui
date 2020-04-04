@@ -35,6 +35,12 @@ export let Config = {
             verify: '/consistency?v=1&nick={nick}&email={email}',
             nick: '/nick?v=1&nick=',
             email: '/email?v=1&email=',
+            export: '/export/async?v=1&fields={fields}&sortBy={sortBy}',
+            ready: '/export/ready?v=1&file=',
+            live: '/export/live?v=1',
+            download: '/download?v=1&file=',
+
+            downloadFileName: 'associats.csv'
         },
         catalog: {
             // base: 'https://localhost:8290/cataleg',

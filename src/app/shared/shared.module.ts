@@ -22,6 +22,7 @@ import { AuthorizatorGuard } from './security/authorizator.guard';
 import { TokenInterceptor } from './security/token.interceptor';
 import { LoginComponent } from './security/login.component';
 import { DefaultPipe } from './default.pipe';
+import { ServerSideEventsService } from './sse.service';
 
 // used to create fake backend
 import { fakeBackendProvider } from './fake-backend';
@@ -69,6 +70,7 @@ const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule];
     AlertService,
     AuthenticationService,
     AuthorizatorGuard,
+    ServerSideEventsService,
 
     // provider used to create fake backend
     // fakeBackendProvider

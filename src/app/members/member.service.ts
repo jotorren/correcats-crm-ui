@@ -3,8 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Config, Result, PageBean } from '../shared';
+import { ServerSideEventsService } from '../shared/sse.service';
 import { PageRequest, Page } from '../shared/domain/datasource-page';
 import { AssociadaListItem } from './associada.list.item';
+
 
 export interface MemberQuery {
   search: '';
@@ -22,7 +24,7 @@ export class MemberService {
   private emptyResult: Result = {code: 0, message: '', result: []};
   private emptyPage: Page<AssociadaListItem> = {content: [], number: 0, size: 0, totalElements: 0};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private sseService: ServerSideEventsService) { }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -92,5 +94,54 @@ export class MemberService {
   addMember(form: any): Observable<Result> {
     const url = Config.api.members.base + Config.api.members.create;
     return this.http.post<Result>(url, form, httpOptions);
+  }
+
+  export(fields: string[], sortBy: string): Observable<Result> {
+    const url = Config.api.members.base +
+      Config.api.members.export.replace('{fields}', fields.join(',')).replace('{sortBy}', sortBy);
+    return this.http.get<Result>(url, httpOptions);
+  }
+
+  isReady(file: string): Observable<Result> {
+    const url = Config.api.members.base + Config.api.members.ready + file;
+    return this.http.get<Result>(url, httpOptions);
+  }
+
+  live(): Observable<string> {
+    const url = Config.api.members.base + Config.api.members.live;
+    return new Observable<string>(observer => {
+        this.sseService.getServerSentEvent(url).subscribe(
+            response => {
+                observer.next(response.data);
+            },
+            error => {
+                observer.error(error);
+            },
+            () => {
+                observer.complete();
+            }
+        );
+    });
+  }
+
+  download(file: string): void {
+    const url = Config.api.members.base + Config.api.members.download + file;
+
+    const myOptions = {
+      responseType: 'blob' as 'json'
+    };
+
+    this.http.get(url, myOptions).subscribe(
+      (response: any) => {
+          const dataType = response.type;
+          const binaryData = [];
+          binaryData.push(response);
+          const downloadLink = document.createElement('a');
+          downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+          downloadLink.setAttribute('download', Config.api.members.downloadFileName);
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+      }
+    );
   }
 }

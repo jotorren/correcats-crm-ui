@@ -8,8 +8,9 @@
     </div>
     <mat-card class="member-card">
       <mat-card-content>
-        <mat-selection-list [(ngModel)]="selectedFields" name="exporter">
-          <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill">Totes</mat-list-option>
+        <span>L'ordre en el que les dades apareixeran al fitxer serà: </span><span class="fill-bold">{{orderedFields}} </span>
+        <mat-selection-list [(ngModel)]="selectedFields" name="exporter" (selectionChange)="onSelectOption($event.option)">
+          <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill-bold">Totes</mat-list-option>
           <br/>
           <div fxLayout="row wrap" fxLayout.xs="column">
             <ng-container *ngFor="let item of availableFields">
@@ -18,10 +19,27 @@
               </mat-list-option>
             </ng-container>
           </div>
-      </mat-selection-list>
+        </mat-selection-list>
+      <br/>
+      <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas que no s'activi automàticament 
+        pots comprovar-ne la disponibilitat fent click a la icona </span><mat-icon inline="true">sync</mat-icon>
+      <mat-divider></mat-divider>
+      <mat-list>
+        <mat-list-item *ngFor="let link of requestedFiles">
+          <mat-icon mat-list-icon class="members-list-row" (click)="onClickRefreshFile(link)">sync</mat-icon>
+          <div mat-line class="fill-light">{{link}}</div>
+        </mat-list-item>
+      </mat-list>
+      <mat-list>
+        <mat-list-item *ngFor="let link of downloadableFiles" class="members-list-row" (click)="onClickDownload(link)">
+          <mat-icon mat-list-icon>save</mat-icon>
+          <div mat-line>{{link}}</div>
+        </mat-list-item>
+      </mat-list>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"><mat-icon>cloud_download</mat-icon></button>
+      <button mat-button mat-raised-button color="primary" matTooltip="Exporta" 
+        type="button" (click)="onClickGenerate($event)"><mat-icon>cloud_download</mat-icon></button>
     </mat-card-actions>
     </mat-card>
 </div>
