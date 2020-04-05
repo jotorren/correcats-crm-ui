@@ -2,6 +2,7 @@ export interface Associada {
   id: string;
   nom: string;
   cognoms: string;
+  sexe: string;
   nick: string;
   email: string;
   nif: string;

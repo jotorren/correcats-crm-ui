@@ -4,6 +4,7 @@ import { MatListOption } from '@angular/material/list';
 import { Subscription } from 'rxjs';
 import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
+import { Config } from '../../shared';
 import { MemberService } from '../member.service';
 
 @Component({
@@ -115,7 +116,12 @@ export class MemberExportComponent implements OnInit {
       sortBy = 'nick';
     }
 
-    this.api.export(this.orderedFields, sortBy)
+    this.api.export(Config.api.members.query.type.search, this.orderedFields,
+      [{
+          key: 'activat',
+          operation: Config.api.members.query.operators.equals,
+          value: true
+      }], null, sortBy, null)
       .subscribe((resok: any) => {
           if (resok.result) {
             this.requestedFiles.push(resok.result);

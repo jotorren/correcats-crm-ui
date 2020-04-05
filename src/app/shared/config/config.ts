@@ -24,30 +24,59 @@ export let Config = {
 
     api: {
         members: {
-            // base: 'https://localhost:8290/api',
-            // base: 'https://82.98.146.11:8090/api',
-            base: 'https://backoffice.corredors.cat:8090/api',
-            list: '/?v=1&offset={offset}&limit={limit}',
-            item: '/{id}?v=1',
-            register: '/register/{id}?v=1',
-            unregister: '/unregister/{id}?v=1',
-            create: '/?v=1',
-            verify: '/consistency?v=1&nick={nick}&email={email}',
-            nick: '/nick?v=1&nick=',
-            email: '/email?v=1&email=',
-            export: '/export/async?v=1&fields={fields}&sortBy={sortBy}',
-            ready: '/export/ready?v=1&file=',
-            live: '/export/live?v=1',
-            download: '/download?v=1&file=',
+            url: {
+                // base: 'https://localhost:8290/api',
+                // base: 'https://82.98.146.11:8090/api',
+                base: 'https://backoffice.corredors.cat:8090/api',
+                list: '/?v=1&offset={offset}&limit={limit}',
+                item: '/{id}?v=1',
+                register: '/register/{id}?v=1',
+                unregister: '/unregister/{id}?v=1',
+                create: '/?v=1',
+                nick: '/nick?v=1&nick=',
+                email: '/email?v=1&email=',
+                verify: '/consistency?v=1&nick={nick}&email={email}',
+                verifiedNicks: '/consistency/nicks?v=1',
+                verifiedMails: '/consistency/emails?v=1',
+                search: '/search?v=1&fields={fields}&search={search}&offset={offset}&limit={limit}',
+                export: '/export?v=1&queryType={queryType}',
+                ready: '/export/ready?v=1&file=',
+                live: '/export/live?v=1',
+                download: '/download?v=1&file=',
+            },
+
+            query: {
+                type: {
+                    all: 0,
+                    search: 1,
+                    inconsistentEmails: 2,
+                    inconsistentNicks: 3
+                },
+                operators: {
+                    equals: 'EQ',
+                    in: 'IN',
+                    not: 'NOT',
+                    gt: 'GT',
+                    gte: 'GTE',
+                    lt: 'LT',
+                    lte: 'LTE',
+                    like: 'LIKE',
+                    startsWith: 'STARTS_WITH',
+                    endsWith: 'ENDS_WITH',
+                    contains: 'CONTAINS'
+                }
+            },
 
             downloadFileName: 'associats.csv'
         },
         catalog: {
-            // base: 'https://localhost:8290/cataleg',
-            base: 'https://backoffice.corredors.cat:8090/cataleg',
-            municipis: '/municipi/search?v=1&search=',
-            municipisambCP: '/municipi/codipostal?v=1&codiPostal=',
-            postalCodes: '/codipostal?v=1&municipi=',
+            url: {
+                // base: 'https://localhost:8290/cataleg',
+                base: 'https://backoffice.corredors.cat:8090/cataleg',
+                municipis: '/municipi/search?v=1&search=',
+                municipisambCP: '/municipi/codipostal?v=1&codiPostal=',
+                postalCodes: '/codipostal?v=1&municipi=',
+            }
         },
     },
 

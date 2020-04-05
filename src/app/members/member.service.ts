@@ -40,8 +40,8 @@ export class MemberService {
   getMembers(request: PageRequest<AssociadaListItem>, query: MemberQuery): Observable<Page<AssociadaListItem>> {
     const offset = (request.page * request.size);
 
-    let url = Config.api.members.base +
-      Config.api.members.list.replace('{offset}', offset + '').replace('{limit}', request.size + '');
+    let url = Config.api.members.url.base +
+      Config.api.members.url.list.replace('{offset}', offset + '').replace('{limit}', request.size + '');
 
     if (query.search) {
         url = url + '&search=' + query.search;
@@ -63,7 +63,7 @@ export class MemberService {
   }
 
   getMemberById(id: string): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.item.replace('{id}', id);
+    const url = Config.api.members.url.base + Config.api.members.url.item.replace('{id}', id);
     return this.http.get<Result>(url, httpOptions).pipe(
       tap(_ => console.log(`fetched member id=${id}`)),
       catchError(this.handleError<Result>(`getMemberById id=${id}`, this.emptyResult))
@@ -71,44 +71,85 @@ export class MemberService {
   }
 
   updateMember(id: string, form: any): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.item.replace('{id}', id);
+    const url = Config.api.members.url.base + Config.api.members.url.item.replace('{id}', id);
     return this.http.put<Result>(url, form, httpOptions);
   }
 
   unregisterMember(id: string): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.unregister.replace('{id}', id);
+    const url = Config.api.members.url.base + Config.api.members.url.unregister.replace('{id}', id);
     return this.http.put<Result>(url, httpOptions);
   }
 
   registerMember(id: string): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.register.replace('{id}', id);
+    const url = Config.api.members.url.base + Config.api.members.url.register.replace('{id}', id);
     return this.http.put<Result>(url, httpOptions);
   }
 
   verifyMember(nick: string, email: string): Observable<Result> {
-    const url = Config.api.members.base +
-      Config.api.members.verify.replace('{nick}', nick).replace('{email}', email);
+    const url = Config.api.members.url.base +
+      Config.api.members.url.verify.replace('{nick}', nick).replace('{email}', email);
     return this.http.get<Result>(url, httpOptions);
   }
 
   addMember(form: any): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.create;
+    const url = Config.api.members.url.base + Config.api.members.url.create;
     return this.http.post<Result>(url, form, httpOptions);
   }
 
-  export(fields: string[], sortBy: string): Observable<Result> {
-    const url = Config.api.members.base +
-      Config.api.members.export.replace('{fields}', fields.join(',')).replace('{sortBy}', sortBy);
-    return this.http.get<Result>(url, httpOptions);
+  search(fields: string[], criteria: any, clause: string,
+         offset: number, limit: number, sortBy: string, asc: string): Observable<Result> {
+    let url = Config.api.members.url.base +
+      Config.api.members.url.search
+        .replace('{fields}', fields.join(','))
+        .replace('{offset}', offset + '')
+        .replace('{limit}', limit + '');
+
+    if (clause && clause === 'OR') {
+      url += '&logicalOperator=\'';
+    }
+
+    if (sortBy) {
+      url += '&sortBy=' + sortBy;
+    }
+
+    if (asc) {
+      url += '&asc=' + (asc === 'ASC');
+    }
+
+    return this.http.post<Result>(url, criteria, httpOptions);
+  }
+
+  export(qt: number, fields: string[], criteria: any, clause: string,
+         sortBy: string, asc: string): Observable<Result> {
+    let url = Config.api.members.url.base +
+      Config.api.members.url.export.replace('{queryType}', qt + '');
+
+    if (fields) {
+        url += '&fields=' + fields.join(',');
+    }
+
+    if (clause && clause === 'OR') {
+      url += '&logicalOperator=\'';
+    }
+
+    if (sortBy) {
+        url += '&sortBy=' + sortBy;
+    }
+
+    if (asc) {
+        url += '&asc=' + (asc === 'ASC');
+    }
+
+    return this.http.post<Result>(url, criteria, httpOptions);
   }
 
   isReady(file: string): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.ready + file;
+    const url = Config.api.members.url.base + Config.api.members.url.ready + file;
     return this.http.get<Result>(url, httpOptions);
   }
 
   live(): Observable<string> {
-    const url = Config.api.members.base + Config.api.members.live;
+    const url = Config.api.members.url.base + Config.api.members.url.live;
     return new Observable<string>(observer => {
         this.sseService.getServerSentEvent(url).subscribe(
             response => {
@@ -125,7 +166,7 @@ export class MemberService {
   }
 
   download(file: string): void {
-    const url = Config.api.members.base + Config.api.members.download + file;
+    const url = Config.api.members.url.base + Config.api.members.url.download + file;
 
     const myOptions = {
       responseType: 'blob' as 'json'

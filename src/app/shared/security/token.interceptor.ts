@@ -46,7 +46,12 @@ export class TokenInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
             this.refreshTokenSubject.next(res.access_token);
             return next.handle(this.addToken(request, res.access_token));
-          }));
+          }),
+          catchError(error => {
+            this.authService.logout();
+            return throwError(error);
+          })
+        );
 
       } else {
         return this.refreshTokenSubject.pipe(

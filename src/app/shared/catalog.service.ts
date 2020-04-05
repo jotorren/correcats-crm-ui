@@ -41,8 +41,8 @@ export class CatalogService {
   }
 
   getCities(filter: string): Observable<Municipi[]> {
-    return this.http.get<Result>(Config.api.catalog.base +
-      Config.api.catalog.municipis + filter, httpOptions)
+    return this.http.get<Result>(Config.api.catalog.url.base +
+      Config.api.catalog.url.municipis + filter, httpOptions)
       .pipe(
         map(cities => cities.result),
         catchError(this.handleError<Municipi[]>('getCities', []))
@@ -50,8 +50,8 @@ export class CatalogService {
   }
 
   getCitiesWithPostalCode(cp: string): Observable<Municipi[]> {
-    return this.http.get<Result>(Config.api.catalog.base +
-      Config.api.catalog.municipisambCP + cp, httpOptions)
+    return this.http.get<Result>(Config.api.catalog.url.base +
+      Config.api.catalog.url.municipisambCP + cp, httpOptions)
       .pipe(
         map(cities => cities.result),
         catchError(this.handleError<Municipi[]>('getCities', []))
@@ -59,8 +59,8 @@ export class CatalogService {
   }
 
   getPostalCodes(municipi: string): Observable<CodiPostal[]> {
-    return this.http.get<Result>(Config.api.catalog.base +
-      Config.api.catalog.postalCodes + municipi, httpOptions)
+    return this.http.get<Result>(Config.api.catalog.url.base +
+      Config.api.catalog.url.postalCodes + municipi, httpOptions)
       .pipe(
         map(cps => cps.result),
         catchError(this.handleError<CodiPostal[]>('getPostalCodes', []))

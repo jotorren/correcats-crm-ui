@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Config } from '../config/config';
-import { Observable, of } from 'rxjs';
+
 
 interface ServerResponse {
     access_token: string;
@@ -21,7 +23,7 @@ providedIn: 'root'
 export class AuthenticationService {
     private config = Config.security.token;
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private router: Router) { }
 
     login(username: string, password: string) {
 
@@ -64,6 +66,7 @@ export class AuthenticationService {
 
     logout() {
         this.removeTokens();
+        this.router.navigate(['/login']);
     }
 
     private handleError<T>(result?: T) {

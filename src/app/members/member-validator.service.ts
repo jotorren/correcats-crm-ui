@@ -27,14 +27,14 @@ export class MemberValidatorService {
   }
 
   isNickOk(nick: string, instance: MemberValidatorService): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.nick + nick;
+    const url = Config.api.members.url.base + Config.api.members.url.nick + nick;
     return instance.http.get<Result>(url, httpOptions).pipe(
       tap(_ => console.log(`verified nick=${nick}`))
     );
   }
 
   isEmailOk(email: string, instance: MemberValidatorService): Observable<Result> {
-    const url = Config.api.members.base + Config.api.members.email + email;
+    const url = Config.api.members.url.base + Config.api.members.url.email + email;
     return instance.http.get<Result>(url, httpOptions).pipe(
       tap(_ => console.log(`verified emal=${email}`))
     );
