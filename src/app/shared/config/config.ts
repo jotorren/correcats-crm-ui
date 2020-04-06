@@ -53,18 +53,45 @@ export let Config = {
                     inconsistentNicks: 3
                 },
                 operators: {
-                    equals: 'EQ',
-                    in: 'IN',
-                    not: 'NOT',
-                    gt: 'GT',
-                    gte: 'GTE',
-                    lt: 'LT',
-                    lte: 'LTE',
-                    like: 'LIKE',
-                    startsWith: 'STARTS_WITH',
-                    endsWith: 'ENDS_WITH',
-                    contains: 'CONTAINS'
+                    equals: { code: 'EQ', desc: 'igual a' },
+                    isnull: { code: 'NULL', desc: 'és nul' },
+                    in: { code: 'IN', desc: 'pertany al conjunt' },
+                    not: { code: 'NOT', desc: 'no és' },
+                    gt: { code: 'GT', desc: 'més gran que' },
+                    gte: { code: 'GTE', desc: 'més gran o igual que' },
+                    lt: { code: 'LT', desc: 'més petit que' },
+                    lte: { code: 'LTE', desc: 'més petit o igual que' },
+                    like: { code: 'LIKE', desc: 'és semblant a' },
+                    startsWith: { code: 'STARTS_WITH', desc: 'comença per' },
+                    endsWith: { code: 'ENDS_WITH', desc: 'acaba amb' },
+                    contains: { code: 'CONTAINS', desc: 'conté' }
+                },
+                fields: {
+                    nom: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    cognoms: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    nick: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    email: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    sexe: ['equals'],
+                    nif: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    iban: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    telefon: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    adreca: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    codiPostal: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    poblacio: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    activat: ['equals'],
+                    quotaAlta: ['equals', 'gt', 'gte', 'lt', 'lte'],
+                    dataAlta: ['equals', 'gt', 'gte', 'lt', 'lte'],
+                    dataBaixa: ['equals', 'isnull', 'gt', 'gte', 'lt', 'lte'],
+                    observacions: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
                 }
+            },
+
+            map: {
+                H: 'Home',
+                D: 'Dona',
+                A: 'Altre',
+                true: 'Sí',
+                false: 'No'
             },
 
             downloadFileName: 'associats.csv'

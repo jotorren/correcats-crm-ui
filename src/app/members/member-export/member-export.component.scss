@@ -57,8 +57,32 @@
   background-color: rgba(0,0,0,.04);
 }
 
-.members-list-row {
+.action {
   cursor: pointer;
+}
+
+.filter-row-field {
+  background-color: rgba(0,0,0,.04);
+}
+
+::ng-deep .mat-form-field-infix {
+  border-top: 0px !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+  height: 0px !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  margin-top: 10px !important;
+}
+
+.input-date-text {
+  font-size: 14px !important;   
 }
 
 @media all and (max-width: 599px){
@@ -75,6 +99,12 @@
     font-size: 14px !important;
     height: 32px;
   }
+
+  .wrap-mat-radio-label {
+    padding-right: 10px;
+    font-size: 14px !important;
+    height: 32px;
+  }
 }
 
 @media all and (min-width: 600px){
@@ -84,6 +114,12 @@
   }
 
   .mat-list-base .mat-list-item {
+    font-size: 14px !important;
+    height: 24px;
+  }
+
+  .wrap-mat-radio-label {
+    padding-right: 10px;
     font-size: 14px !important;
     height: 24px;
   }

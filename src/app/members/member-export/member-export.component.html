@@ -10,7 +10,7 @@
       <mat-card-content>
         <span>L'ordre en el que les dades apareixeran al fitxer serà: </span><span class="fill-bold">{{orderedFields}} </span>
         <mat-selection-list [(ngModel)]="selectedFields" name="exporter" (selectionChange)="onSelectOption($event.option)">
-          <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill-bold">Totes</mat-list-option>
+          <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill">Inclou totes les disponibles</mat-list-option>
           <br/>
           <div fxLayout="row wrap" fxLayout.xs="column">
             <ng-container *ngFor="let item of availableFields">
@@ -20,20 +20,88 @@
             </ng-container>
           </div>
         </mat-selection-list>
+      
+      <br/><br/>
+      <mat-divider></mat-divider>
+
+      <div class="member-full-width">
+        <span>Que compleixin les següents condicions:</span>
+      </div>
+      <div fxLayout="wrap">
+        <div fxFlex="3 1 auto" class="filter-row-field">
+          <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)">
+            <mat-option *ngFor="let attr of filterFields" [value]="attr">
+              {{attr}}
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div fxFlex="3 1 auto" class="filter-row-field">
+          <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)">
+            <mat-option *ngFor="let op of filterOps" [value]="op.code">
+              {{op.desc}}
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <div fxFlex="4 1 auto" class="filter-row-field">
+
+          <div *ngIf="!nullFilterValue && filterBy==='sexe'" align="right">
+            <mat-radio-group [(ngModel)]="filterValue">
+              <mat-radio-button value="A"><span class="wrap-mat-radio-label">Altre</span></mat-radio-button>
+              <mat-radio-button value="D"><span class="wrap-mat-radio-label">Dona</span></mat-radio-button>
+              <mat-radio-button value="H"><span class="wrap-mat-radio-label">Home</span></mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div *ngIf="!nullFilterValue && (filterBy==='dataAlta' || filterBy==='dataBaixa')" align="right">
+            <mat-form-field class="member-full-width">
+            <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" 
+              [(ngModel)]="filterValue" class="input-date-text">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>           
+          </div>
+
+          <div *ngIf="!nullFilterValue && filterBy==='activat'" align="right">
+            <mat-radio-group [(ngModel)]="filterValue">
+              <mat-radio-button value="true"><span class="wrap-mat-radio-label">Sí</span></mat-radio-button>
+              <mat-radio-button value="false"><span class="wrap-mat-radio-label">No</span></mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div fxFlex="1 1 auto" align="right" class="action filter-row-field">
+          <mat-icon (click)="onClickFilterAdd($event)">add</mat-icon>
+        </div>
+
+      </div>
       <br/>
+
+      <mat-list>
+        <mat-list-item *ngFor="let condition of criteria">
+          <mat-icon mat-list-icon class="action" (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició">clear</mat-icon>
+          <div mat-line>"{{condition.key}}" {{condition.operationMap}} 
+            <span *ngIf="condition.operation !== 'NULL'">"{{condition.valueMap}}"</span></div>
+        </mat-list-item>
+      </mat-list>
+
+      <br/><br/>
+      <mat-divider></mat-divider>
+
       <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas que no s'activi automàticament 
         pots comprovar-ne la disponibilitat fent click a la icona </span><mat-icon inline="true">sync</mat-icon>
-      <mat-divider></mat-divider>
       <mat-list>
         <mat-list-item *ngFor="let link of requestedFiles">
-          <mat-icon mat-list-icon class="members-list-row" (click)="onClickRefreshFile(link)">sync</mat-icon>
+          <mat-icon mat-list-icon class="action" (click)="onClickRefreshFile(link)">sync</mat-icon>
           <div mat-line class="fill-light">{{link}}</div>
         </mat-list-item>
       </mat-list>
       <mat-list>
-        <mat-list-item *ngFor="let link of downloadableFiles" class="members-list-row" (click)="onClickDownload(link)">
-          <mat-icon mat-list-icon>save</mat-icon>
+        <mat-list-item *ngFor="let link of downloadableFiles">
+          <mat-icon mat-list-icon class="action" (click)="onClickDownload(link)" matTooltip="Descarrega">save</mat-icon>
           <div mat-line>{{link}}</div>
+          <mat-icon mat-list-icon class="action" (click)="onClickDeleteDownload(link)" matTooltip="Elimina">delete</mat-icon>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
