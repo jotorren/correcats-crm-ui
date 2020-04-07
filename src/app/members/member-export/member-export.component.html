@@ -34,24 +34,28 @@
       </div>
       <div fxLayout="wrap" fxLayout.xs="column">
         <div fxFlex="3 1 auto" class="middle">
-          <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)">
-            <mat-option *ngFor="let attr of filterFields" [value]="attr">
-              {{attr}}
-            </mat-option>
-          </mat-select>
+          <mat-form-field>
+            <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)">
+              <mat-option *ngFor="let attr of filterFields" [value]="attr">
+                {{attr}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div fxFlex="3 1 auto" class="middle">
-          <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)">
-            <mat-option *ngFor="let op of filterOps" [value]="op.code">
-              {{op.desc}}
-            </mat-option>
-          </mat-select>
+          <mat-form-field>
+            <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)">
+              <mat-option *ngFor="let op of filterOps" [value]="op.code">
+                {{op.desc}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div fxFlex="4 1 auto" class="middle">
 
-          <div *ngIf="!nullFilterValue && filterBy==='sexe'" align="right">
+          <div *ngIf="!nullFilterValue && filterBy==='sexe'">
             <mat-radio-group [(ngModel)]="filterValue">
               <mat-radio-button value="A"><span class="wrap-mat-radio-label">Altre</span></mat-radio-button>
               <mat-radio-button value="D"><span class="wrap-mat-radio-label">Dona</span></mat-radio-button>
@@ -59,7 +63,7 @@
             </mat-radio-group>
           </div>
 
-          <div *ngIf="!nullFilterValue && (filterBy==='dataAlta' || filterBy==='dataBaixa')" align="right">
+          <div *ngIf="!nullFilterValue && (filterBy==='dataAlta' || filterBy==='dataBaixa')">
             <mat-form-field class="full-width">
               <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" [(ngModel)]="filterValue"
                 class="input-date-text">
@@ -68,7 +72,7 @@
             </mat-form-field>
           </div>
 
-          <div *ngIf="!nullFilterValue && filterBy==='activat'" align="right">
+          <div *ngIf="!nullFilterValue && filterBy==='activat'">
             <mat-radio-group [(ngModel)]="filterValue">
               <mat-radio-button value="true"><span class="wrap-mat-radio-label">Sí</span></mat-radio-button>
               <mat-radio-button value="false"><span class="wrap-mat-radio-label">No</span></mat-radio-button>
@@ -76,7 +80,7 @@
           </div>
         </div>
 
-        <div fxFlex="1 1 auto" align="right" class="middle">
+        <div fxFlex="1 1 auto" class="middle">
           <button mat-button mat-mini-fab color="accent" matTooltip="Afegeix filtre" type="button"
             (click)="onClickFilterAdd($event)">
             <mat-icon>add</mat-icon>

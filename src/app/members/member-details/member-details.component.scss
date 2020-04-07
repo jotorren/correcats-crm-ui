@@ -1,3 +1,10 @@
+/* Structure */
+.member-container {
+  position: relative;
+  height: 80%;
+  padding: 5px;
+}
+
 .member-loading-shade {
   position: absolute;
   top: 0;
@@ -15,20 +22,34 @@
   margin-right: 10px;
 }
 
-/* Structure */
-.member-container {
-  position: relative;
-  padding: 5px;
+.member-details-container {
+  margin-top: 10px;
+  height: 90%;
 }
 
 .mat-flat-button {
   margin: 5px;
 }
 
-//.member-card {
-//  max-width: 400px;
-//}
+// Width & Height
+.full-width {
+  width: 100%;
+}
 
+.full-height {
+  height: 100%;
+}
+
+// align
+.justify {
+  justify-content: center
+}
+
+.member-header-text {
+  margin-left: -32px !important;
+}
+
+// Images
 .member-male {
   // background-image: url('https://mdbootstrap.com/img/Photos/Others/men.jpg');
   background-image: url('../../../assets/images/male.png');
@@ -38,4 +59,25 @@
 .member-female {
   background-image: url('../../../assets/images/female.png');
   background-size: cover;
+}
+
+//
+@media all and (max-width: 599px){
+  .xs-view {
+    display: block;
+  }
+
+  .normal-view {
+    display: none;
+  }
+}
+
+@media all and (min-width: 600px){
+  .xs-view {
+    display: none;
+  }
+
+  .normal-view {
+    display: block;
+  }  
 }

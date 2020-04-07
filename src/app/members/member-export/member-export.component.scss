@@ -25,6 +25,10 @@
   margin: 5px;
 }
 
+::ng-deep .mat-form-field-infix {
+  width: 290px !important;
+}
+
 .button-row {
   margin: 10px 0;
 }

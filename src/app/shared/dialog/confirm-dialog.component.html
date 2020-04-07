@@ -1,10 +1,10 @@
-<h2 mat-dialog-title>{{title}}</h2>
-  
+<h2 mat-dialog-title class="full-width fill">{{title}}</h2>
+
 <div mat-dialog-content>
   <p>{{message}}</p>
 </div>
 
 <div mat-dialog-actions>
   <button mat-button (click)="onDismiss()">No</button>
-  <button mat-raised-button color="primary" (click)="onConfirm()">Sí</button>
+  <button mat-raised-button color="accent" (click)="onConfirm()">Sí</button>
 </div>

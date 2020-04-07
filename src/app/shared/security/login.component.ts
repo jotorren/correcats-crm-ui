@@ -47,7 +47,8 @@ export class LoginComponent implements OnInit {
         if (resko.error.error_description) {
           messages = resko.error.error_description;
         } else {
-          messages = [JSON.stringify(resko.error)];
+          console.log(resko.error);
+          messages = 'Autenticació incorrecta';
         }
 
         this.alertService.error(messages, {

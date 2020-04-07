@@ -68,7 +68,7 @@ export class MemberDetailsComponent implements OnInit {
     const dialogData = new ConfirmDialogModel('Confirmació', message);
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
+      maxHeight: '200px',
       data: dialogData
     });
 

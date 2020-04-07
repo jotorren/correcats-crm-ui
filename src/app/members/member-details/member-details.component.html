@@ -3,60 +3,133 @@
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
   <div class="button-row">
-    <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home"><mat-icon>home</mat-icon></a>
+    <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home">
+      <mat-icon>home</mat-icon>
+    </a>
     <span class="mat-title">Detalls d'un associat</span>
   </div>
-  <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+  <mat-card class="member-details-container">
     <mat-card-header>
-      <div mat-card-avatar [ngClass]="{'member-male' : member.sexe === 'H', 'member-female' : member.sexe === 'D'}"></div>
+      <div mat-card-avatar [ngClass]="{'member-male' : member.sexe === 'H', 'member-female' : member.sexe === 'D'}">
+      </div>
       <mat-card-title>{{member.nick}}</mat-card-title>
       <mat-card-subtitle>{{member.cognoms}}, {{member.nom}}</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
+
+    <mat-card-content class="normal-view">
+      <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+        <div fxFlex="0 1 33%">
+          <mat-card class="mat-elevation-z4 full-height">
+            <mat-card-header class="justify">
+              <span class="mat-tab-label member-header-text">Bàsica</span>
+            </mat-card-header>            
+            <mat-card-content>
+              <dl>
+                <dt>eMail:</dt>
+                <dd>{{member.email}}</dd>
+                <dt>NIF:</dt>
+                <dd>{{member.nif}}</dd>
+                <dt>IBAN:</dt>
+                <dd>{{member.iban}}</dd>
+                <dt>&nbsp;</dt>
+                <dd>&nbsp;</dd>
+              </dl>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div fxFlex="0 1 33%">
+          <mat-card class="mat-elevation-z4 full-height">
+            <mat-card-header class="justify">
+              <span class="mat-tab-label member-header-text">Contacte</span>
+            </mat-card-header>              
+            <mat-card-content>
+              <dl>
+                <dt>Telèfon:</dt>
+                <dd>{{member.telefon}}</dd>
+                <dt>Adreça:</dt>
+                <dd>{{member.adreca}}</dd>
+                <dt>Codi postal:</dt>
+                <dd>{{member.codiPostal}}</dd>
+                <dt>Població:</dt>
+                <dd>{{member.poblacio}}</dd>
+              </dl>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div fxFlex="0 1 33%">
+          <mat-card class="mat-elevation-z4 full-height">
+            <mat-card-header class="justify">
+              <span class="mat-tab-label member-header-text">Altra</span>
+            </mat-card-header>              
+            <mat-card-content>
+              <dl>
+                <dt>Quota pagada al TPV:</dt>
+                <dd>{{member.quotaAlta}} €</dd>
+                <dt>Data del pagament:</dt>
+                <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
+                <dt>Observacions:</dt>
+                <dd>{{member.observacions}}</dd>
+                <dt>&nbsp;</dt>
+                <dd>&nbsp;</dd>
+              </dl>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content class="xs-view" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
       <mat-tab-group #usertabs>
-      <mat-tab label="Bàsica">
-      <dl>
-        <dt>eMail:</dt>
-        <dd>{{member.email}}</dd>
-        <dt>NIF:</dt>
-        <dd>{{member.nif}}</dd>
-        <dt>IBAN:</dt>
-        <dd>{{member.iban}}</dd>
-        <dt>&nbsp;</dt>
-        <dd>&nbsp;</dd>
-      </dl>
-      </mat-tab>
+        <mat-tab label="Bàsica">
+          <dl>
+            <dt>eMail:</dt>
+            <dd>{{member.email}}</dd>
+            <dt>NIF:</dt>
+            <dd>{{member.nif}}</dd>
+            <dt>IBAN:</dt>
+            <dd>{{member.iban}}</dd>
+            <dt>&nbsp;</dt>
+            <dd>&nbsp;</dd>
+          </dl>
+        </mat-tab>
 
-      <mat-tab label="Contacte">
-      <dl>
-        <dt>Telèfon:</dt>
-        <dd>{{member.telefon}}</dd>
-        <dt>Adreça:</dt>
-        <dd>{{member.adreca}}</dd>
-        <dt>Codi postal:</dt>
-        <dd>{{member.codiPostal}}</dd>
-        <dt>Població:</dt>
-        <dd>{{member.poblacio}}</dd>
-      </dl>
-      </mat-tab>
+        <mat-tab label="Contacte">
+          <dl>
+            <dt>Telèfon:</dt>
+            <dd>{{member.telefon}}</dd>
+            <dt>Adreça:</dt>
+            <dd>{{member.adreca}}</dd>
+            <dt>Codi postal:</dt>
+            <dd>{{member.codiPostal}}</dd>
+            <dt>Població:</dt>
+            <dd>{{member.poblacio}}</dd>
+          </dl>
+        </mat-tab>
 
-      <mat-tab label="Altra">
-        <dl>
-          <dt>Quota pagada al TPV:</dt>
-          <dd>{{member.quotaAlta}} €</dd>
-          <dt>Data del pagament:</dt>
-          <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
-          <dt>Observacions:</dt>
-          <dd>{{member.observacions}}</dd>
-          <dt>&nbsp;</dt>
-          <dd>&nbsp;</dd>
-        </dl>
+        <mat-tab label="Altra">
+          <dl>
+            <dt>Quota pagada al TPV:</dt>
+            <dd>{{member.quotaAlta}} €</dd>
+            <dt>Data del pagament:</dt>
+            <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
+            <dt>Observacions:</dt>
+            <dd>{{member.observacions}}</dd>
+            <dt>&nbsp;</dt>
+            <dd>&nbsp;</dd>
+          </dl>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>
+
     <mat-card-actions>
-      <a mat-flat-button color="primary" disabled="true" [routerLink]="['/member-details', member.id]" ><mat-icon>edit</mat-icon> Edita</a>
-      <a mat-flat-button color="accent" (click)="unregisterMember(member.id)"><mat-icon>delete</mat-icon> Baixa</a>
+      <a mat-flat-button color="primary" disabled="true" [routerLink]="['/member-details', member.id]">
+        <mat-icon>edit</mat-icon> Edita
+      </a>
+      <a mat-flat-button color="accent" (click)="unregisterMember(member.id)">
+        <mat-icon>delete</mat-icon> Baixa
+      </a>
     </mat-card-actions>
   </mat-card>
 </div>
