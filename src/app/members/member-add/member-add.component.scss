@@ -21,14 +21,6 @@
   padding: 5px;
 }
 
-.member-full-width {
-  width: 100%;
-}
-
-.member-full-width:nth-last-child(0) {
-  margin-bottom: 10px;
-}
-
 .mat-flat-button {
   margin: 5px;
 }
@@ -49,6 +41,12 @@
   width: 100%;
 }
 
+.wrap-mat-radio-label {
+  padding-right: 10px;
+  font-size: 14px !important;
+  height: 32px;
+}
+
 .mat-form-field {
   margin-top: 16px;
 }
@@ -66,6 +64,14 @@
 //  color: red;
 //}
 
-.member-cpc{
+.full-width {
+  width: 100%;
+}
+
+.full-width:nth-last-child(0) {
+  margin-bottom: 10px;
+}
+
+.do-action {
   cursor: pointer;
 }

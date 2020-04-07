@@ -21,14 +21,6 @@
   padding: 5px;
 }
 
-.member-full-width {
-  width: 100%;
-}
-
-.member-full-width:nth-last-child(0) {
-  margin-bottom: 10px;
-}
-
 .mat-flat-button {
   margin: 5px;
 }
@@ -37,7 +29,13 @@
 //  max-width: 400px;
 //}
 
-.member-header-image {
-  background-image: url('https://mdbootstrap.com/img/Photos/Others/men.jpg');
+.member-male {
+  // background-image: url('https://mdbootstrap.com/img/Photos/Others/men.jpg');
+  background-image: url('../../../assets/images/male.png');
+  background-size: cover;
+}
+
+.member-female {
+  background-image: url('../../../assets/images/female.png');
   background-size: cover;
 }

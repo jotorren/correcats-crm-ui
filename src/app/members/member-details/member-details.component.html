@@ -6,9 +6,9 @@
     <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home"><mat-icon>home</mat-icon></a>
     <span class="mat-title">Detalls d'un associat</span>
   </div>
-  <mat-card class="member-card" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+  <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
     <mat-card-header>
-      <div mat-card-avatar class="member-header-image"></div>
+      <div mat-card-avatar [ngClass]="{'member-male' : member.sexe === 'H', 'member-female' : member.sexe === 'D'}"></div>
       <mat-card-title>{{member.nick}}</mat-card-title>
       <mat-card-subtitle>{{member.cognoms}}, {{member.nom}}</mat-card-subtitle>
     </mat-card-header>

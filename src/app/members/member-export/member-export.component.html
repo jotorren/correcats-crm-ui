@@ -4,7 +4,7 @@
     </div>
     <div class="button-row">
       <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home"><mat-icon>home</mat-icon></a>
-      <span class="mat-title">Genera un fitxer d'associats</span>
+      <span class="mat-title">Genera un fitxer d'associats personalitzat</span>
     </div>
     <mat-card class="member-card">
       <mat-card-content>
@@ -24,7 +24,7 @@
       <br/><br/>
       <mat-divider></mat-divider>
 
-      <div class="member-full-width">
+      <div class="full-width">
         <span>Que compleixin les següents condicions:</span>
       </div>
       <div fxLayout="wrap">
@@ -55,7 +55,7 @@
           </div>
 
           <div *ngIf="!nullFilterValue && (filterBy==='dataAlta' || filterBy==='dataBaixa')" align="right">
-            <mat-form-field class="member-full-width">
+            <mat-form-field class="full-width">
             <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" 
               [(ngModel)]="filterValue" class="input-date-text">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -71,7 +71,7 @@
           </div>
         </div>
 
-        <div fxFlex="1 1 auto" align="right" class="action filter-row-field">
+        <div fxFlex="1 1 auto" align="right" class="do-action filter-row-field">
           <mat-icon (click)="onClickFilterAdd($event)">add</mat-icon>
         </div>
 
@@ -80,7 +80,7 @@
 
       <mat-list>
         <mat-list-item *ngFor="let condition of criteria">
-          <mat-icon mat-list-icon class="action" (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició">clear</mat-icon>
+          <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició">clear</mat-icon>
           <div mat-line>"{{condition.key}}" {{condition.operationMap}} 
             <span *ngIf="condition.operation !== 'NULL'">"{{condition.valueMap}}"</span></div>
         </mat-list-item>
@@ -93,15 +93,15 @@
         pots comprovar-ne la disponibilitat fent click a la icona </span><mat-icon inline="true">sync</mat-icon>
       <mat-list>
         <mat-list-item *ngFor="let link of requestedFiles">
-          <mat-icon mat-list-icon class="action" (click)="onClickRefreshFile(link)">sync</mat-icon>
+          <mat-icon mat-list-icon class="do-action" (click)="onClickRefreshFile(link)">sync</mat-icon>
           <div mat-line class="fill-light">{{link}}</div>
         </mat-list-item>
       </mat-list>
       <mat-list>
         <mat-list-item *ngFor="let link of downloadableFiles">
-          <mat-icon mat-list-icon class="action" (click)="onClickDownload(link)" matTooltip="Descarrega">save</mat-icon>
+          <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega">save</mat-icon>
           <div mat-line>{{link}}</div>
-          <mat-icon mat-list-icon class="action" (click)="onClickDeleteDownload(link)" matTooltip="Elimina">delete</mat-icon>
+          <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteDownload(link)" matTooltip="Elimina">delete</mat-icon>
         </mat-list-item>
       </mat-list>
     </mat-card-content>

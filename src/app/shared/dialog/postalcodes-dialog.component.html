@@ -2,7 +2,7 @@
 
 <div mat-dialog-content>
     <div [formGroup]="searchForm">
-        <mat-form-field class="pc-full-width" appearance="fill">
+        <mat-form-field class="full-width" appearance="fill">
             <input #city matInput placeholder="Població" formControlName="city" maxlength="255"
                 (focus)="onFocus($event)">
             <mat-hint align="start" class="xs-nodisplay">Escriu com a mínim tres lletres del nom</mat-hint>
@@ -18,7 +18,7 @@
             <mat-card-content>
                 <mat-list>
                     <mat-list-item *ngFor="let city of potentialCities | async">
-                        <p matLine><span class="pc-action pc-data" (click)="searchPostalCodes(city)">{{city.nom}}</span></p>
+                        <p matLine><span class="do-action pc-data" (click)="searchPostalCodes(city)">{{city.nom}}</span></p>
                         <button mat-mini-fab color="primary" (click)="searchPostalCodes(city)">
                             <mat-icon> mail</mat-icon>
                         </button>

@@ -50,7 +50,9 @@ export let Config = {
                     all: 0,
                     search: 1,
                     inconsistentEmails: 2,
-                    inconsistentNicks: 3
+                    inconsistentNicks: 3,
+                    notInForumGroup: 4,
+                    inForumGroupButNotMember: 5,
                 },
                 operators: {
                     equals: { code: 'EQ', desc: 'igual a' },

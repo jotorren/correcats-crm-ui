@@ -38,6 +38,7 @@ import { MemberValidatorService } from './member-validator.service';
 import { MemberDetailsResolve } from './member-details/member-details.resolve';
 import { MemberExportComponent } from './member-export/member-export.component';
 import { SharedModule } from '../shared';
+import { MemberReportComponent } from './member-report/member-report.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -92,7 +93,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
         MemberDetailsComponent,
         MemberEditComponent,
         MembersListComponent,
-        MemberExportComponent
+        MemberExportComponent,
+        MemberReportComponent
     ],
     exports: [
         MemberAddComponent,

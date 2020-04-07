@@ -124,6 +124,7 @@ export class MemberAddComponent implements OnInit {
     // });
 
     this.memberForm = this.formBuilder.group({
+      sexe: ['H'],
       nom : [null, Validators.required],
       cognoms : [null, Validators.required],
       nick : [null, Validators.required, this.validators.nickValidator],

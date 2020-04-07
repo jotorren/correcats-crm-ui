@@ -1,8 +1,8 @@
 <div class="member-container mat-elevation-z8">
   <div class="button-row">
     <a mat-flat-button color="primary" [routerLink]="['/member-add']"><mat-icon>add</mat-icon> Alta</a>
-    <a mat-flat-button color="primary" [routerLink]="['/members-export']"><mat-icon>save_alt</mat-icon> Exporta</a>
-    <a mat-flat-button color="primary" [routerLink]="['/members-list']"><mat-icon>sync_problem</mat-icon> Verifica</a>
+    <a mat-flat-button color="primary" [routerLink]="['/members-report']"><mat-icon>save_alt</mat-icon> Llistats</a>
+    <a mat-flat-button color="primary" [routerLink]="['/members-export']"><mat-icon>settings</mat-icon> Personalitza</a>
   </div>
   <div class="mat-elevation-z8">
     <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
@@ -38,7 +38,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
-        [routerLink]="['/member-details/', row.id]" class="members-list-row"></tr>
+        [routerLink]="['/member-details/', row.id]" class="do-action"></tr>
       <!-- tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr -->
     </table>
     <mat-paginator #paginator *ngIf="data.page$ | async as page"

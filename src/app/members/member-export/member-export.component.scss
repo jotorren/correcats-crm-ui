@@ -21,14 +21,6 @@
   padding: 5px;
 }
 
-.member-full-width {
-  width: 100%;
-}
-
-.member-full-width:nth-last-child(0) {
-  margin-bottom: 10px;
-}
-
 .mat-flat-button {
   margin: 5px;
 }
@@ -57,7 +49,15 @@
   background-color: rgba(0,0,0,.04);
 }
 
-.action {
+.full-width {
+  width: 100%;
+}
+
+.full-width:nth-last-child(0) {
+  margin-bottom: 10px;
+}
+
+.do-action {
   cursor: pointer;
 }
 

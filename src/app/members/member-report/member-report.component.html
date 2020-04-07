@@ -1,0 +1,114 @@
+<div class="member-container mat-elevation-z8">
+    <div class="member-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+        <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home">
+            <mat-icon>home</mat-icon>
+        </a>
+        <span class="mat-title">Descarrega un fitxer d'associats predefinit</span>
+    </div>
+    <mat-card>
+        <mat-card-content>
+
+            <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+                <div fxFlex="0 1 auto">
+                    <mat-card class="member-card">
+                        <mat-card-header class="member-card">
+                            <div mat-card-avatar class="all-header-image"></div>
+                            <mat-card-title>Tots els associats</mat-card-title>
+                            <mat-card-subtitle>Cognoms, Nom, Nick, eMail, IBAN</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-actions class="member-card-actions">
+                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer" type="button"
+                                (click)="onClickGetAll($event)" class="small-icon-button">
+                                <mat-icon>save_alt</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <div fxFlex="0 1 auto">
+                    <mat-card class="member-card">
+                        <mat-card-header class="member-card">
+                            <div mat-card-avatar class="inconsistentemail-header-image"></div>
+                            <mat-card-title>Associats amb un email diferent al fòrum</mat-card-title>
+                            <mat-card-subtitle>Nick, eMail, eMail al fòrum</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-actions class="member-card-actions">
+                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer" type="button"
+                                (click)="onClickGetInconsistentEmail($event)" class="small-icon-button">
+                                <mat-icon>save_alt</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <div fxFlex="0 1 auto">
+                    <mat-card class="member-card">
+                        <mat-card-header class="member-card">
+                            <div mat-card-avatar class="inconsistentnick-header-image"></div>
+                            <mat-card-title>Associats amb un nick diferent al fòrum</mat-card-title>
+                            <mat-card-subtitle>eMail, Nick, Nick al fòrum</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-actions class="member-card-actions">
+                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer" type="button"
+                                (click)="onClickGetInconsistentNick($event)" class="small-icon-button">
+                                <mat-icon>save_alt</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <div fxFlex="0 1 auto">
+                    <mat-card class="member-card">
+                        <mat-card-header class="member-card">
+                            <div mat-card-avatar class="notingroup-header-image"></div>
+                            <mat-card-title>Associats que al fòrum no apareixen com a tal</mat-card-title>
+                            <mat-card-subtitle>Cognoms, Nom, Nick, eMail</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-actions class="member-card-actions">
+                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer" type="button"
+                                (click)="onClickGetNotInForumGroup($event)" class="small-icon-button">
+                                <mat-icon>save_alt</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <div fxFlex="0 1 auto">
+                    <mat-card class="member-card">
+                        <mat-card-header class="member-card">
+                            <div mat-card-avatar class="groupnotmember-header-image"></div>
+                            <mat-card-title>Usuaris del fòrum que apareixen com a associats i no ho són</mat-card-title>
+                            <mat-card-subtitle>Nick fòrum, Codi d'usuari, eMail, Data de registre</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-actions class="member-card-actions">
+                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer" type="button"
+                                (click)="onClickGetInForumGroupButNotMember($event)" class="small-icon-button">
+                                <mat-icon>save_alt</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+            <br /><br />
+            <mat-divider></mat-divider>
+
+            <span>Un cop el fitxer estigui disponible, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas que l'enllaç 
+                no s'activi automàticament pots comprovar-ne la disponibilitat fent click a la icona </span>
+            <mat-icon inline="true">sync</mat-icon>
+            <mat-list>
+                <mat-list-item *ngFor="let link of requestedFiles">
+                    <mat-icon mat-list-icon class="do-action" (click)="onClickRefreshFile(link)">sync</mat-icon>
+                    <div mat-line class="fill-light">{{link}}</div>
+                </mat-list-item>
+            </mat-list>
+            <mat-list>
+                <mat-list-item *ngFor="let link of downloadableFiles">
+                    <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega">save
+                    </mat-icon>
+                    <div mat-line>{{link}}</div>
+                    <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteDownload(link)" matTooltip="Elimina">
+                        delete</mat-icon>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+</div>

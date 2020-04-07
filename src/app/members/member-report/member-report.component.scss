@@ -1,0 +1,101 @@
+.member-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .home {
+    margin-right: 10px;
+  }
+  
+  /* Structure */
+  .member-container {
+    position: relative;
+    padding: 5px;
+  }
+  
+  .member-card {
+    height: 100%;
+  }
+
+  .member-card-actions {
+    text-align: center;
+  }
+
+  .small-icon-button {
+    width: 24px !important;
+    height: 24px !important;
+    line-height: 24px !important;
+ 
+    .mat-icon {
+        padding-top: 0px;
+        width: 16px !important;
+        height: 16px !important;
+        line-height: 16px !important;
+    }
+    
+    .material-icons {
+        font-size: 16px !important;
+    }
+ }
+
+ ::ng-deep .mat-button-wrapper {
+     padding-top: 0px !important;
+ }
+
+  .mat-flat-button {
+    margin: 5px;
+  }
+  
+  .button-row {
+    margin: 10px 0;
+  }
+  
+  .fill-light {
+    background-color: rgba(0,0,0,.04);
+    color: grey;
+  }
+    
+  .full-width {
+    width: 100%;
+  }
+  
+  .full-width:nth-last-child(0) {
+    margin-bottom: 10px;
+  }
+
+  .do-action {
+    cursor: pointer;
+  }
+
+  .all-header-image {
+    background-image: url('../../../assets/images/people.png');
+    background-size: cover;
+  }
+
+  .inconsistentemail-header-image {
+    background-image: url('../../../assets/images/email.png');
+    background-size: cover;
+  }
+  
+  .inconsistentnick-header-image {
+    background-image: url('../../../assets/images/nick.png');
+    background-size: cover;
+  }
+
+  .notingroup-header-image {
+    background-image: url('../../../assets/images/exclusion.png');
+    background-size: cover;
+  }
+
+  .groupnotmember-header-image {
+    background-image: url('../../../assets/images/thief.png');
+    background-size: cover;
+  }
