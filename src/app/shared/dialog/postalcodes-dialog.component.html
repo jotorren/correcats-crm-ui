@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Codis postals</h2>
+<h2 mat-dialog-title>Poblacions / Codis postals</h2>
 
 <div mat-dialog-content>
     <div [formGroup]="searchForm">
@@ -10,39 +10,44 @@
         </mat-form-field>
     </div>
 
-    <div fxLayout="row wrap" fxLayout.xs="column">
-        <mat-card class="pc-column"> 
-            <mat-card-header>
-                <mat-card-subtitle class="xs-nodisplay">Població</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-list>
-                    <mat-list-item *ngFor="let city of potentialCities | async">
-                        <p matLine><span class="do-action pc-data" (click)="searchPostalCodes(city)">{{city.nom}}</span></p>
-                        <button mat-mini-fab color="primary" (click)="searchPostalCodes(city)">
-                            <mat-icon> mail</mat-icon>
-                        </button>
-                    </mat-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
-
-        <mat-card class="pc-column">
-            <mat-card-content>
+    <div fxLayout="row wrap" fxLayout.xs="column" class="full-width">
+        <div fxFlex="0 1 auto" class="pc-column">
+            <mat-card>
                 <mat-card-header>
-                    <mat-card-subtitle class="xs-nodisplay">Codis Postals</mat-card-subtitle>
+                    <mat-card-subtitle class="xs-nodisplay">Població</mat-card-subtitle>
                 </mat-card-header>
-                <mat-selection-list [(ngModel)]="postalCode" [multiple]="false">
-                    <div fxLayout="row wrap">
-                        <ng-container *ngFor="let pc of postalCodesList">
-                            <mat-list-option [value]="pc.valor" fxFlex="0 1 33.3%" fxFlex.gt-md="0 1 20%">
-                                {{pc.valor}}
-                            </mat-list-option>
-                        </ng-container>
-                    </div>
-                </mat-selection-list>
-            </mat-card-content>
-        </mat-card>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item *ngFor="let city of potentialCities | async">
+                            <p matLine><span class="do-action pc-data"
+                                    (click)="searchPostalCodes(city)">{{city.nom}}</span></p>
+                            <button mat-mini-fab color="primary" (click)="searchPostalCodes(city)">
+                                <mat-icon> mail</mat-icon>
+                            </button>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <div fxFlex="0 1 auto" class="pc-column">
+            <mat-card>
+                <mat-card-content>
+                    <mat-card-header>
+                        <mat-card-subtitle class="xs-nodisplay">Codis Postals</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-selection-list [(ngModel)]="postalCode" [multiple]="false">
+                        <div fxLayout="row wrap">
+                            <ng-container *ngFor="let pc of postalCodesList">
+                                <mat-list-option [value]="pc.valor" fxFlex="0 1 33.3%" fxFlex.gt-md="0 1 20%">
+                                    {{pc.valor}}
+                                </mat-list-option>
+                            </ng-container>
+                        </div>
+                    </mat-selection-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
 </div>
 
@@ -50,5 +55,3 @@
     <button mat-raised-button color="accent" (click)="onDismiss()">Cancel.la</button>
     <button mat-raised-button color="primary" (click)="onConfirm()">Ok</button>
 </div>
-
-

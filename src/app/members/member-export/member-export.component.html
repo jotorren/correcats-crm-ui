@@ -1,34 +1,39 @@
 <div class="member-container mat-elevation-z8">
-    <div class="member-loading-shade" *ngIf="isLoadingResults">
-      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-    </div>
-    <div class="button-row">
-      <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home"><mat-icon>home</mat-icon></a>
-      <span class="mat-title">Genera un fitxer d'associats personalitzat</span>
-    </div>
-    <mat-card class="member-card">
-      <mat-card-content>
-        <span>L'ordre en el que les dades apareixeran al fitxer serà: </span><span class="fill-bold">{{orderedFields}} </span>
-        <mat-selection-list [(ngModel)]="selectedFields" name="exporter" (selectionChange)="onSelectOption($event.option)">
-          <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill">Inclou totes les disponibles</mat-list-option>
-          <br/>
-          <div fxLayout="row wrap" fxLayout.xs="column">
-            <ng-container *ngFor="let item of availableFields">
-              <mat-list-option [value]="item" fxFlex="0 1 33.3%">
-                <span>{{item}}</span>
-              </mat-list-option>
-            </ng-container>
-          </div>
-        </mat-selection-list>
-      
-      <br/><br/>
+  <div class="member-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home">
+      <mat-icon>home</mat-icon>
+    </a>
+    <span class="mat-title">Genera un fitxer d'associats personalitzat</span>
+  </div>
+  <mat-card class="member-card">
+    <mat-card-content>
+      <span>L'ordre en el que les dades apareixeran al fitxer serà: </span><span class="fill-bold">{{orderedFields}}
+      </span>
+      <mat-selection-list [(ngModel)]="selectedFields" name="exporter"
+        (selectionChange)="onSelectOption($event.option)">
+        <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill">Inclou totes les
+          disponibles</mat-list-option>
+        <br />
+        <div fxLayout="row wrap" fxLayout.xs="column">
+          <ng-container *ngFor="let item of availableFields">
+            <mat-list-option [value]="item" fxFlex="0 1 33.3%">
+              <span>{{item}}</span>
+            </mat-list-option>
+          </ng-container>
+        </div>
+      </mat-selection-list>
+
+      <br /><br />
       <mat-divider></mat-divider>
 
       <div class="full-width">
         <span>Que compleixin les següents condicions:</span>
       </div>
-      <div fxLayout="wrap">
-        <div fxFlex="3 1 auto" class="filter-row-field">
+      <div fxLayout="wrap" fxLayout.xs="column">
+        <div fxFlex="3 1 auto" class="middle">
           <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)">
             <mat-option *ngFor="let attr of filterFields" [value]="attr">
               {{attr}}
@@ -36,7 +41,7 @@
           </mat-select>
         </div>
 
-        <div fxFlex="3 1 auto" class="filter-row-field">
+        <div fxFlex="3 1 auto" class="middle">
           <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)">
             <mat-option *ngFor="let op of filterOps" [value]="op.code">
               {{op.desc}}
@@ -44,7 +49,7 @@
           </mat-select>
         </div>
 
-        <div fxFlex="4 1 auto" class="filter-row-field">
+        <div fxFlex="4 1 auto" class="middle">
 
           <div *ngIf="!nullFilterValue && filterBy==='sexe'" align="right">
             <mat-radio-group [(ngModel)]="filterValue">
@@ -56,11 +61,11 @@
 
           <div *ngIf="!nullFilterValue && (filterBy==='dataAlta' || filterBy==='dataBaixa')" align="right">
             <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" 
-              [(ngModel)]="filterValue" class="input-date-text">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>           
+              <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" [(ngModel)]="filterValue"
+                class="input-date-text">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
 
           <div *ngIf="!nullFilterValue && filterBy==='activat'" align="right">
@@ -71,26 +76,31 @@
           </div>
         </div>
 
-        <div fxFlex="1 1 auto" align="right" class="do-action filter-row-field">
-          <mat-icon (click)="onClickFilterAdd($event)">add</mat-icon>
+        <div fxFlex="1 1 auto" align="right" class="middle">
+          <button mat-button mat-mini-fab color="accent" matTooltip="Afegeix filtre" type="button"
+            (click)="onClickFilterAdd($event)">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
 
       </div>
-      <br/>
 
       <mat-list>
         <mat-list-item *ngFor="let condition of criteria">
-          <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició">clear</mat-icon>
-          <div mat-line>"{{condition.key}}" {{condition.operationMap}} 
+          <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteCriteria(condition)"
+            matTooltip="Elimina condició">clear</mat-icon>
+          <div>"{{condition.key}}" {{condition.operationMap}}
             <span *ngIf="condition.operation !== 'NULL'">"{{condition.valueMap}}"</span></div>
         </mat-list-item>
       </mat-list>
 
-      <br/><br/>
+      <br />
       <mat-divider></mat-divider>
 
-      <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas que no s'activi automàticament 
-        pots comprovar-ne la disponibilitat fent click a la icona </span><mat-icon inline="true">sync</mat-icon>
+      <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas que no s'activi
+        automàticament
+        pots comprovar-ne la disponibilitat fent click a la icona </span>
+      <mat-icon inline="true">sync</mat-icon>
       <mat-list>
         <mat-list-item *ngFor="let link of requestedFiles">
           <mat-icon mat-list-icon class="do-action" (click)="onClickRefreshFile(link)">sync</mat-icon>
@@ -99,15 +109,19 @@
       </mat-list>
       <mat-list>
         <mat-list-item *ngFor="let link of downloadableFiles">
-          <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega">save</mat-icon>
+          <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega">save
+          </mat-icon>
           <div mat-line>{{link}}</div>
-          <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteDownload(link)" matTooltip="Elimina">delete</mat-icon>
+          <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteDownload(link)" matTooltip="Elimina">delete
+          </mat-icon>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button mat-raised-button color="primary" matTooltip="Exporta" 
-        type="button" (click)="onClickGenerate($event)"><mat-icon>cloud_download</mat-icon></button>
+      <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"
+        (click)="onClickGenerate($event)">
+        <mat-icon>cloud_download</mat-icon>
+      </button>
     </mat-card-actions>
-    </mat-card>
+  </mat-card>
 </div>

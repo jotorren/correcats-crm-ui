@@ -13,7 +13,6 @@
 
       <mat-step [stepControl]="memberForm">
         <ng-template matStepLabel>Inici</ng-template>
-        <strong>Dades principals</strong>
         <mat-card (panleft)="onPanLeft($event)">
 
           <mat-radio-group formControlName="sexe">
@@ -78,7 +77,6 @@
 
       <mat-step [stepControl]="memberForm">
         <ng-template matStepLabel>Quota</ng-template>
-        <strong>Dades cobrament</strong>
         <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
           <mat-form-field class="full-width">
             <mat-label>NIF</mat-label>
@@ -132,7 +130,6 @@
 
       <mat-step [stepControl]="memberForm" [optional]="secondStepisOptional">
         <ng-template matStepLabel>Més</ng-template>
-        <strong>Dades contacte</strong>
         <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
           <mat-form-field class="full-width">
             <mat-label>Telèfon</mat-label>
@@ -178,7 +175,6 @@
 
       <mat-step [stepControl]="memberForm">
         <ng-template matStepLabel>Fi</ng-template>
-        <strong>Confirmació</strong>
         <mat-card (panright)="onPanRight($event)">
           <mat-form-field class="full-width">
             <mat-label>Observacions</mat-label>
