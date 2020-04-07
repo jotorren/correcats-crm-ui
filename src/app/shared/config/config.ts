@@ -114,7 +114,7 @@ export let Config = {
         members: {
             list: {
                 debounceTime: 500,
-                pageSize: 4
+                pageSize: 7
             }
         }
     }
