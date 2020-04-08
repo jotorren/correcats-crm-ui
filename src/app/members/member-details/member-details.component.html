@@ -56,63 +56,63 @@
     </ng-template>
 
     <ng-template #bigScreen>
-    <mat-card-content>
-      <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
-        <div fxFlex="0 1 33%">
-          <mat-card class="mat-elevation-z4 full-height margin-around">
-            <mat-card-header>
-              <div mat-card-avatar class="basic-header-image"></div>
-              <span class="mat-tab-label">Bàsica</span>
-            </mat-card-header>            
-            <mat-card-content>
-              <ng-container *ngTemplateOutlet="basicdata"></ng-container>
-            </mat-card-content>
-          </mat-card>
-        </div>
+      <mat-card-content>
+        <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+          <div fxFlex="0 1 33%">
+            <mat-card class="mat-elevation-z4 full-height margin-around">
+              <mat-card-header>
+                <div mat-card-avatar class="basic-header-image"></div>
+                <span class="mat-tab-label">Bàsica</span>
+              </mat-card-header>
+              <mat-card-content>
+                <ng-container *ngTemplateOutlet="basicdata"></ng-container>
+              </mat-card-content>
+            </mat-card>
+          </div>
 
-        <div fxFlex="0 1 33%">
-          <mat-card class="mat-elevation-z4 full-height margin-around">
-            <mat-card-header>
-              <div mat-card-avatar class="contact-header-image"></div>
-              <span class="mat-tab-label">Contacte</span>
-            </mat-card-header>              
-            <mat-card-content>
-              <ng-container *ngTemplateOutlet="contactdata"></ng-container>
-            </mat-card-content>
-          </mat-card>
-        </div>
+          <div fxFlex="0 1 33%">
+            <mat-card class="mat-elevation-z4 full-height margin-around">
+              <mat-card-header>
+                <div mat-card-avatar class="contact-header-image"></div>
+                <span class="mat-tab-label">Contacte</span>
+              </mat-card-header>
+              <mat-card-content>
+                <ng-container *ngTemplateOutlet="contactdata"></ng-container>
+              </mat-card-content>
+            </mat-card>
+          </div>
 
-        <div fxFlex="0 1 33%">
-          <mat-card class="mat-elevation-z4 full-height margin-around">
-            <mat-card-header>
-              <div mat-card-avatar class="other-header-image"></div>
-              <span class="mat-tab-label">Altra</span>
-            </mat-card-header>              
-            <mat-card-content>
-              <ng-container *ngTemplateOutlet="otherdata"></ng-container>
-            </mat-card-content>
-          </mat-card>
+          <div fxFlex="0 1 33%">
+            <mat-card class="mat-elevation-z4 full-height margin-around">
+              <mat-card-header>
+                <div mat-card-avatar class="other-header-image"></div>
+                <span class="mat-tab-label">Altra</span>
+              </mat-card-header>
+              <mat-card-content>
+                <ng-container *ngTemplateOutlet="otherdata"></ng-container>
+              </mat-card-content>
+            </mat-card>
+          </div>
         </div>
-      </div>
-    </mat-card-content>
+      </mat-card-content>
     </ng-template>
 
     <ng-template [ngIf]="smallScreen" [ngIfElse]="bigScreen">
-    <mat-card-content (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
-      <mat-tab-group #usertabs>
-        <mat-tab label="Bàsica">
-          <ng-container *ngTemplateOutlet="basicdata"></ng-container>
-        </mat-tab>
+      <mat-card-content (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+        <mat-tab-group #usertabs>
+          <mat-tab label="Bàsica">
+            <ng-container *ngTemplateOutlet="basicdata"></ng-container>
+          </mat-tab>
 
-        <mat-tab label="Contacte">
-          <ng-container *ngTemplateOutlet="contactdata"></ng-container>
-        </mat-tab>
+          <mat-tab label="Contacte">
+            <ng-container *ngTemplateOutlet="contactdata"></ng-container>
+          </mat-tab>
 
-        <mat-tab label="Altra">
-          <ng-container *ngTemplateOutlet="otherdata"></ng-container>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card-content>
+          <mat-tab label="Altra">
+            <ng-container *ngTemplateOutlet="otherdata"></ng-container>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
     </ng-template>
 
     <mat-card-actions align="end">

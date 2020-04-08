@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatListOption } from '@angular/material/list';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
 import { Config } from '../../shared';
 import { MemberService } from '../member.service';
-import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-member-export',
@@ -14,6 +13,8 @@ import { isNgTemplate } from '@angular/compiler';
   styleUrls: ['./member-export.component.scss']
 })
 export class MemberExportComponent implements OnInit {
+
+  smallScreen: boolean;
 
   isLoadingResults = false;
   durationInSeconds = 2;
@@ -65,27 +66,35 @@ export class MemberExportComponent implements OnInit {
   constructor(
     private api: MemberService,
     private alerter: AlertService,
+    private breakpointObserver: BreakpointObserver
   ) { }
 
   ngOnInit(): void {
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small
+    ]).subscribe(result => {
+      this.smallScreen = result.matches;
+    });
+
     // Default selection
     this.selectedFields = ['nom', 'cognoms', 'nick', 'iban'];
     this.orderedFields = ['nom', 'cognoms', 'nick', 'iban'];
 
     this.sub = this.api.live()
-    .subscribe(
-      data => {
-        this.requestedFiles = this.requestedFiles.filter(item => item !== data);
-        this.downloadableFiles.unshift(data);
-      },
-      err => {
-        console.log(err);
-        this.sub.unsubscribe();
-      },
-      () => {
-        this.sub.unsubscribe();
-      }
-    );
+      .subscribe(
+        data => {
+          this.requestedFiles = this.requestedFiles.filter(item => item !== data);
+          this.downloadableFiles.unshift(data);
+        },
+        err => {
+          console.log(err);
+          this.sub.unsubscribe();
+        },
+        () => {
+          this.sub.unsubscribe();
+        }
+      );
   }
 
   get filter() {
@@ -160,8 +169,8 @@ export class MemberExportComponent implements OnInit {
 
       if (this.criteria.filter(crit => {
         return (crit.key === this.filterBy &&
-                crit.operation === this.filterOp &&
-                crit.value === this.filterValue);
+          crit.operation === this.filterOp &&
+          crit.value === this.filterValue);
       }).length > 0) {
         return;
       }
@@ -194,7 +203,7 @@ export class MemberExportComponent implements OnInit {
       this.criteria = this.criteria.slice();
 
       this.filterBy = null,
-      this.filterOp = null;
+        this.filterOp = null;
       this.filterValue = null;
       this.nullFilterValue = false;
     }
@@ -203,8 +212,8 @@ export class MemberExportComponent implements OnInit {
   onClickDeleteCriteria(condition) {
     this.criteria = this.criteria.filter(crit => {
       return (crit.key !== condition.key ||
-              crit.operation !== condition.operation ||
-              crit.value !== condition.value);
+        crit.operation !== condition.operation ||
+        crit.value !== condition.value);
     });
   }
 
@@ -235,13 +244,13 @@ export class MemberExportComponent implements OnInit {
     const search = [];
     this.criteria.forEach(crit => {
       if (crit.key === 'activat') {
-         // string to boolean conversion
+        // string to boolean conversion
         search.push({
           key: crit.key,
           operation: crit.operation,
           value: (crit.value === 'true'),
         });
-      } else if (crit.key === 'dataAlta' || crit.key  === 'dataBaixa') {
+      } else if (crit.key === 'dataAlta' || crit.key === 'dataBaixa') {
         // date to string conversion
         if (crit.operation === Config.api.members.query.operators.isnull.code) {
           search.push({
@@ -268,14 +277,14 @@ export class MemberExportComponent implements OnInit {
     this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.search, this.orderedFields, search, null, sortBy, null)
       .subscribe((resok: any) => {
-          if (resok.result) {
-            this.requestedFiles.push(resok.result);
-          }
-          this.isLoadingResults = false;
-        }, (resko: any) => {
-          handle(resko, this.durationInSeconds, this.alerter);
-          this.isLoadingResults = false;
-        });
+        if (resok.result) {
+          this.requestedFiles.push(resok.result);
+        }
+        this.isLoadingResults = false;
+      }, (resko: any) => {
+        handle(resko, this.durationInSeconds, this.alerter);
+        this.isLoadingResults = false;
+      });
   }
 
   onClickRefreshFile(file) {

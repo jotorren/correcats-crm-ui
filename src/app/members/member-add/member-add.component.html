@@ -8,6 +8,7 @@
     </a>
     <span class="mat-title">Alta d'un nou associat</span>
   </div>
+  <mat-card class="member-add-container">
   <form [formGroup]="memberForm" (ngSubmit)="onFormSubmit()">
 
     <ng-template #step1>
@@ -249,4 +250,5 @@
       </mat-vertical-stepper>
     </ng-template>
   </form>
+</mat-card>
 </div>

@@ -1,7 +1,7 @@
 /* Structure */
 .member-container {
   position: relative;
-  height: 80%;
+  min-height: 80%;
   padding: 5px;
 }
 
@@ -24,7 +24,7 @@
 
 .member-details-container {
   margin-top: 10px;
-  height: 90%;
+  min-height: 90%;
 }
 
 .mat-flat-button {
@@ -43,10 +43,6 @@
 // Align & Margin
 .justify {
   justify-content: center
-}
-
-.member-header-text {
-  margin-left: -32px !important;
 }
 
 .margin-around {
