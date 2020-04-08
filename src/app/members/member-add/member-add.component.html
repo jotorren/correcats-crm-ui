@@ -9,11 +9,11 @@
     <span class="mat-title">Alta d'un nou associat</span>
   </div>
   <form [formGroup]="memberForm" (ngSubmit)="onFormSubmit()">
-    <mat-horizontal-stepper [linear]="isLinear" labelPosition="bottom" #stepper>
+    <mat-horizontal-stepper [linear]="isLinear" labelPosition="right" #stepper>
 
       <mat-step [stepControl]="memberForm">
         <ng-template matStepLabel>Inici</ng-template>
-        <mat-card (panleft)="onPanLeft($event)">
+        <mat-card class="mat-elevation-z4" (panleft)="onPanLeft($event)">
 
           <mat-radio-group formControlName="sexe">
             <mat-radio-button value="D"><span class="wrap-mat-radio-label">Dona</span></mat-radio-button>
@@ -77,7 +77,7 @@
 
       <mat-step [stepControl]="memberForm">
         <ng-template matStepLabel>Quota</ng-template>
-        <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+        <mat-card class="mat-elevation-z4" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
           <mat-form-field class="full-width">
             <mat-label>NIF</mat-label>
             <input #nif matInput placeholder="00000000T" formControlName="nif" pattern="[0-9]{8}[a-zA-Z]{1}"
@@ -123,14 +123,14 @@
           </mat-form-field>
         </mat-card>
         <div class="button-row">
-          <button mat-button mat-raised-button color="accent" matStepperPrevious type="button" class="do-action">Enrera</button>
+          <button mat-button mat-raised-button color="accent" matStepperPrevious type="button" class="do-action spaced-button">Enrera</button>
           <button mat-button mat-raised-button color="primary" matStepperNext type="button" class="do-action">Següent</button>
         </div>
       </mat-step>
 
-      <mat-step [stepControl]="memberForm" [optional]="secondStepisOptional">
+      <mat-step [stepControl]="memberForm">
         <ng-template matStepLabel>Més</ng-template>
-        <mat-card (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+        <mat-card class="mat-elevation-z4" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
           <mat-form-field class="full-width">
             <mat-label>Telèfon</mat-label>
             <input #telefon matInput formControlName="telefon" placeholder="Ex. 655123456" maxlength="32">
@@ -168,26 +168,27 @@
           </mat-form-field>
         </mat-card>
         <div class="button-row">
-          <button mat-button mat-raised-button color="accent" matStepperPrevious type="button" class="do-action">Enrera</button>
+          <button mat-button mat-raised-button color="accent" matStepperPrevious type="button" class="do-action spaced-button">Enrera</button>
           <button mat-button mat-raised-button color="primary" matStepperNext type="button" class="do-action">Següent</button>
         </div>
       </mat-step>
 
       <mat-step [stepControl]="memberForm">
         <ng-template matStepLabel>Fi</ng-template>
-        <mat-card (panright)="onPanRight($event)">
+        <mat-card class="mat-elevation-z4" (panright)="onPanRight($event)">
           <mat-form-field class="full-width">
             <mat-label>Observacions</mat-label>
-            <textarea #observacions matInput rows="15" formControlName="observacions" placeholder="Observacions"
+            <textarea #observacions matInput rows="12" formControlName="observacions" placeholder="Observacions"
               maxlength="1024"></textarea>
             <mat-hint align="end">{{observacions.value.length}} / 1024</mat-hint>
           </mat-form-field>
         </mat-card>
         <div class="button-row">
-          <button mat-button mat-raised-button color="accent" matStepperPrevious type="button">Enrera</button>
+          <button mat-button mat-raised-button color="accent" matStepperPrevious type="button" class="spaced-button">Enrera</button>
           <button mat-button mat-raised-button color="primary" type="button"
             matTooltip="Verifica al fòrum el nick i l'email" (click)="onVerifyData()"
-            [disabled]="!memberForm.get('nick').valid || !memberForm.get('email').valid">
+            [disabled]="!memberForm.get('nick').valid || !memberForm.get('email').valid"
+            class="spaced-button">
             <mat-icon>verified_user</mat-icon>
           </button>
           <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit"

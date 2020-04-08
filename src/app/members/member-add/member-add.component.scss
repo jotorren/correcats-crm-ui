@@ -1,3 +1,10 @@
+/* Structure */
+.member-container {
+  position: relative;
+  min-height: 80%;
+  padding: 5px;
+}
+
 .member-loading-shade {
   position: absolute;
   top: 0;
@@ -15,30 +22,63 @@
   margin-right: 10px;
 }
 
-/* Structure */
-.member-container {
-  position: relative;
-  padding: 5px;
-}
-
 .mat-flat-button {
   margin: 5px;
 }
 
+// Width & Height
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+// align
+.justify {
+  justify-content: center
+}
+
+.middle {
+  line-height: 5em;
+}
+
+// Fill
+.fill {
+  background-color: rgba(0,0,0,.04);
+}
+
+.fill-light {
+  background-color: rgba(0,0,0,.04);
+  color: grey;
+}
+
+.fill-bold {
+  background-color: rgba(0,0,0,.04);
+  font-weight: bold;
+}
+
+.fill-title {
+  background-color: #3f51b5;
+  color: white;
+}
+
+// Action
+.do-action {
+  cursor: pointer;
+}
+
+//
+
+
 .button-row {
-  margin: 10px 0;
+  margin-top: 10px;
   float: right;
 }
 
-.button-row button,
-.button-row a {
+.spaced-button {
   margin-right: 8px;
-}
-
-.member-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
 }
 
 .wrap-mat-radio-label {
@@ -48,30 +88,5 @@
 }
 
 .mat-form-field {
-  margin-top: 16px;
-}
-
-.mat-stepper-horizontal {
-  margin-top: 8px;
-}
-
-// ::ng-deep .mat-snack-bar-container{
-//  color: #155724 !important;
-//  background-color: #ffffff !important;
-//  border-color: red !important;
-// }
-// ::ng-deep .mat-simple-snackbar-action {
-//  color: red;
-//}
-
-.full-width {
-  width: 100%;
-}
-
-.full-width:nth-last-child(0) {
-  margin-bottom: 10px;
-}
-
-.do-action {
-  cursor: pointer;
+  margin-top: 5px;
 }
