@@ -40,13 +40,18 @@
   height: 100%;
 }
 
-// align
+// Align & Margin
 .justify {
   justify-content: center
 }
 
 .member-header-text {
   margin-left: -32px !important;
+}
+
+.margin-around {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 // Images
@@ -58,6 +63,20 @@
 
 .member-female {
   background-image: url('../../../assets/images/female.png');
+  background-size: cover;
+}
+
+.basic-header-image {
+  background-image: url('../../../assets/images/personaldata3.png');
+  background-size: cover;
+}
+.contact-header-image {
+  background-image: url('../../../assets/images/contact2.png');
+  background-size: cover;
+}
+
+.other-header-image {
+  background-image: url('../../../assets/images/info.png');
   background-size: cover;
 }
 

@@ -118,25 +118,31 @@ export class MemberExportComponent implements OnInit {
   }
 
   onFilterBySelected(event) {
-    this.filterOps = [];
-    Config.api.members.query.fields[event.value].forEach(element => {
-      this.filterOps.push(Config.api.members.query.operators[element]);
-    });
+    if (!event.value) {
+      this.filterOps = [];
+      this.filterOp = null;
+      this.filterValue = null;
+    } else {
+      this.filterOps = [];
+      Config.api.members.query.fields[event.value].forEach(element => {
+        this.filterOps.push(Config.api.members.query.operators[element]);
+      });
 
-    // Set default selection
-    if (event.value === 'activat') {
-      this.filterOp = Config.api.members.query.operators.equals.code;
-      this.filterValue = 'true';
-    } else if (event.value === 'sexe') {
-      this.filterOp = Config.api.members.query.operators.equals.code;
-      this.filterValue = 'D';
-    } else if (event.value === 'dataAlta') {
-      this.filterOp = Config.api.members.query.operators.gte.code;
-      const currentYear = new Date().getFullYear();
-      this.filterValue = new Date('01/01/' + currentYear);
-    } else if (event.value === 'dataBaixa') {
-      this.filterOp = Config.api.members.query.operators.lte.code;
-      this.filterValue = new Date();
+      // Set default selection
+      if (event.value === 'activat') {
+        this.filterOp = Config.api.members.query.operators.equals.code;
+        this.filterValue = 'true';
+      } else if (event.value === 'sexe') {
+        this.filterOp = Config.api.members.query.operators.equals.code;
+        this.filterValue = 'D';
+      } else if (event.value === 'dataAlta') {
+        this.filterOp = Config.api.members.query.operators.gte.code;
+        const currentYear = new Date().getFullYear();
+        this.filterValue = new Date('01/01/' + currentYear);
+      } else if (event.value === 'dataBaixa') {
+        this.filterOp = Config.api.members.query.operators.lte.code;
+        this.filterValue = new Date();
+      }
     }
   }
 

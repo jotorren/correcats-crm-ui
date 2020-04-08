@@ -12,7 +12,7 @@
     <mat-card-content>
       <mat-card class="mat-elevation-z4">
         <mat-card-header>
-          <span class="mat-tab-label member-header-text full-width fill-title">Dades a incloure</span>
+          <span class="mat-body-2 member-header-text full-width fill-title">Dades a incloure</span>
         </mat-card-header>
         <mat-card-content>
           <mat-expansion-panel class="select-values" [expanded]="false">
@@ -20,6 +20,9 @@
               <mat-panel-title>
                 <span>Tria</span>
               </mat-panel-title>
+              <mat-panel-description>
+                <span>L'ordre de sel.lecció determina l'ordre en el que les dades apareixeran dins el fitxer</span>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-selection-list [(ngModel)]="selectedFields" name="exporter"
               (selectionChange)="onSelectOption($event.option)">
@@ -41,19 +44,25 @@
 
       <mat-card class="mat-elevation-z4 criteria-card">
         <mat-card-header>
-          <span class="mat-tab-label member-header-text full-width fill-title">Criteris de cerca</span>
-        </mat-card-header>        
+          <span class="mat-body-2 member-header-text full-width fill-title">Criteris de cerca</span>
+        </mat-card-header>
         <mat-card-content>
           <mat-expansion-panel class="select-values" [expanded]="false">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <span>Defineix</span>
               </mat-panel-title>
+              <mat-panel-description>
+                <span>En el cas de no definir cap criteri, només es consultaran els associats marcats com
+                  "activats"</span>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div fxLayout="wrap" fxLayout.xs="column">
               <div fxFlex="0 1 30%" class="middle">
                 <mat-form-field>
-                  <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)">
+                  <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)"
+                    placeholder="Camp">
+                    <mat-option [value]=""></mat-option>
                     <mat-option *ngFor="let attr of filterFields" [value]="attr">
                       {{attr}}
                     </mat-option>
@@ -62,7 +71,8 @@
               </div>
               <div fxFlex="0 1 30%" class="middle">
                 <mat-form-field>
-                  <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)">
+                  <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)"
+                    placeholder="Tipus de condició">
                     <mat-option *ngFor="let op of filterOps" [value]="op.code">
                       {{op.desc}}
                     </mat-option>
@@ -100,7 +110,7 @@
               </div>
             </div>
           </mat-expansion-panel>
-          <div mat-line>Filtres aplicats:</div>          
+          <div mat-line>Filtres aplicats:</div>
           <mat-list>
             <mat-list-item *ngFor="let condition of criteria">
               <mat-icon mat-list-icon (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició"

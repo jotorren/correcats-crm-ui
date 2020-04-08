@@ -23,6 +23,7 @@
 }
 
 .member-reports-container {
+  margin-top: 10px;
   min-height: 90%;
 }
 
@@ -39,9 +40,14 @@
   height: 100%;
 }
 
-// Align
+// Align & margins
 .justify {
   justify-content: center
+}
+
+.margin-around {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 // Fill
