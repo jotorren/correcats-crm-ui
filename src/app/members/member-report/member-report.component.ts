@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
@@ -22,6 +23,7 @@ export class MemberReportComponent implements OnInit {
   constructor(
     private api: MemberService,
     private alerter: AlertService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +32,7 @@ export class MemberReportComponent implements OnInit {
         data => {
           this.requestedFiles = this.requestedFiles.filter(item => item !== data);
           this.downloadableFiles.unshift(data);
+          this.snackBar.open('Fitxer ' + data + ' llest', 'OK', { duration: 4000,  verticalPosition: 'top' });
         },
         err => {
           console.log(err);
@@ -130,6 +133,7 @@ export class MemberReportComponent implements OnInit {
           this.downloadableFiles.unshift(file);
         }
         this.isLoadingResults = false;
+        this.snackBar.open('Fitxer ' + file + ' llest', 'OK', { duration: 2000 });
       }, (resko: any) => {
         handle(resko, this.durationInSeconds, this.alerter);
         this.isLoadingResults = false;

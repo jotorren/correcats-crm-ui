@@ -80,6 +80,14 @@
   float: right;
 }
 
+::ng-deep .mat-horizontal-stepper-header-container {
+  height: 24px !important;
+}
+
+.form-card {
+  margin-top: 25px;
+}
+
 .spaced-button {
   margin-right: 8px;
 }

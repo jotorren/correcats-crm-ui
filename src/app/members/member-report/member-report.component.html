@@ -90,14 +90,11 @@
                 </div>
             </div>
             <br /><br />
-            <span>Un cop el fitxer estigui disponible, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas
-                que l'enllaç
-                no s'activi automàticament pots comprovar-ne la disponibilitat fent click a la icona </span>
-            <mat-icon inline="true">sync</mat-icon>
+            <span>Un cop el fitxer estigui disponible, aquí sota apareixerà l'enllaç per poder-lo descarregar.</span>
             <mat-list>
                 <mat-list-item *ngFor="let link of requestedFiles">
                     <mat-icon mat-list-icon class="do-action" (click)="onClickRefreshFile(link)">sync</mat-icon>
-                    <div mat-line class="fill-light">{{link}}</div>
+                    <div class="filename fill-light">{{link}}</div>
                 </mat-list-item>
             </mat-list>
             <mat-list>
@@ -105,7 +102,7 @@
                     <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega">
                         save
                     </mat-icon>
-                    <div mat-line>{{link}}</div>
+                    <div class="filename">{{link}}</div>
                     <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteDownload(link)"
                         matTooltip="Elimina">
                         delete</mat-icon>

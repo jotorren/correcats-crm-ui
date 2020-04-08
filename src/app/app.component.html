@@ -1,11 +1,25 @@
-<div class="header">
-  <div><img src="../assets/images/logo.png" class="logo"></div>
-  <div class="header-actions">
-    <button mat-button mat-raised-button color="accent" (click)="logout()"  *ngIf="logged" >Surt</button>
-  </div>
-</div>
-<mat-divider></mat-divider>
 <div class="container">
-  <app-alert></app-alert>
-  <router-outlet></router-outlet>
+  <mat-card class="header mat-elevation-z0">
+    <mat-card-content>
+      <div fxLayout="wrap" class="full-width">
+        <div fxFlex="0 1 50%">
+          <img src="../assets/images/logo.png" class="logo">
+        </div>
+        <div fxFlex="0 1 50%" fxLayoutAlign="end">
+          <button mat-button mat-raised-button class="logout" color="accent" (click)="logout()" *ngIf="logged">Desconnecta</button>
+        </div>
+      </div>
+      <nav>
+      </nav>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="content">
+    <app-alert></app-alert>
+    <router-outlet></router-outlet>
+  </div>
+  
+  <div class="footer">
+      <span class="mat-small">Associació Esportiva Corredors.cat © 2020 Tots els drets reservats</span>
+  </div>
 </div>

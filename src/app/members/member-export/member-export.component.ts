@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatListOption } from '@angular/material/list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
@@ -66,7 +67,8 @@ export class MemberExportComponent implements OnInit {
   constructor(
     private api: MemberService,
     private alerter: AlertService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -86,6 +88,7 @@ export class MemberExportComponent implements OnInit {
         data => {
           this.requestedFiles = this.requestedFiles.filter(item => item !== data);
           this.downloadableFiles.unshift(data);
+          this.snackBar.open('Fitxer ' + data + ' llest', 'OK', { duration: 4000,  verticalPosition: 'top' });
         },
         err => {
           console.log(err);
@@ -296,6 +299,7 @@ export class MemberExportComponent implements OnInit {
           this.downloadableFiles.unshift(file);
         }
         this.isLoadingResults = false;
+        this.snackBar.open('Fitxer ' + file + ' llest', 'OK', { duration: 2000 });
       }, (resko: any) => {
         handle(resko, this.durationInSeconds, this.alerter);
         this.isLoadingResults = false;

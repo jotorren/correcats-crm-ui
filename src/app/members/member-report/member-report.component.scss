@@ -81,7 +81,15 @@
     font-size: 16px !important;
   }
 }
-  
+
+.mat-list-item {
+  height: 32px !important;
+}
+
+.filename {
+  font-size: 14px !important;
+}
+
 .all-header-image {
   background-image: url('../../../assets/images/people.png');
   background-size: cover;

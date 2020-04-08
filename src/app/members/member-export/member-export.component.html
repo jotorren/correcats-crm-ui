@@ -123,31 +123,29 @@
       </mat-card>
       <br />
 
-      <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas que no s'activi
-        automàticament
-        pots comprovar-ne la disponibilitat fent click a la icona </span>
-      <mat-icon inline="true">sync</mat-icon>
+      <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar.</span>
+      <div class="button-row" fxLayoutAlign="end">
+        <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"
+        (click)="onClickGenerate($event)">
+        <mat-icon>thumb_up_alt</mat-icon>
+      </button>
+      </div>
+
       <mat-list>
         <mat-list-item *ngFor="let link of requestedFiles">
           <mat-icon mat-list-icon class="do-action" (click)="onClickRefreshFile(link)">sync</mat-icon>
-          <div mat-line class="fill-light">{{link}}</div>
+          <div class="fill-light">{{link}}</div>
         </mat-list-item>
       </mat-list>
       <mat-list>
         <mat-list-item *ngFor="let link of downloadableFiles">
           <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega">save
           </mat-icon>
-          <div mat-line>{{link}}</div>
+          <div>{{link}}</div>
           <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteDownload(link)" matTooltip="Elimina">delete
           </mat-icon>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"
-        (click)="onClickGenerate($event)">
-        <mat-icon>cloud_download</mat-icon>
-      </button>
-    </mat-card-actions>
   </mat-card>
 </div>
