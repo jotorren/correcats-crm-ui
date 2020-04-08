@@ -20,7 +20,7 @@
               <mat-panel-title>
                 <span>Tria</span>
               </mat-panel-title>
-              <mat-panel-description *ng-If="!smallScreen">
+              <mat-panel-description *ngIf="!smallScreen">
                 <span>L'ordre de sel.lecció determina l'ordre en el que les dades apareixeran dins el fitxer</span>
               </mat-panel-description>
             </mat-expansion-panel-header>
@@ -52,7 +52,7 @@
               <mat-panel-title>
                 <span>Defineix</span>
               </mat-panel-title>
-              <mat-panel-description *ng-If="!smallScreen">
+              <mat-panel-description *ngIf="!smallScreen">
                 <span>En el cas de no definir cap criteri, només es consultaran els associats marcats com
                   "activats"</span>
               </mat-panel-description>
