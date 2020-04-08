@@ -16,7 +16,47 @@
       <mat-card-subtitle>{{member.cognoms}}, {{member.nom}}</mat-card-subtitle>
     </mat-card-header>
 
-    <mat-card-content class="normal-view">
+    <ng-template #basicdata>
+      <dl>
+        <dt>eMail:</dt>
+        <dd>{{member.email}}</dd>
+        <dt>NIF:</dt>
+        <dd>{{member.nif}}</dd>
+        <dt>IBAN:</dt>
+        <dd>{{member.iban}}</dd>
+        <dt>&nbsp;</dt>
+        <dd>&nbsp;</dd>
+      </dl>
+    </ng-template>
+
+    <ng-template #contactdata>
+      <dl>
+        <dt>Telèfon:</dt>
+        <dd>{{member.telefon}}</dd>
+        <dt>Adreça:</dt>
+        <dd>{{member.adreca}}</dd>
+        <dt>Codi postal:</dt>
+        <dd>{{member.codiPostal}}</dd>
+        <dt>Població:</dt>
+        <dd>{{member.poblacio}}</dd>
+      </dl>
+    </ng-template>
+
+    <ng-template #otherdata>
+      <dl>
+        <dt>Quota pagada al TPV:</dt>
+        <dd>{{member.quotaAlta}} €</dd>
+        <dt>Data del pagament:</dt>
+        <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
+        <dt>Observacions:</dt>
+        <dd>{{member.observacions}}</dd>
+        <dt>&nbsp;</dt>
+        <dd>&nbsp;</dd>
+      </dl>
+    </ng-template>
+
+    <ng-template #bigScreen>
+    <mat-card-content>
       <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
         <div fxFlex="0 1 33%">
           <mat-card class="mat-elevation-z4 full-height margin-around">
@@ -25,16 +65,7 @@
               <span class="mat-tab-label">Bàsica</span>
             </mat-card-header>            
             <mat-card-content>
-              <dl>
-                <dt>eMail:</dt>
-                <dd>{{member.email}}</dd>
-                <dt>NIF:</dt>
-                <dd>{{member.nif}}</dd>
-                <dt>IBAN:</dt>
-                <dd>{{member.iban}}</dd>
-                <dt>&nbsp;</dt>
-                <dd>&nbsp;</dd>
-              </dl>
+              <ng-container *ngTemplateOutlet="basicdata"></ng-container>
             </mat-card-content>
           </mat-card>
         </div>
@@ -46,16 +77,7 @@
               <span class="mat-tab-label">Contacte</span>
             </mat-card-header>              
             <mat-card-content>
-              <dl>
-                <dt>Telèfon:</dt>
-                <dd>{{member.telefon}}</dd>
-                <dt>Adreça:</dt>
-                <dd>{{member.adreca}}</dd>
-                <dt>Codi postal:</dt>
-                <dd>{{member.codiPostal}}</dd>
-                <dt>Població:</dt>
-                <dd>{{member.poblacio}}</dd>
-              </dl>
+              <ng-container *ngTemplateOutlet="contactdata"></ng-container>
             </mat-card-content>
           </mat-card>
         </div>
@@ -67,64 +89,31 @@
               <span class="mat-tab-label">Altra</span>
             </mat-card-header>              
             <mat-card-content>
-              <dl>
-                <dt>Quota pagada al TPV:</dt>
-                <dd>{{member.quotaAlta}} €</dd>
-                <dt>Data del pagament:</dt>
-                <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
-                <dt>Observacions:</dt>
-                <dd>{{member.observacions}}</dd>
-                <dt>&nbsp;</dt>
-                <dd>&nbsp;</dd>
-              </dl>
+              <ng-container *ngTemplateOutlet="otherdata"></ng-container>
             </mat-card-content>
           </mat-card>
         </div>
       </div>
     </mat-card-content>
+    </ng-template>
 
-    <mat-card-content class="xs-view" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+    <ng-template [ngIf]="smallScreen" [ngIfElse]="bigScreen">
+    <mat-card-content (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
       <mat-tab-group #usertabs>
         <mat-tab label="Bàsica">
-          <dl>
-            <dt>eMail:</dt>
-            <dd>{{member.email}}</dd>
-            <dt>NIF:</dt>
-            <dd>{{member.nif}}</dd>
-            <dt>IBAN:</dt>
-            <dd>{{member.iban}}</dd>
-            <dt>&nbsp;</dt>
-            <dd>&nbsp;</dd>
-          </dl>
+          <ng-container *ngTemplateOutlet="basicdata"></ng-container>
         </mat-tab>
 
         <mat-tab label="Contacte">
-          <dl>
-            <dt>Telèfon:</dt>
-            <dd>{{member.telefon}}</dd>
-            <dt>Adreça:</dt>
-            <dd>{{member.adreca}}</dd>
-            <dt>Codi postal:</dt>
-            <dd>{{member.codiPostal}}</dd>
-            <dt>Població:</dt>
-            <dd>{{member.poblacio}}</dd>
-          </dl>
+          <ng-container *ngTemplateOutlet="contactdata"></ng-container>
         </mat-tab>
 
         <mat-tab label="Altra">
-          <dl>
-            <dt>Quota pagada al TPV:</dt>
-            <dd>{{member.quotaAlta}} €</dd>
-            <dt>Data del pagament:</dt>
-            <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
-            <dt>Observacions:</dt>
-            <dd>{{member.observacions}}</dd>
-            <dt>&nbsp;</dt>
-            <dd>&nbsp;</dd>
-          </dl>
+          <ng-container *ngTemplateOutlet="otherdata"></ng-container>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>
+    </ng-template>
 
     <mat-card-actions align="end">
       <a mat-flat-button color="accent" (click)="unregisterMember(member.id)">

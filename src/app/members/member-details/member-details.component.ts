@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import { debounceTime, tap, map, filter } from 'rxjs/operators';
 import { MemberService } from '../member.service';
@@ -21,6 +22,7 @@ export class MemberDetailsComponent implements OnInit {
 
   @ViewChild('usertabs') tabs: MatTabGroup;
 
+  smallScreen: boolean;
   member: Associada;
   isLoadingResults = false;
 
@@ -31,9 +33,17 @@ export class MemberDetailsComponent implements OnInit {
     private api: MemberService,
     private router: Router,
     public dialog: MatDialog,
-    private alerter: AlertService) { }
+    private alerter: AlertService,
+    private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small
+    ]).subscribe(result => {
+      this.smallScreen = result.matches;
+    });
+
     this.route.data.forEach((data: { api: Result }) => {
       this.member = data.api.result;
     });
@@ -77,13 +87,13 @@ export class MemberDetailsComponent implements OnInit {
         this.isLoadingResults = true;
         this.api.unregisterMember(id)
           .subscribe(res => {
-              this.isLoadingResults = false;
-              this.router.navigate(['/members-list']);
-            }, (err) => {
-              handle(err, this.durationInSeconds, this.alerter);
-              this.isLoadingResults = false;
-            }
-        );
+            this.isLoadingResults = false;
+            this.router.navigate(['/members-list']);
+          }, (err) => {
+            handle(err, this.durationInSeconds, this.alerter);
+            this.isLoadingResults = false;
+          }
+          );
       }
     });
   }

@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, from, Subject } from 'rxjs';
 import { debounceTime, tap, switchMap, finalize, map, startWith, filter } from 'rxjs/operators';
 import { Config, Result } from '../../shared';
@@ -30,6 +31,8 @@ export class MemberAddComponent implements OnInit {
   @ViewChild('codiPostal') cp: ElementRef;
   @ViewChild('stepper') stepper: MatStepper;
 
+  smallScreen: boolean;
+
   // firstFormGroup: FormGroup;
   // secondFormGroup: FormGroup;
   // thirdFormGroup: FormGroup;
@@ -40,7 +43,7 @@ export class MemberAddComponent implements OnInit {
 
   cities: Municipi[] = [];
   filteredCities: Observable<Municipi[]> = from([]);
-  emptyCitiesList = [{codi: '00000', nom: 'Introdueix 3 lletres qualsevols del nom'}];
+  emptyCitiesList = [{ codi: '00000', nom: 'Introdueix 3 lletres qualsevols del nom' }];
   selectedCityCode: string;
   postalCodes: CodiPostal[] = [];
   filteredCodes: Observable<CodiPostal[]> = from([]);
@@ -58,9 +61,17 @@ export class MemberAddComponent implements OnInit {
     private snackBar: MatSnackBar,
     private catalog: CatalogService,
     private dialog: MatDialog,
-    private validators: MemberValidatorService) { }
+    private validators: MemberValidatorService,
+    private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small
+    ]).subscribe(result => {
+      this.smallScreen = result.matches;
+    });
+
     this.pan
       .pipe(
         debounceTime(Config.ui.debounceTime)
@@ -125,22 +136,22 @@ export class MemberAddComponent implements OnInit {
 
     this.memberForm = this.formBuilder.group({
       sexe: ['H'],
-      nom : [null, Validators.required],
-      cognoms : [null, Validators.required],
-      nick : [null, Validators.required, this.validators.nickValidator],
-      email : [null, [
+      nom: [null, Validators.required],
+      cognoms: [null, Validators.required],
+      nick: [null, Validators.required, this.validators.nickValidator],
+      email: [null, [
         Validators.required,
         Validators.email
       ], this.validators.emailValidator],
-      nif : [null, Validators.pattern],
-      iban : [null, Validators.pattern],
+      nif: [null, Validators.pattern],
+      iban: [null, Validators.pattern],
 
-      telefon : [null],
-      adreca : [null],
-      codiPostal : [null],
-      poblacio : [null],
-      quotaAlta : [null, Validators.pattern],
-      dataAlta : [null],
+      telefon: [null],
+      adreca: [null],
+      codiPostal: [null],
+      poblacio: [null],
+      quotaAlta: [null, Validators.pattern],
+      dataAlta: [null],
 
       observacions: [null, Validators.maxLength],
     }, { updateOn: 'blur' });
@@ -174,7 +185,7 @@ export class MemberAddComponent implements OnInit {
                 // finalize(() => {
                 //   this.isLoadingResults = false;
                 // }),
-            );
+              );
           } else {
             console.log('valuechanges: filter does not fire query');
 
@@ -214,7 +225,7 @@ export class MemberAddComponent implements OnInit {
     this.selectedCityCode = event.option.id;
   }
 
-  onFocusPoblacio(event)  {
+  onFocusPoblacio(event) {
     this.memberForm.get('poblacio').updateValueAndValidity({ onlySelf: true, emitEvent: true });
   }
 
@@ -227,7 +238,7 @@ export class MemberAddComponent implements OnInit {
   }
 
   onVerifyData() {
-    if (!this.memberForm.value.nick || !this.memberForm.value.email){
+    if (!this.memberForm.value.nick || !this.memberForm.value.email) {
       return;
     }
 
@@ -244,7 +255,7 @@ export class MemberAddComponent implements OnInit {
               observacions = observacions.concat(msg).concat('\n');
             });
           } else {
-            this.snackBar.open('Nick/eMail comprobats', 'OK', {duration: 2000});
+            this.snackBar.open('Nick/eMail comprobats', 'OK', { duration: 2000 });
           }
           this.memberForm.get('observacions').setValue(observacions);
         }
@@ -266,40 +277,40 @@ export class MemberAddComponent implements OnInit {
 
     this.api.addMember(formData)
       .subscribe((resok: any) => {
-          this.isLoadingResults = false;
-          this.router.navigate(['/member-details', resok.result]);
-        }, (resko: any) => {
+        this.isLoadingResults = false;
+        this.router.navigate(['/member-details', resok.result]);
+      }, (resko: any) => {
 
-          // let messages = '';
-          // if (resko.error.errors) {
-          //   resko.error.errors.map(item => item.message).forEach(item => {
-          //     myduration++;
-          //     messages = messages + '<li>' + item + '</li>';
-          //   });
-          // } else {
-          //   messages = JSON.stringify(resko.error);
-          // }
-          // this.alerter.error(messages, {
-          //   autoClose: true,
-          //   duration: myduration * 1000,
-          //   keepAfterRouteChange: false
-          // });
+        // let messages = '';
+        // if (resko.error.errors) {
+        //   resko.error.errors.map(item => item.message).forEach(item => {
+        //     myduration++;
+        //     messages = messages + '<li>' + item + '</li>';
+        //   });
+        // } else {
+        //   messages = JSON.stringify(resko.error);
+        // }
+        // this.alerter.error(messages, {
+        //   autoClose: true,
+        //   duration: myduration * 1000,
+        //   keepAfterRouteChange: false
+        // });
 
-          // let messages;
-          // if (resko.error.errors) {
-          //   messages = resko.error.errors.map(item => item.message);
-          //   myduration = myduration + messages.length;
-          // } else {
-          //   messages = [JSON.stringify(resko.error)];
-          // }
-          // this.snackBar.openFromComponent(ErrorListComponent, {
-          //     duration: myduration * 1000,
-          //     data: messages
-          // });
+        // let messages;
+        // if (resko.error.errors) {
+        //   messages = resko.error.errors.map(item => item.message);
+        //   myduration = myduration + messages.length;
+        // } else {
+        //   messages = [JSON.stringify(resko.error)];
+        // }
+        // this.snackBar.openFromComponent(ErrorListComponent, {
+        //     duration: myduration * 1000,
+        //     data: messages
+        // });
 
-          handle(resko, this.durationInSeconds, this.alerter);
-          this.isLoadingResults = false;
-        });
+        handle(resko, this.durationInSeconds, this.alerter);
+        this.isLoadingResults = false;
+      });
   }
 
   openCitiesAndPostalCodesDialog() {
