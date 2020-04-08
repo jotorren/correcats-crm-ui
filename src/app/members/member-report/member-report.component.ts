@@ -26,26 +26,27 @@ export class MemberReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.api.live()
-    .subscribe(
-      data => {
-        this.requestedFiles = this.requestedFiles.filter(item => item !== data);
-        this.downloadableFiles.unshift(data);
-      },
-      err => {
-        console.log(err);
-        this.sub.unsubscribe();
-      },
-      () => {
-        this.sub.unsubscribe();
-      }
-    );
+      .subscribe(
+        data => {
+          this.requestedFiles = this.requestedFiles.filter(item => item !== data);
+          this.downloadableFiles.unshift(data);
+        },
+        err => {
+          console.log(err);
+          this.sub.unsubscribe();
+        },
+        () => {
+          this.sub.unsubscribe();
+        }
+      );
   }
 
   onClickGetAll(event) {
 
+    this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.search,
-      ['cognoms', 'nom', 'nick', 'email', 'iban'], 
-      [{ key: 'activat', operation: Config.api.members.query.operators.equals.code, value: true}],
+      ['cognoms', 'nom', 'nick', 'email', 'iban'],
+      [{ key: 'activat', operation: Config.api.members.query.operators.equals.code, value: true }],
       null, 'cognoms', null)
       .subscribe((resok: any) => {
         if (resok.result) {
@@ -60,6 +61,7 @@ export class MemberReportComponent implements OnInit {
 
   onClickGetInconsistentEmail(event) {
 
+    this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.inconsistentEmails, null, null, null, null, null)
       .subscribe((resok: any) => {
         if (resok.result) {
@@ -73,6 +75,8 @@ export class MemberReportComponent implements OnInit {
   }
 
   onClickGetInconsistentNick(event) {
+
+    this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.inconsistentNicks, null, null, null, null, null)
       .subscribe((resok: any) => {
         if (resok.result) {
@@ -86,6 +90,8 @@ export class MemberReportComponent implements OnInit {
   }
 
   onClickGetNotInForumGroup(event) {
+
+    this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.notInForumGroup,
       ['cognoms', 'nom', 'nick', 'email'], null, null, 'cognoms', null)
       .subscribe((resok: any) => {
@@ -100,6 +106,8 @@ export class MemberReportComponent implements OnInit {
   }
 
   onClickGetInForumGroupButNotMember(event) {
+
+    this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.inForumGroupButNotMember, null, null, null, null, null)
       .subscribe((resok: any) => {
         if (resok.result) {
@@ -113,6 +121,8 @@ export class MemberReportComponent implements OnInit {
   }
 
   onClickRefreshFile(file) {
+
+    this.isLoadingResults = true;
     this.api.isReady(file)
       .subscribe((resok: any) => {
         if (resok.result) {

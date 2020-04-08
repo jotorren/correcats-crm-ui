@@ -1,3 +1,10 @@
+/* Structure */
+.member-container {
+  position: relative;
+  min-height: 80%;
+  padding: 5px;
+}
+
 .member-loading-shade {
   position: absolute;
   top: 0;
@@ -10,21 +17,45 @@
   align-items: center;
   justify-content: center;
 }
-  
+
 .home {
   margin-right: 10px;
 }
-  
-/* Structure */
-.member-container {
-  position: relative;
-  padding: 5px;
+
+.member-reports-container {
+  min-height: 90%;
 }
-  
-.member-card {
+
+.mat-flat-button {
+  margin: 5px;
+}
+
+// Width & Height
+.full-width {
+  width: 100%;
+}
+
+.full-height {
   height: 100%;
 }
 
+// Align
+.justify {
+  justify-content: center
+}
+
+// Fill
+.fill-light {
+  background-color: rgba(0,0,0,.04);
+  color: grey;
+}
+
+// Pointer
+.do-action {
+  cursor: pointer;
+}
+
+//
 .member-card-actions {
   text-align: center;
 }
@@ -45,32 +76,7 @@
     font-size: 16px !important;
   }
 }
-
-.mat-flat-button {
-  margin: 5px;
-}
   
-.button-row {
-  margin: 10px 0;
-}
-  
-.fill-light {
-  background-color: rgba(0,0,0,.04);
-  color: grey;
-}
-    
-.full-width {
-  width: 100%;
-}
-  
-.full-width:nth-last-child(0) {
-  margin-bottom: 10px;
-}
-
-.do-action {
-  cursor: pointer;
-}
-
 .all-header-image {
   background-image: url('../../../assets/images/people.png');
   background-size: cover;
