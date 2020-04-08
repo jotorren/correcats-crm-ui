@@ -1,3 +1,10 @@
+/* Structure */
+.member-container {
+  position: relative;
+  min-height: 80%;
+  padding: 5px;
+}
+
 .member-loading-shade {
   position: absolute;
   top: 0;
@@ -15,22 +22,62 @@
   margin-right: 10px;
 }
 
-/* Structure */
-.member-container {
-  position: relative;
-  padding: 5px;
+.member-export-container {
+  margin-top: 10px;
+  min-height: 90%;
 }
 
 .mat-flat-button {
   margin: 5px;
 }
 
-::ng-deep .mat-form-field-infix {
-  width: 290px !important;
+// Width & Height
+.full-width {
+  width: 100%;
 }
 
-.button-row {
-  margin: 10px 0;
+.full-height {
+  height: 100%;
+}
+
+// align
+.justify {
+  justify-content: center
+}
+
+.middle {
+  line-height: 5em;
+}
+
+// Fill
+.fill {
+  background-color: rgba(0,0,0,.04);
+}
+
+.fill-light {
+  background-color: rgba(0,0,0,.04);
+  color: grey;
+}
+
+.fill-bold {
+  background-color: rgba(0,0,0,.04);
+  font-weight: bold;
+}
+
+.fill-title {
+  background-color: #3f51b5;
+  color: white;
+}
+
+// Action
+.do-action {
+  cursor: pointer;
+}
+
+//
+.member-header-text {
+  margin-left: -32px !important;
+  margin-bottom: 10px;
 }
 
 .member-form {
@@ -39,38 +86,28 @@
   width: 100%;
 }
 
-.fill-bold {
-  background-color: rgba(0,0,0,.04);
-  font-weight: bold;
-}
-
-.fill-light {
-  background-color: rgba(0,0,0,.04);
-  color: grey;
-}
-
-.fill {
-  background-color: rgba(0,0,0,.04);
-}
-
-.full-width {
-  width: 100%;
-}
-
-.full-width:nth-last-child(0) {
-  margin-bottom: 10px;
-}
-
-.do-action {
-  cursor: pointer;
-}
-
 .input-date-text {
   font-size: 14px !important;   
 }
 
-.middle {
-  line-height: 5em;
+.criteria-card {
+  margin-top: 10px;
+}
+
+.select-values {
+  margin-bottom: 10px;
+}
+
+.delete-criteria {
+  margin-left: -20px;
+}
+
+.mat-expansion-panel-header {
+  padding-left: 12px !important;
+}
+
+::ng-deep .mat-form-field-infix {
+  width: 210px !important;
 }
 
 @media all and (max-width: 599px){

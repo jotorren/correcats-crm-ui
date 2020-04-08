@@ -2,104 +2,116 @@
   <div class="member-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
-  <div class="button-row">
+  <div>
     <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home">
       <mat-icon>home</mat-icon>
     </a>
     <span class="mat-title">Genera un fitxer d'associats personalitzat</span>
   </div>
-  <mat-card class="member-card">
+  <mat-card class="member-export-container">
     <mat-card-content>
-      <span>L'ordre en el que les dades apareixeran al fitxer serà: </span><span class="fill-bold">{{orderedFields}}
-      </span>
-      <mat-selection-list [(ngModel)]="selectedFields" name="exporter"
-        (selectionChange)="onSelectOption($event.option)">
-        <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill">Inclou totes les
-          disponibles</mat-list-option>
-        <br />
-        <div fxLayout="row wrap" fxLayout.xs="column">
-          <ng-container *ngFor="let item of availableFields">
-            <mat-list-option [value]="item" fxFlex="0 1 33.3%">
-              <span>{{item}}</span>
-            </mat-list-option>
-          </ng-container>
-        </div>
-      </mat-selection-list>
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <span class="mat-tab-label member-header-text full-width fill-title">Dades a incloure</span>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-expansion-panel class="select-values" [expanded]="false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span>Tria</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-selection-list [(ngModel)]="selectedFields" name="exporter"
+              (selectionChange)="onSelectOption($event.option)">
+              <mat-list-option #allSelected (click)="toggleAllSelection()" value="all" class="fill">Totes les
+                disponibles</mat-list-option>
+              <br />
+              <div fxLayout="row wrap" fxLayout.xs="column">
+                <ng-container *ngFor="let item of availableFields">
+                  <mat-list-option [value]="item" fxFlex="0 1 33.3%">
+                    <span>{{item}}</span>
+                  </mat-list-option>
+                </ng-container>
+              </div>
+            </mat-selection-list>
+          </mat-expansion-panel>
+          Sel.leccionades: <div mat-line class="fill-bold full-width">{{orderedFields}}</div>
+        </mat-card-content>
+      </mat-card>
 
-      <br /><br />
-      <mat-divider></mat-divider>
-
-      <div class="full-width">
-        <span>Que compleixin les següents condicions:</span>
-      </div>
-      <div fxLayout="wrap" fxLayout.xs="column">
-        <div fxFlex="3 1 auto" class="middle">
-          <mat-form-field>
-            <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)">
-              <mat-option *ngFor="let attr of filterFields" [value]="attr">
-                {{attr}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex="3 1 auto" class="middle">
-          <mat-form-field>
-            <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)">
-              <mat-option *ngFor="let op of filterOps" [value]="op.code">
-                {{op.desc}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex="4 1 auto" class="middle">
-
-          <div *ngIf="!nullFilterValue && filterBy==='sexe'">
-            <mat-radio-group [(ngModel)]="filterValue">
-              <mat-radio-button value="A"><span class="wrap-mat-radio-label">Altre</span></mat-radio-button>
-              <mat-radio-button value="D"><span class="wrap-mat-radio-label">Dona</span></mat-radio-button>
-              <mat-radio-button value="H"><span class="wrap-mat-radio-label">Home</span></mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <div *ngIf="!nullFilterValue && (filterBy==='dataAlta' || filterBy==='dataBaixa')">
-            <mat-form-field class="full-width">
-              <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" [(ngModel)]="filterValue"
-                class="input-date-text">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
-
-          <div *ngIf="!nullFilterValue && filterBy==='activat'">
-            <mat-radio-group [(ngModel)]="filterValue">
-              <mat-radio-button value="true"><span class="wrap-mat-radio-label">Sí</span></mat-radio-button>
-              <mat-radio-button value="false"><span class="wrap-mat-radio-label">No</span></mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </div>
-
-        <div fxFlex="1 1 auto" class="middle">
-          <button mat-button mat-mini-fab color="accent" matTooltip="Afegeix filtre" type="button"
-            (click)="onClickFilterAdd($event)">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-
-      </div>
-
-      <mat-list>
-        <mat-list-item *ngFor="let condition of criteria">
-          <mat-icon mat-list-icon class="do-action" (click)="onClickDeleteCriteria(condition)"
-            matTooltip="Elimina condició">clear</mat-icon>
-          <div>"{{condition.key}}" {{condition.operationMap}}
-            <span *ngIf="condition.operation !== 'NULL'">"{{condition.valueMap}}"</span></div>
-        </mat-list-item>
-      </mat-list>
-
+      <mat-card class="mat-elevation-z4 criteria-card">
+        <mat-card-header>
+          <span class="mat-tab-label member-header-text full-width fill-title">Criteris de cerca</span>
+        </mat-card-header>        
+        <mat-card-content>
+          <mat-expansion-panel class="select-values" [expanded]="false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span>Defineix</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="wrap" fxLayout.xs="column">
+              <div fxFlex="0 1 30%" class="middle">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="filterBy" name="filterBy" (selectionChange)="onFilterBySelected($event)">
+                    <mat-option *ngFor="let attr of filterFields" [value]="attr">
+                      {{attr}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="0 1 30%" class="middle">
+                <mat-form-field>
+                  <mat-select [(ngModel)]="filterOp" name="filterOp" (selectionChange)="onFilterOpSelected($event)">
+                    <mat-option *ngFor="let op of filterOps" [value]="op.code">
+                      {{op.desc}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="0 1 40%" class="middle">
+                <div *ngIf="!nullFilterValue && filterBy==='sexe'">
+                  <mat-radio-group [(ngModel)]="filterValue">
+                    <mat-radio-button value="A"><span class="wrap-mat-radio-label">Altre</span></mat-radio-button>
+                    <mat-radio-button value="D"><span class="wrap-mat-radio-label">Dona</span></mat-radio-button>
+                    <mat-radio-button value="H"><span class="wrap-mat-radio-label">Home</span></mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div *ngIf="!nullFilterValue && (filterBy==='dataAlta' || filterBy==='dataBaixa')">
+                  <mat-form-field class="full-width">
+                    <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" [(ngModel)]="filterValue"
+                      class="input-date-text">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div *ngIf="!nullFilterValue && filterBy==='activat'">
+                  <mat-radio-group [(ngModel)]="filterValue">
+                    <mat-radio-button value="true"><span class="wrap-mat-radio-label">Sí</span></mat-radio-button>
+                    <mat-radio-button value="false"><span class="wrap-mat-radio-label">No</span></mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+              <div fxFlex="0 1 10%" align="right" class="middle">
+                <button mat-button mat-mini-fab color="accent" matTooltip="Afegeix filtre" type="button"
+                  (click)="onClickFilterAdd($event)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+          <div mat-line>Filtres aplicats:</div>          
+          <mat-list>
+            <mat-list-item *ngFor="let condition of criteria">
+              <mat-icon mat-list-icon (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició"
+                class="do-action delete-criteria">clear</mat-icon>
+              <div>"{{condition.key}}" {{condition.operationMap}}
+                <span *ngIf="condition.operation !== 'NULL'">"{{condition.valueMap}}"</span></div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
       <br />
-      <mat-divider></mat-divider>
 
       <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar. En cas que no s'activi
         automàticament

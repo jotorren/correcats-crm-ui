@@ -259,7 +259,7 @@ export class MemberExportComponent implements OnInit {
       }
     });
 
-
+    this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.search, this.orderedFields, search, null, sortBy, null)
       .subscribe((resok: any) => {
           if (resok.result) {
@@ -273,6 +273,7 @@ export class MemberExportComponent implements OnInit {
   }
 
   onClickRefreshFile(file) {
+    this.isLoadingResults = true;
     this.api.isReady(file)
       .subscribe((resok: any) => {
         if (resok.result) {
