@@ -24,8 +24,6 @@
         <dd>{{member.nif}}</dd>
         <dt>IBAN:</dt>
         <dd>{{member.iban}}</dd>
-        <dt>&nbsp;</dt>
-        <dd>&nbsp;</dd>
       </dl>
     </ng-template>
 
@@ -50,8 +48,6 @@
         <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
         <dt>Observacions:</dt>
         <dd>{{member.observacions}}</dd>
-        <dt>&nbsp;</dt>
-        <dd>&nbsp;</dd>
       </dl>
     </ng-template>
 
@@ -100,15 +96,15 @@
     <ng-template [ngIf]="smallScreen" [ngIfElse]="bigScreen">
       <mat-card-content (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
         <mat-tab-group #usertabs>
-          <mat-tab label="Bàsica">
+          <mat-tab label="Bàsica" class="full-width">
             <ng-container *ngTemplateOutlet="basicdata"></ng-container>
           </mat-tab>
 
-          <mat-tab label="Contacte">
+          <mat-tab label="Contacte" class="full-width">
             <ng-container *ngTemplateOutlet="contactdata"></ng-container>
           </mat-tab>
 
-          <mat-tab label="Altra">
+          <mat-tab label="Altra" class="full-width">
             <ng-container *ngTemplateOutlet="otherdata"></ng-container>
           </mat-tab>
         </mat-tab-group>

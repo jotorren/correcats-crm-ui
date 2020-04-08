@@ -84,6 +84,14 @@
   height: 24px !important;
 }
 
+::ng-deep .mat-vertical-content-container {
+  margin-left: 12px !important;
+}
+
+::ng-deep .mat-step-header {
+  padding-left: 0px !important;
+}
+
 .form-card {
   margin-top: 25px;
 }
