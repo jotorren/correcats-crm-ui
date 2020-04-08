@@ -17,6 +17,7 @@
         <input #in (input)="inputChanged({search: in.value})" type="text" matInput placeholder="Search">
       </mat-form-field>
     </div>
+    <div class="member-table-container">
     <table mat-table [dataSource]="data" class="member-table" matSort matSortActive="name" matSortDisableClear
       matSortDirection="asc">
 
@@ -46,6 +47,7 @@
         class="do-action"></tr>
       <!-- tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr -->
     </table>
+  </div>
     <mat-paginator #paginator *ngIf="data.page$ | async as page" [length]="page.totalElements" [pageSize]="page.size"
       [pageIndex]="page.number" [hidePageSize]="true" (page)="data.fetch($event.pageIndex)">
     </mat-paginator>
