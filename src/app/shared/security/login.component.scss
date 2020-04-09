@@ -1,18 +1,28 @@
-:host {
+form {
+  max-width: 300px;
+  margin: auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.actions {
+  text-align: center;
+}
+
+@media all and (max-width: 599px){
+  .login-container {
+    text-align: center;
+    display: block;
+    margin-top: 40%;
+  }
+}
+
+@media all and (min-width: 600px){
+  .login-container {
     text-align: center;
     display: block;
     margin-top: 10%;
   }
-  
-  form {
-    max-width: 300px;
-    margin: auto;
-  }
-  
-  mat-form-field {
-    width: 100%;
-  }
-  
-  .actions {
-    text-align: center;
-  }
+}
