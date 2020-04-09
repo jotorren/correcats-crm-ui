@@ -6,7 +6,7 @@ import { Config, Result, PageBean } from '../shared';
 import { ServerSideEventsService } from '../shared/sse.service';
 import { PageRequest, Page } from '../shared/domain/datasource-page';
 import { AssociadaListItem } from './associada.list.item';
-
+import { LogService } from '../shared/log/log.service';
 
 export interface MemberQuery {
   search: '';
@@ -24,7 +24,10 @@ export class MemberService {
   private emptyResult: Result = {code: 0, message: '', result: []};
   private emptyPage: Page<AssociadaListItem> = {content: [], number: 0, size: 0, totalElements: 0};
 
-  constructor(private http: HttpClient, private sseService: ServerSideEventsService) { }
+  constructor(
+    private http: HttpClient,
+    private sseService: ServerSideEventsService,
+    private log: LogService) { }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -65,7 +68,7 @@ export class MemberService {
   getMemberById(id: string): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.item.replace('{id}', id);
     return this.http.get<Result>(url, httpOptions).pipe(
-      tap(_ => console.log(`fetched member id=${id}`)),
+      tap(_ => this.log.debug(`fetched member id=${id}`)),
       catchError(this.handleError<Result>(`getMemberById id=${id}`, this.emptyResult))
     );
   }

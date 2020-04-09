@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
 import { Config } from '../config/config';
+import { Result } from '..';
 
 
 interface ServerResponse {
@@ -40,7 +41,14 @@ export class AuthenticationService {
     }
 
     isLoggedIn() {
-        return !!this.getToken();
+        return (null != this.getToken());
+    }
+
+    checkToken() {
+        return this.httpClient.get<Result>(Config.security.token.check.endpoint, httpOptions).pipe(
+            map(res => res.result),
+            catchError(this.handleError<boolean>(false, false))
+        );
     }
 
     getToken() {
@@ -61,7 +69,7 @@ export class AuthenticationService {
             httpOptions
         ).pipe(
             tap(res => { this.storeTokens(res); }),
-            catchError(this.handleError({})));
+            catchError(this.handleError(true, {})));
     }
 
     logout() {
@@ -69,8 +77,11 @@ export class AuthenticationService {
         this.router.navigate(['/login']);
     }
 
-    private handleError<T>(result?: T) {
-        this.removeTokens();
+    private handleError<T>(removeTokens: boolean, result?: T) {
+        if (removeTokens) {
+            this.removeTokens();
+        }
+
         return (error: any): Observable<T> => {
 
             return of(result as T);

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MemberService } from '../member.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MemberErrorStateMatcher } from '../../shared/error.state.matcher';
+import { LogService } from 'src/app/shared/log/log.service';
 
 @Component({
   selector: 'app-member-edit',
@@ -25,7 +26,12 @@ export class MemberEditComponent implements OnInit {
   isLoadingResults = false;
   matcher = new MemberErrorStateMatcher();
 
-  constructor(private router: Router, private route: ActivatedRoute, private api: MemberService, private formBuilder: FormBuilder) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private api: MemberService,
+    private formBuilder: FormBuilder,
+    private log: LogService) { }
 
   ngOnInit(): void {
     this.getMemberById(this.route.snapshot.params.id);
@@ -63,7 +69,7 @@ export class MemberEditComponent implements OnInit {
           this.isLoadingResults = false;
           this.router.navigate(['/member-details', id]);
         }, (err: any) => {
-          console.log(err);
+          this.log.error(err);
           this.isLoadingResults = false;
         }
       );

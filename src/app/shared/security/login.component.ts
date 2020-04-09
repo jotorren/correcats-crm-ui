@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { AlertService } from '../alert/alert.service';
 import { first } from 'rxjs/operators';
+import { LogService } from '../log/log.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private log: LogService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
         if (resko.error.error_description) {
           messages = resko.error.error_description;
         } else {
-          console.log(resko.error);
+          this.log.error(resko.error);
           messages = 'Autenticació incorrecta';
         }
 

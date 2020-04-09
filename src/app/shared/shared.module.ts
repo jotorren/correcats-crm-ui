@@ -21,6 +21,7 @@ import { AuthenticationService } from './security/authentication.service';
 import { AuthorizatorGuard } from './security/authorizator.guard';
 import { TokenInterceptor } from './security/token.interceptor';
 import { LoginComponent } from './security/login.component';
+import { LogService } from './log/log.service';
 import { DefaultPipe } from './default.pipe';
 import { ServerSideEventsService } from './sse.service';
 
@@ -28,6 +29,10 @@ import { ServerSideEventsService } from './sse.service';
 import { fakeBackendProvider } from './fake-backend';
 
 const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule];
+
+export function logServiceFactory() {
+  return new LogService('app');
+}
 
 @NgModule({
   imports: [
@@ -66,6 +71,10 @@ const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule];
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
+    },
+    {
+      provide: LogService,
+      useFactory: logServiceFactory
     },
     AlertService,
     AuthenticationService,

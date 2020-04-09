@@ -16,6 +16,7 @@ import { CatalogService, Municipi, CodiPostal } from '../../shared/catalog.servi
 import { PostalCodesDialogComponent } from '../../shared/dialog/postalcodes-dialog.component';
 import { MemberService } from '../member.service';
 import { MemberValidatorService } from '../member-validator.service';
+import { LogService } from 'src/app/shared/log/log.service';
 
 @Component({
   selector: 'app-member-add',
@@ -62,7 +63,8 @@ export class MemberAddComponent implements OnInit {
     private catalog: CatalogService,
     private dialog: MatDialog,
     private validators: MemberValidatorService,
-    private breakpointObserver: BreakpointObserver) { }
+    private breakpointObserver: BreakpointObserver,
+    private log: LogService) { }
 
   ngOnInit(): void {
     this.breakpointObserver.observe([
@@ -171,24 +173,19 @@ export class MemberAddComponent implements OnInit {
         // }),
         switchMap(value => {
           if (this.memberForm.value.codiPostal) {
-            console.log('valuechanges: getCitiesWithPostalCode(' + this.memberForm.value.codiPostal + ')');
-
             return [this.cities];
           } else if (value && value.length > 2) {
 
             return this.catalog.getCities(value + '')
               .pipe(
                 tap(data => {
-                  console.log('valuechanges: getCities(' + value + ')');
-                  data.forEach(item => console.log(item));
+                  data.forEach(item => this.log.debug(item));
                 }),
                 // finalize(() => {
                 //   this.isLoadingResults = false;
                 // }),
               );
           } else {
-            console.log('valuechanges: filter does not fire query');
-
             // this.isLoadingResults = false;
             return from([this.emptyCitiesList]);
           }
@@ -200,8 +197,6 @@ export class MemberAddComponent implements OnInit {
       );
 
     this.postalCode2City.subscribe(codiPostal => {
-      console.log('Processing async event fired during postal code selection ' + codiPostal);
-
       this.catalog.getCitiesWithPostalCode(codiPostal)
         .subscribe(data => {
           if (data && data.length > 0) {
@@ -330,10 +325,10 @@ export class MemberAddComponent implements OnInit {
   }
 
   private debugPostalCodes() {
-    this.postalCodes.forEach(pc => console.log(pc));
+    this.postalCodes.forEach(pc => this.log.debug(pc));
   }
 
   private debugCities() {
-    this.cities.forEach(ci => console.log(ci));
+    this.cities.forEach(ci => this.log.debug(ci));
   }
 }

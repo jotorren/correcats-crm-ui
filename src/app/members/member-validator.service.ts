@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Config, Result } from '../shared';
+import { LogService } from '../shared/log/log.service';
 
 type AsyncValidator = (value: string, instance: MemberValidatorService) => Observable<Result>;
 
@@ -16,7 +17,9 @@ const httpOptions = {
 })
 export class MemberValidatorService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private log: LogService) { }
 
   get nickValidator() {
     return this.itemValidator(this.isNickOk);
@@ -29,14 +32,14 @@ export class MemberValidatorService {
   isNickOk(nick: string, instance: MemberValidatorService): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.nick + nick;
     return instance.http.get<Result>(url, httpOptions).pipe(
-      tap(_ => console.log(`verified nick=${nick}`))
+      tap(_ => this.log.debug(`verified nick=${nick}`))
     );
   }
 
   isEmailOk(email: string, instance: MemberValidatorService): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.email + email;
     return instance.http.get<Result>(url, httpOptions).pipe(
-      tap(_ => console.log(`verified emal=${email}`))
+      tap(_ => this.log.debug(`verified emal=${email}`))
     );
   }
 
@@ -65,15 +68,15 @@ export class MemberValidatorService {
       let message = '';
       switch (httpCode) {
         case 404:
-          console.log('Nick no trobat a Joomla');
+          this.log.error('Nick no trobat a Joomla');
           message = apiErrors[0].message;
           break;
         case 412:
-          console.log('Nick/eMail en ús');
+          this.log.error('Nick/eMail en ús');
           message = apiErrors[0].message;
           break;
         case 500:
-          console.log('Error intern del sistema');
+          this.log.error('Error intern del sistema');
           message = apiErrors[0].message;
           break;
         default:

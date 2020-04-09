@@ -5,6 +5,7 @@ import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
 import { Config } from '../../shared';
 import { MemberService } from '../member.service';
+import { LogService } from 'src/app/shared/log/log.service';
 
 @Component({
   selector: 'app-member-report',
@@ -24,6 +25,7 @@ export class MemberReportComponent implements OnInit {
     private api: MemberService,
     private alerter: AlertService,
     private snackBar: MatSnackBar,
+    private log: LogService
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class MemberReportComponent implements OnInit {
           this.snackBar.open('El fitxer "' + data + '" ja es pot descarregar', 'OK', { duration: 4000,  verticalPosition: 'top' });
         },
         err => {
-          console.log(err);
+          this.log.error(err);
           this.sub.unsubscribe();
         },
         () => {

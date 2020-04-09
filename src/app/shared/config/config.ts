@@ -1,5 +1,37 @@
 export let Config = {
 
+    log: [
+        {
+            name: 'root',
+            level: 'INFO',
+            layout: {
+                type: 'JsonLayout',
+                params: {
+                    readable: false,
+                    combineMessages: false
+                }
+            },
+            additivity: false,
+            appenders: [
+                'BrowserConsoleAppender'
+            ]
+        },
+        {
+            name: 'app',
+            level: 'DEBUG',
+            layout: {
+                type: 'PatternLayout',
+                params: {
+                    pattern: '%d{HH:mm:ss} %-5p - %m%n'
+                }
+            },
+            additivity: false,
+            appenders: [
+                'BrowserConsoleAppender'
+            ]
+        }
+    ],
+
     security: {
         token: {
             endpoint: 'https://backoffice.corredors.cat:8443/auth/realms/BO-corredors.cat/protocol/openid-connect/token',
@@ -19,10 +51,22 @@ export let Config = {
                 grantType: 'password',
                 refreshGrantType: 'refresh_token'
             },
+            check: {
+                endpoint: 'https://backoffice.corredors.cat:8090/health/alive'
+            }
         }
     },
 
     api: {
+        catalog: {
+            url: {
+                // base: 'https://localhost:8290/cataleg',
+                base: 'https://backoffice.corredors.cat:8090/cataleg',
+                municipis: '/municipi/search?v=1&search=',
+                municipisambCP: '/municipi/codipostal?v=1&codiPostal=',
+                postalCodes: '/codipostal?v=1&municipi=',
+            }
+        },
         members: {
             url: {
                 // base: 'https://localhost:8290/api',
@@ -97,15 +141,6 @@ export let Config = {
             },
 
             downloadFileName: 'associats.csv'
-        },
-        catalog: {
-            url: {
-                // base: 'https://localhost:8290/cataleg',
-                base: 'https://backoffice.corredors.cat:8090/cataleg',
-                municipis: '/municipi/search?v=1&search=',
-                municipisambCP: '/municipi/codipostal?v=1&codiPostal=',
-                postalCodes: '/codipostal?v=1&municipi=',
-            }
         },
     },
 

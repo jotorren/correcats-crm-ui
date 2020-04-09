@@ -47,7 +47,6 @@ export class PostalCodesDialogComponent implements OnInit {
                     } else if (value && value.length > 2) {
                         return this.catalog.getCities(value + '');
                     } else {
-                        console.log('filter does not fire query');
                         return from([]);
                     }
                 })
