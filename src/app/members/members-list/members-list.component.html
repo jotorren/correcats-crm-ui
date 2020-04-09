@@ -1,5 +1,5 @@
 <div class="member-container mat-elevation-z8">
-  <div>
+  <!-- <div>
     <a mat-flat-button color="primary" [routerLink]="['/member-add']">
       <mat-icon>add</mat-icon> Alta
     </a>
@@ -9,10 +9,10 @@
     <a mat-flat-button color="primary" [routerLink]="['/members-export']">
       <mat-icon>settings</mat-icon>
     </a>
-  </div>
+  </div> -->
   <mat-card class="member-list-container" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
     <div class="toolbar">
-      <mat-form-field class="search">
+      <mat-form-field class="search full-width">
         <mat-icon matPrefix>search</mat-icon>
         <input #in (input)="inputChanged({search: in.value})" type="text" matInput placeholder="Search">
       </mat-form-field>

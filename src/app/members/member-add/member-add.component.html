@@ -2,12 +2,12 @@
   <div class="member-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
-  <div>
+  <!-- <div>
     <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home">
       <mat-icon>home</mat-icon>
     </a>
     <span class="mat-title">Alta d'un nou associat</span>
-  </div>
+  </div> -->
   <mat-card class="member-add-container">
   <form [formGroup]="memberForm" (ngSubmit)="onFormSubmit()">
 

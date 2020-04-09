@@ -1,3 +1,6 @@
+@import '../../../correcat.scss';
+$primary: map-get($crm-app-theme, primary);
+
 /* Structure */
 .member-container {
   position: relative;
@@ -65,7 +68,7 @@
 }
 
 .fill-title {
-  background-color: #3f51b5;
+  background-color: mat-color($primary);
   color: white;
 }
 
@@ -104,7 +107,7 @@
 
 .mat-expansion-panel:not([class*='mat-elevation-z']) {
   box-shadow: none;
-  border: 1px solid #3f51b5;
+  border: 1px solid #B8B8B8;
 }
 
 .mat-expansion-panel-header {

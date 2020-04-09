@@ -1,4 +1,7 @@
-.container {
+@import '../correcat.scss';
+$primary: map-get($crm-app-theme, primary);
+
+.window-container {
   padding-top: 5px;
   float: none;
   width: 100%;
@@ -14,6 +17,49 @@
   padding-bottom: 0px;
 }
 
+.content-toolbar {
+  height: 32px;
+  color: white;
+  background-color: mat-color($primary);
+}
+
+.content-container {
+  // display: flex;
+  // flex-direction: column;
+  // position: absolute;
+  // top: 0;
+  // bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.content-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+// .content-is-mobile .content-toolbar {
+//   position: fixed;
+//   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+//   z-index: 2;
+// }
+
+// .content-is-mobile .content-sidenav-container {
+//   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+//      `<body>` to be our scrolling element for mobile layouts. */
+//   flex: 1 0 auto;
+// }
+
+.mat-sidenav {
+  background-color: mat-color($primary);
+  margin-top: 5px;
+}
+
+.mat-nav-list .mat-list-item {
+  color: white;
+}
+
 .content {
   padding: 10px;
 
@@ -26,7 +72,7 @@
 .footer {
   flex-shrink: 0;
   flex-grow: 0;
-  margin-left: 10px;
+  margin: auto;
 }
 
 .full-width {

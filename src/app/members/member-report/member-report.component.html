@@ -2,12 +2,12 @@
     <div class="member-loading-shade" *ngIf="isLoadingResults">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div>
-    <div>
+    <!-- <div>
         <a mat-mini-fab color="primary" matTooltip="Torna al llistat" [routerLink]="['/members-list']" class="home">
             <mat-icon>home</mat-icon>
         </a>
         <span class="mat-title">Obté un fitxer d'associats</span>
-    </div>
+    </div> -->
     <mat-card class="member-reports-container">
         <mat-card-content>
 
@@ -20,7 +20,7 @@
                             <mat-card-subtitle>Cognoms, Nom, Nick, eMail, IBAN</mat-card-subtitle>
                         </mat-card-header>
                         <mat-card-actions class="member-card-actions">
-                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer"
+                            <button mat-button mat-raised-button color="primary" matTooltip="Vull aquest fitxer"
                                 type="button" (click)="onClickGetAll($event)" class="small-icon-button">
                                 <mat-icon>save_alt</mat-icon>
                             </button>
@@ -35,7 +35,7 @@
                             <mat-card-subtitle>Nick, eMail, eMail al fòrum</mat-card-subtitle>
                         </mat-card-header>
                         <mat-card-actions class="member-card-actions">
-                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer"
+                            <button mat-button mat-raised-button color="primary" matTooltip="Vull aquest fitxer"
                                 type="button" (click)="onClickGetInconsistentEmail($event)" class="small-icon-button">
                                 <mat-icon>save_alt</mat-icon>
                             </button>
@@ -50,7 +50,7 @@
                             <mat-card-subtitle>eMail, Nick, Nick al fòrum</mat-card-subtitle>
                         </mat-card-header>
                         <mat-card-actions class="member-card-actions">
-                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer"
+                            <button mat-button mat-raised-button color="primary" matTooltip="Vull aquest fitxer"
                                 type="button" (click)="onClickGetInconsistentNick($event)" class="small-icon-button">
                                 <mat-icon>save_alt</mat-icon>
                             </button>
@@ -65,7 +65,7 @@
                             <mat-card-subtitle>Cognoms, Nom, Nick, eMail</mat-card-subtitle>
                         </mat-card-header>
                         <mat-card-actions class="member-card-actions">
-                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer"
+                            <button mat-button mat-raised-button color="primary" matTooltip="Vull aquest fitxer"
                                 type="button" (click)="onClickGetNotInForumGroup($event)" class="small-icon-button">
                                 <mat-icon>save_alt</mat-icon>
                             </button>
@@ -80,7 +80,7 @@
                             <mat-card-subtitle>Nick fòrum, Codi d'usuari, eMail, Data de registre</mat-card-subtitle>
                         </mat-card-header>
                         <mat-card-actions class="member-card-actions">
-                            <button mat-button mat-raised-button color="accent" matTooltip="Vull aquest fitxer"
+                            <button mat-button mat-raised-button color="primary" matTooltip="Vull aquest fitxer"
                                 type="button" (click)="onClickGetInForumGroupButNotMember($event)"
                                 class="small-icon-button">
                                 <mat-icon>save_alt</mat-icon>

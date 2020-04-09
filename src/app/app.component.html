@@ -1,4 +1,4 @@
-<div class="container">
+<div class="window-container">
   <mat-card class="header mat-elevation-z0">
     <mat-card-content>
       <div fxLayout="wrap" class="full-width">
@@ -6,7 +6,8 @@
           <img src="../assets/images/logo.png" class="logo">
         </div>
         <div fxFlex="0 1 50%" fxLayoutAlign="end">
-          <button mat-button mat-raised-button class="logout" color="accent" (click)="logout()" *ngIf="logged">Desconnecta</button>
+          <button mat-button mat-raised-button class="logout" color="accent" (click)="logout()"
+            *ngIf="logged">Desconnecta</button>
         </div>
       </div>
       <nav>
@@ -14,12 +15,35 @@
     </mat-card-content>
   </mat-card>
 
-  <div class="content">
-    <app-alert></app-alert>
-    <router-outlet></router-outlet>
+  <div class="content-container" [class.content-is-mobile]="mobileQuery.matches">
+    <mat-toolbar class="content-toolbar" *ngIf="logged">
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="content-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 5 : 0">
+      <!-- <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+        fixedTopGap="56"> -->
+        <mat-sidenav #snav [mode]="'over'" [fixedInViewport]="false">        
+        <mat-nav-list dense>
+          <a mat-list-item routerLink="/member-add" (click)="snav.toggle()">Alta d'un nou associat</a>
+          <a mat-list-item routerLink="/members-list" (click)="snav.toggle()">Consulta la llista d'associats</a>
+          <a mat-list-item routerLink="/members-report" (click)="snav.toggle()">Descarrega llistat predefinit</a>
+          <a mat-list-item routerLink="/members-export" (click)="snav.toggle()">Genera i descarrega el teu llistat</a>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <div class="content">
+          <app-alert></app-alert>
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </div>
-  
+
   <div class="footer">
-      <span class="mat-small">Associació Esportiva Corredors.cat © 2020 Tots els drets reservats</span>
+    <span class="mat-small">Associació Esportiva Corredors.cat © 2020 Tots els drets reservats</span>
   </div>
 </div>
