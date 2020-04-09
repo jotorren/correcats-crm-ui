@@ -1,5 +1,6 @@
 @import '../../../correcat.scss';
 $primary: map-get($crm-app-theme, primary);
+$accent: map-get($crm-app-theme, accent);
 
 /* Structure */
 .member-container {
@@ -62,8 +63,7 @@ $primary: map-get($crm-app-theme, primary);
 }
 
 .fill-bold {
-  background-color: rgba(0,0,0,.04);
-  font-weight: bold;
+  background-color: mat-color($accent);
 }
 
 .fill-title {
@@ -119,6 +119,10 @@ $primary: map-get($crm-app-theme, primary);
 
 .button-row {
   margin-top: 10px;
+}
+
+.button-generate {
+  height: 36px;
 }
 
 @media all and (max-width: 599px){

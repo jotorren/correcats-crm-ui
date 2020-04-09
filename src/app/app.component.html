@@ -1,26 +1,26 @@
 <div class="window-container">
   <div class="header">
-      <div fxLayout="wrap" class="full-width">
-        <div fxFlex="0 1 50%">
-          <img src="../assets/images/logo.png" class="logo">
-        </div>
-        <div fxFlex="0 1 50%" fxLayoutAlign="end">
-          <button mat-button mat-raised-button class="logout" color="accent" (click)="logout()"
-            *ngIf="logged">Desconnecta</button>
-        </div>
+    <div fxLayout="wrap" class="full-width">
+      <div fxFlex="0 1 50%">
+        <img src="../assets/images/logo.png" class="logo">
       </div>
-      <mat-toolbar class="content-toolbar" *ngIf="logged">
-        <button mat-icon-button (click)="snav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </mat-toolbar>
+      <div fxFlex="0 1 50%" fxLayoutAlign="end">
+        <button mat-button mat-raised-button class="logout" color="accent" (click)="logout()"
+          *ngIf="logged">Desconnecta</button>
+      </div>
     </div>
+    <mat-toolbar class="content-toolbar" *ngIf="logged">
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
 
   <div class="content-container" [class.content-is-mobile]="mobileQuery.matches">
     <mat-sidenav-container class="content-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 5 : 0">
       <!-- <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
         fixedTopGap="56"> -->
-        <mat-sidenav #snav [mode]="'over'" [fixedInViewport]="false">        
+      <mat-sidenav #snav [mode]="'over'" [fixedInViewport]="false">
         <mat-nav-list dense>
           <a mat-list-item routerLink="/member-add" (click)="snav.toggle()">Alta d'un nou associat</a>
           <a mat-list-item routerLink="/members-list" (click)="snav.toggle()">Consulta la llista d'associats</a>

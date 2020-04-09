@@ -38,7 +38,7 @@
               </div>
             </mat-selection-list>
           </mat-expansion-panel>
-          Sel.leccionades: <div mat-line class="fill-bold full-width">{{orderedFields}}</div>
+          Sel.leccionades: <div mat-line class="fill-bold full-width mat-body-2">{{orderedFields}}</div>
         </mat-card-content>
       </mat-card>
 
@@ -112,10 +112,10 @@
           </mat-expansion-panel>
           <div mat-line>Filtres aplicats:</div>
           <mat-list>
-            <mat-list-item *ngFor="let condition of criteria">
+            <mat-list-item *ngFor="let condition of criteria" class="fill-bold">
               <mat-icon mat-list-icon (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició"
                 class="do-action delete-criteria">clear</mat-icon>
-              <div>"{{condition.key}}" {{condition.operationMap}}
+              <div class="mat-body-2">"{{condition.key}}" {{condition.operationMap}}
                 <span *ngIf="condition.operation !== 'NULL'">"{{condition.valueMap}}"</span></div>
             </mat-list-item>
           </mat-list>
@@ -123,12 +123,16 @@
       </mat-card>
       <br />
 
-      <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar.</span>
-      <div class="button-row" fxLayoutAlign="end">
-        <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"
-        (click)="onClickGenerate($event)">
-        <mat-icon>thumb_up_alt</mat-icon>
-      </button>
+      <div fxLayout="wrap" class="full-width">
+        <div fxFlex="0 1 50%">
+          <span>Un cop generat, aquí sota apareixerà l'enllaç per poder-lo descarregar.</span>
+        </div>
+        <div fxFlex="0 1 50%" fxLayoutAlign="end">
+          <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"
+          (click)="onClickGenerate($event)" class="button-generate">
+          <mat-icon>thumb_up_alt</mat-icon>
+        </button>
+        </div>
       </div>
 
       <mat-list>

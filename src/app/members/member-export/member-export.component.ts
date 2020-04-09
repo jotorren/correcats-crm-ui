@@ -88,7 +88,7 @@ export class MemberExportComponent implements OnInit {
         data => {
           this.requestedFiles = this.requestedFiles.filter(item => item !== data);
           this.downloadableFiles.unshift(data);
-          this.snackBar.open('Fitxer ' + data + ' llest', 'OK', { duration: 4000,  verticalPosition: 'top' });
+          this.snackBar.open('El fitxer "' + data + '" ja es pot descarregar', 'OK', { duration: 4000,  verticalPosition: 'top' });
         },
         err => {
           console.log(err);
@@ -299,7 +299,7 @@ export class MemberExportComponent implements OnInit {
           this.downloadableFiles.unshift(file);
         }
         this.isLoadingResults = false;
-        this.snackBar.open('Fitxer ' + file + ' llest', 'OK', { duration: 2000 });
+        this.snackBar.open('El fitxer "' + file + '" ja es pot descarregar', 'OK', { duration: 2000 });
       }, (resko: any) => {
         handle(resko, this.durationInSeconds, this.alerter);
         this.isLoadingResults = false;
