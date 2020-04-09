@@ -1,4 +1,4 @@
-<div class="member-container mat-elevation-z8">
+<!-- <div class="member-container mat-elevation-z8"> -->
   <!-- <div>
     <a mat-flat-button color="primary" [routerLink]="['/member-add']">
       <mat-icon>add</mat-icon> Alta
@@ -10,7 +10,7 @@
       <mat-icon>settings</mat-icon>
     </a>
   </div> -->
-  <mat-card class="member-list-container" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
+  <mat-card class="member-list-container mat-elevation-z8" (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
     <div class="toolbar">
       <mat-form-field class="search full-width">
         <mat-icon matPrefix>search</mat-icon>
@@ -52,4 +52,4 @@
       [pageIndex]="page.number" [hidePageSize]="true" (page)="data.fetch($event.pageIndex)">
     </mat-paginator>
   </mat-card>
-</div>
+<!-- </div> -->

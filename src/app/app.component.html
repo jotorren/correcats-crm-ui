@@ -1,6 +1,5 @@
 <div class="window-container">
-  <mat-card class="header mat-elevation-z0">
-    <mat-card-content>
+  <div class="header">
       <div fxLayout="wrap" class="full-width">
         <div fxFlex="0 1 50%">
           <img src="../assets/images/logo.png" class="logo">
@@ -10,18 +9,14 @@
             *ngIf="logged">Desconnecta</button>
         </div>
       </div>
-      <nav>
-      </nav>
-    </mat-card-content>
-  </mat-card>
+      <mat-toolbar class="content-toolbar" *ngIf="logged">
+        <button mat-icon-button (click)="snav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar>
+    </div>
 
   <div class="content-container" [class.content-is-mobile]="mobileQuery.matches">
-    <mat-toolbar class="content-toolbar" *ngIf="logged">
-      <button mat-icon-button (click)="snav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </mat-toolbar>
-
     <mat-sidenav-container class="content-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 5 : 0">
       <!-- <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
         fixedTopGap="56"> -->

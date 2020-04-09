@@ -1,4 +1,4 @@
-<div class="member-container mat-elevation-z8">
+<!-- <div class="member-container mat-elevation-z8"> -->
   <div class="member-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
@@ -8,7 +8,7 @@
     </a>
     <span class="mat-title">Alta d'un nou associat</span>
   </div> -->
-  <mat-card class="member-add-container">
+  <mat-card class="member-add-container mat-elevation-z8">
   <form [formGroup]="memberForm" (ngSubmit)="onFormSubmit()">
 
     <ng-template #step1>
@@ -251,4 +251,4 @@
     </ng-template>
   </form>
 </mat-card>
-</div>
+<!-- </div> -->

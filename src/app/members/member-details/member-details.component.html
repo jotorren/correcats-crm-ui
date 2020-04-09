@@ -1,4 +1,4 @@
-<div class="member-container mat-elevation-z8">
+<!-- <div class="member-container mat-elevation-z8"> -->
   <div class="member-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
@@ -8,7 +8,7 @@
     </a>
     <span class="mat-title">Detalls d'un associat</span>
   </div> -->
-  <mat-card class="member-details-container">
+  <mat-card class="member-details-container mat-elevation-z8">
     <mat-card-header>
       <div mat-card-avatar [ngClass]="{'member-male' : member.sexe === 'H', 'member-female' : member.sexe === 'D'}">
       </div>
@@ -120,4 +120,4 @@
       </a>
     </mat-card-actions>
   </mat-card>
-</div>
+<!-- </div> -->

@@ -1,0 +1,11 @@
+@import '../../../correcat.scss';
+$primary: map-get($crm-app-theme, primary);
+
+.full-width {
+    width: 100%;
+}
+
+.fill {
+    background-color: mat-color($primary);
+    color: white;
+}
