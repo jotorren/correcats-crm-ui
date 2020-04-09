@@ -112,12 +112,21 @@
     </ng-template>
 
     <mat-card-actions align="end">
-      <a mat-flat-button color="accent" (click)="unregisterMember(member.id)">
-        <mat-icon>delete</mat-icon> Baixa
-      </a>
-      <a mat-flat-button color="primary" disabled="true" [routerLink]="['/member-details', member.id]">
-        <mat-icon>edit</mat-icon> Edita
-      </a>
+      <div fxLayout="wrap" class="full-width">
+        <div fxFlex="0 1 40%" fxLayoutAlign="start">
+          <a mat-flat-button color="primary" [routerLink]="['/members-list']">
+            <mat-icon>arrow_back</mat-icon> Torna
+          </a>
+        </div>
+        <div fxFlex="0 1 60%" fxLayoutAlign="end">
+          <a mat-flat-button color="accent" (click)="unregisterMember(member.id)">
+            <mat-icon>delete</mat-icon> Baixa
+          </a>
+          <a mat-flat-button color="primary" disabled="true" [routerLink]="['/member-details', member.id]">
+            <mat-icon>edit</mat-icon> Edita
+          </a>
+        </div>
+      </div>
     </mat-card-actions>
   </mat-card>
 <!-- </div> -->
