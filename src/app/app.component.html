@@ -5,7 +5,7 @@
         <img src="../assets/images/logo.png" class="logo">
       </div>
       <div fxFlex="0 1 50%" fxLayoutAlign="end">
-        <button mat-button mat-raised-button class="logout" color="accent" (click)="snav.toggle();logout()"
+        <button mat-button mat-raised-button class="logout" color="accent" (click)="snav.close();logout()"
           *ngIf="logged">Desconnecta</button>
       </div>
     </div>
