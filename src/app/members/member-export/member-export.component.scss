@@ -113,8 +113,8 @@ $accent: map-get($crm-app-theme, accent);
   padding-left: 12px !important;
 }
 
-::ng-deep .mat-form-field-infix {
-  width: 210px !important;
+.member-export-container .mat-form-field {
+  width: 95%;
 }
 
 .button-row {
