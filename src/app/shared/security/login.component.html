@@ -16,7 +16,10 @@
 
       <mat-form-field>
         <mat-label>Contrasenya</mat-label>
-        <input matInput type="password" id="password" placeholder="Contrasenya" formControlName="password" required>
+        <input matInput [type]="hide ? 'password' : 'text'" id="password" placeholder="Contrasenya" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>        
         <mat-error>
           <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
             La contrasenya és obligatòria
