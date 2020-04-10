@@ -10,6 +10,7 @@ import { MemberAddComponent } from './members/member-add/member-add.component';
 import { MemberReportComponent } from './members/member-report/member-report.component';
 import { MemberExportComponent } from './members/member-export/member-export.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberFindComponent } from './members/member-find/member-find.component';
 
 const routes: Routes = [
   {
@@ -76,6 +77,15 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'Custom export data to CSV',
+      roles: []
+    }
+  },
+  {
+    path: 'member-find',
+    component: MemberFindComponent,
+    canActivate: [ AuthorizatorGuard ],
+    data: {
+      title: 'Look for a member',
       roles: []
     }
   },

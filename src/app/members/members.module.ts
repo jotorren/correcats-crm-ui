@@ -40,6 +40,7 @@ import { MemberDetailsResolve } from './member-details/member-details.resolve';
 import { MemberExportComponent } from './member-export/member-export.component';
 import { SharedModule } from '../shared';
 import { MemberReportComponent } from './member-report/member-report.component';
+import { MemberFindComponent } from './member-find/member-find.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -96,7 +97,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
         MemberEditComponent,
         MembersListComponent,
         MemberExportComponent,
-        MemberReportComponent
+        MemberReportComponent,
+        MemberFindComponent
     ],
     exports: [
         MemberAddComponent,

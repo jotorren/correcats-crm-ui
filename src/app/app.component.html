@@ -5,7 +5,7 @@
         <img src="../assets/images/logo.png" class="logo">
       </div>
       <div fxFlex="0 1 50%" fxLayoutAlign="end">
-        <button mat-button mat-raised-button class="logout" color="accent" (click)="logout()"
+        <button mat-button mat-raised-button class="logout" color="accent" (click)="snav.toggle();logout()"
           *ngIf="logged">Desconnecta</button>
       </div>
     </div>
@@ -26,6 +26,7 @@
           <a mat-list-item routerLink="/members-list" (click)="snav.toggle()">Consulta la llista d'associats</a>
           <a mat-list-item routerLink="/members-report" (click)="snav.toggle()">Descarrega llistat predefinit</a>
           <a mat-list-item routerLink="/members-export" (click)="snav.toggle()">Genera i descarrega el teu llistat</a>
+          <a mat-list-item routerLink="/member-find" (click)="snav.toggle()">Localitza un associat</a>
         </mat-nav-list>
       </mat-sidenav>
 
