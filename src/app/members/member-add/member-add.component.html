@@ -42,6 +42,7 @@
           <mat-label>Nick</mat-label>
           <input #nick matInput placeholder="Nick" formControlName="nick" [errorStateMatcher]="matcher" required
             maxlength="32">
+            <mat-icon matSuffix>account_circle</mat-icon>
           <mat-hint align="end">{{nick.value.length}} / 32</mat-hint>
           <mat-error>
             <span *ngIf="memberForm.get('nick').hasError('required') && memberForm.get('nick').touched">Si us plau
@@ -54,6 +55,7 @@
           <mat-label>eMail</mat-label>
           <input #email matInput placeholder="Ex. me@example.com" formControlName="email" [errorStateMatcher]="matcher"
             required maxlength="100">
+            <mat-icon matSuffix>alternate_email</mat-icon>
           <mat-hint align="end">{{email.value.length}} / 100</mat-hint>
           <mat-error>
             <span *ngIf="memberForm.get('email').hasError('required') && memberForm.get('email').touched">
@@ -87,6 +89,7 @@
           <input #iban matInput placeholder="ESCC BBBB SSSS ZZZZ ZZZZ ZZZZ" formControlName="iban"
             pattern="[a-zA-Z]{2}[0-9]{2}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}"
             maxlength="32">
+            <mat-icon matSuffix>account_balance</mat-icon>
           <mat-hint align="end">{{iban.value.length}} / 32</mat-hint>
           <mat-error>
             <span *ngIf="!memberForm.get('iban').valid && memberForm.get('iban').touched">
@@ -122,11 +125,13 @@
         <mat-form-field class="full-width">
           <mat-label>Telèfon</mat-label>
           <input #telefon matInput formControlName="telefon" placeholder="Ex. 655123456" maxlength="32">
+          <mat-icon matSuffix>phone</mat-icon>
           <mat-hint align="end">{{telefon.value.length}} / 32</mat-hint>
         </mat-form-field>
         <mat-form-field class="full-width">
           <mat-label>Adreça</mat-label>
           <input #adreca matInput placeholder="Adreça" formControlName="adreca" maxlength="255">
+          <mat-icon matSuffix>mail</mat-icon>
           <mat-hint align="end">{{adreca.value.length}} / 255</mat-hint>
         </mat-form-field>
         <mat-form-field class="full-width">
@@ -134,7 +139,7 @@
           <input #codiPostal matInput [matAutocomplete]="auto1" placeholder="Ex. 08001" formControlName="codiPostal"
             maxlength="32" (change)="onCodiPostalChange($event)">
           <mat-icon matSuffix matTooltip="Asistent poblacions/codis postals" (click)="openCitiesAndPostalCodesDialog()"
-            class="do-action">list</mat-icon>
+            class="do-action icon-as-button">list</mat-icon>
           <mat-hint align="end">{{codiPostal.value.length}} / 32</mat-hint>
           <mat-autocomplete #auto1="matAutocomplete">
             <mat-option *ngFor="let pc of filteredCodes | async" [value]="pc.valor" [id]="pc.internalId">
@@ -146,6 +151,7 @@
           <mat-label>Població</mat-label>
           <input #poblacio matInput [matAutocomplete]="auto2" placeholder="Població" formControlName="poblacio"
             maxlength="255" (focus)="onFocusPoblacio($event)">
+            <mat-icon matSuffix>location_city</mat-icon>
           <mat-hint align="start">Escriu com a mínim tres lletres del nom</mat-hint>
           <mat-hint align="end">{{poblacio.value.length}} / 255</mat-hint>
           <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="onPoblacioSelected($event)">
