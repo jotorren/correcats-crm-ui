@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -34,7 +35,8 @@ export class MemberDetailsComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private alerter: AlertService,
-    private breakpointObserver: BreakpointObserver) { }
+    private breakpointObserver: BreakpointObserver,
+    private location: Location) { }
 
   ngOnInit(): void {
     this.breakpointObserver.observe([
@@ -63,6 +65,10 @@ export class MemberDetailsComponent implements OnInit {
           }
         }
       });
+  }
+
+  onClickBack() {
+    this.location.back();
   }
 
   onPanLeft(event) {
