@@ -10,6 +10,7 @@ import { AssociadaListItem } from '../associada.list.item';
 import { LogService } from 'src/app/shared/log/log.service';
 import { MatInput } from '@angular/material/input';
 import { FormControl } from '@angular/forms';
+import { SortOrder } from 'src/app/shared/domain/datasource-page';
 
 @Component({
   selector: 'app-members-list',
@@ -64,7 +65,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.data = new PaginatedDataSource<AssociadaListItem, MemberQuery>(
       (request, query) => this.api.getMembers(request, query),
-      { property: 'cognoms', order: 'asc' },
+      { property: 'cognoms', order: SortOrder.asc },
       { search: filter },
       this.myPageSize
     );

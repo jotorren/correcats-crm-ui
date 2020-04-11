@@ -5,7 +5,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
-import { Config } from '../../shared';
+import { Config, SearchOperator } from '../../shared';
 import { MemberService } from '../member.service';
 import { LogService } from 'src/app/shared/log/log.service';
 
@@ -55,7 +55,7 @@ export class MemberExportComponent implements OnInit {
   filterOps = [];
 
   filterBy: string;
-  filterOp: string;
+  filterOp: SearchOperator;
   filterValue;
   nullFilterValue = false;
 
@@ -138,23 +138,23 @@ export class MemberExportComponent implements OnInit {
       this.filterValue = null;
     } else {
       this.filterOps = [];
-      Config.api.members.query.fields[event.value].forEach(element => {
+      Config.api.members.query.fields[event.value].all.forEach(element => {
         this.filterOps.push(Config.api.members.query.operators[element]);
       });
 
       // Set default selection
       if (event.value === 'activat') {
-        this.filterOp = Config.api.members.query.operators.equals.code;
+        this.filterOp = Config.api.members.query.operators[Config.api.members.query.fields.activat.default].code;
         this.filterValue = 'true';
       } else if (event.value === 'sexe') {
-        this.filterOp = Config.api.members.query.operators.equals.code;
+        this.filterOp = Config.api.members.query.operators[Config.api.members.query.fields.sexe.default].code;
         this.filterValue = 'D';
       } else if (event.value === 'dataAlta') {
-        this.filterOp = Config.api.members.query.operators.gte.code;
+        this.filterOp = Config.api.members.query.operators[Config.api.members.query.fields.dataAlta.default].code;
         const currentYear = new Date().getFullYear();
         this.filterValue = new Date('01/01/' + currentYear);
       } else if (event.value === 'dataBaixa') {
-        this.filterOp = Config.api.members.query.operators.lte.code;
+        this.filterOp = Config.api.members.query.operators[Config.api.members.query.fields.dataBaixa.default].code;
         this.filterValue = new Date();
       }
     }
@@ -167,6 +167,10 @@ export class MemberExportComponent implements OnInit {
     } else {
       this.nullFilterValue = false;
     }
+  }
+
+  isNullOperator(value): boolean {
+    return value === Config.api.members.query.operators.isnull.code;
   }
 
   onClickFilterAdd(event) {
@@ -184,6 +188,7 @@ export class MemberExportComponent implements OnInit {
       for (const p in Config.api.members.query.operators) {
         if (Config.api.members.query.operators[p].code === this.filterOp) {
           literal1 = Config.api.members.query.operators[p].desc;
+          break;
         }
       }
 

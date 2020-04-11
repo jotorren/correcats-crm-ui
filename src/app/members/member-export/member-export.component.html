@@ -115,7 +115,7 @@
               <mat-icon mat-list-icon (click)="onClickDeleteCriteria(condition)" matTooltip="Elimina condició"
                 class="do-action delete-criteria">clear</mat-icon>
               <div class="mat-body-2">"{{condition.key}}" {{condition.operationMap}}
-                <span *ngIf="condition.operation !== 'NULL'">"{{condition.valueMap}}"</span></div>
+                <span *ngIf="!isNullOperator(condition.operation)">"{{condition.valueMap}}"</span></div>
             </mat-list-item>
           </mat-list>
         </mat-card-content>
@@ -129,7 +129,7 @@
         <div fxFlex="0 1 50%" fxLayoutAlign="end">
           <button mat-button mat-raised-button color="primary" matTooltip="Exporta" type="button"
           (click)="onClickGenerate($event)" class="button-generate">
-          <mat-icon>thumb_up_alt</mat-icon>
+          <mat-icon>thumb_up_alt</mat-icon> Genera
         </button>
         </div>
       </div>
