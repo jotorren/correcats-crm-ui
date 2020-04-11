@@ -4,4 +4,7 @@ export interface AssociadaListItem {
     cognoms: string;
     nick: string;
     email: string;
+    activat: boolean;
+    dataAlta: string;
+    dataBaixa: string;
   }
