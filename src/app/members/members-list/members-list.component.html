@@ -20,8 +20,8 @@
     </mat-form-field>
   </div>
   <div class="member-table-container">
-    <table mat-table [dataSource]="data" class="member-table" matSort matSortActive="name" matSortDisableClear
-      matSortDirection="asc">
+    <table mat-table [dataSource]="data" class="member-table" matSort [matSortActive]="sortField" [matSortDirection]="sortDirection"
+    matSortDisableClear>
 
       <ng-container matColumnDef="cognoms">
         <th mat-header-cell *matHeaderCellDef>Cognoms</th>

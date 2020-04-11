@@ -72,9 +72,9 @@ export let Config = {
         },
         members: {
             url: {
-                base: 'https://localhost:8290/api',
+                // base: 'https://localhost:8290/api',
                 // base: 'https://82.98.146.11:8090/api',
-                // base: 'https://backoffice.corredors.cat:8090/api',
+                base: 'https://backoffice.corredors.cat:8090/api',
                 list: '/?v=1&offset={offset}&limit={limit}',
                 item: '/{id}?v=1',
                 register: '/register/{id}?v=1',

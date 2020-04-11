@@ -35,6 +35,14 @@ justify-content: center;
     background-color: tan;
 }
 
+.member-deleted-icon {
+    color: red;
+}
+
+.member-warnings-icon {
+    color: gold;
+}
+
 table {
     width: 100%;
     margin-top: 10px;
@@ -52,6 +60,14 @@ table {
     width: 100%;
 }
 
+.middle {
+    line-height: 5em;
+  }
+
 .do-action {
     cursor: pointer;
+}
+
+.nodisplay {
+    display: none;
 }

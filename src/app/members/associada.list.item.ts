@@ -7,4 +7,5 @@ export interface AssociadaListItem {
     activat: boolean;
     dataAlta: string;
     dataBaixa: string;
+    observacions: string;
   }

@@ -40,7 +40,9 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   // );
 
   @ViewChild('search') search: MatInput;
-  @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  sortField = 'cognoms';
+  sortDirection = 'asc';
 
   constructor(private api: MemberService,
               private log: LogService,
@@ -65,7 +67,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.data = new PaginatedDataSource<AssociadaListItem, MemberQuery>(
       (request, query) => this.api.getMembers(request, query),
-      { property: 'cognoms', order: SortOrder.asc },
+      { property: this.sortField as keyof AssociadaListItem, order: this.sortDirection as SortOrder },
       { search: filter },
       this.myPageSize
     );

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Config, Result, PageBean, SearchCriteria } from '../shared';
 import { ServerSideEventsService } from '../shared/sse.service';
-import { PageRequest, Page } from '../shared/domain/datasource-page';
+import { PageRequest, Page, SortOrder } from '../shared/domain/datasource-page';
 import { AssociadaListItem } from './associada.list.item';
 import { LogService } from '../shared/log/log.service';
 
@@ -109,7 +109,7 @@ export class MemberService {
 
     if (request.sort) {
       url += '&sortBy=' + request.sort.property;
-      url += '&asc=' + (request.sort.order === 'asc');
+      url += '&asc=' + (request.sort.order === SortOrder.asc);
     }
 
     return this.http.post<Result>(url, criteria, httpOptions)

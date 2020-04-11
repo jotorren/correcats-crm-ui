@@ -13,7 +13,7 @@ export class MembersDataSource implements DataSource<AssociadaListItem> {
     public criteria: SearchCriteria[];
     private doSearch = new Subject<number>();
 
-    private emptyPage: Page<AssociadaListItem> = { content: [], number: 0, size: Config.ui.members.list.pageSize, totalElements: 0 };
+    private emptyPage: Page<AssociadaListItem> = { content: [], number: 0, size: 0, totalElements: 0 };
     private pageSubject = new BehaviorSubject<Page<AssociadaListItem>>(this.emptyPage);
     public page$ = this.pageSubject.asObservable();
 

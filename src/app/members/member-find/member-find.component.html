@@ -4,18 +4,20 @@
 </div>
 <mat-card class="member-find-container mat-elevation-z8">
     <form [formGroup]="findForm" (ngSubmit)="onFormSubmit()">
-        <mat-slide-toggle formControlName="wodeleted">
-            Inclou els associats donats de baixa
-        </mat-slide-toggle>
-        <div>
-            <label>Sexe: </label>
-            <mat-radio-group formControlName="sexe">
-                <mat-radio-button value="">Tots</mat-radio-button>
-                <mat-radio-button value="D">Dona</mat-radio-button>
-                <mat-radio-button value="H">Home</mat-radio-button>
-            </mat-radio-group>
-        </div>
-
+        <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+            <div fxFlex="0 1 50%" fxFlex.xs="0 1 auto" fxLayoutAlign="start">
+                <mat-radio-group formControlName="sexe">
+                    <mat-radio-button value="">Tots</mat-radio-button>
+                    <mat-radio-button value="D">Dona</mat-radio-button>
+                    <mat-radio-button value="H">Home</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div fxFlex="0 1 50%" fxFlex.xs="0 1 auto" fxLayoutAlign="end" fxLayoutAlign.xs="start">
+                <mat-slide-toggle formControlName="wodeleted">
+                    Inclou els associats donats de baixa
+                </mat-slide-toggle>
+            </div>
+        </div>        
         <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
             <div fxFlex="0 1 20%" fxFlex.xs="0 1 auto">
                 <mat-form-field appearance="fill" [floatLabel]="'always'">
@@ -101,13 +103,13 @@
         </div>
         <div fxLayout="wrap" class="full-width">
             <div fxFlex="0 1 50%" fxLayoutAlign="start">
-                <button mat-button mat-raised-button color="accent" matTooltip="Neteja el formulari" type="reset"
+                <button mat-button mat-raised-button color="accent" matTooltip="Neteja el formulari" type="button"
                     (click)=" onClickReset($event)">
                     <mat-icon>clear</mat-icon> Neteja
                 </button>
             </div>
             <div fxFlex="0 1 50%" fxLayoutAlign="end">
-                <button mat-button mat-raised-button color="primary" matTooltip="Cerca" type="submit">
+                <button #searchbutton mat-button mat-raised-button color="primary" matTooltip="Cerca" type="submit">
                     <mat-icon>search</mat-icon> Cerca
                 </button>
             </div>
@@ -115,11 +117,11 @@
     </form>
 
     <div class="member-list-container">
-        <table mat-table [dataSource]="data" class="member-table" matSort matSortActive="cognoms" matSortDirection="asc"
+        <table mat-table [dataSource]="data" class="member-table" matSort matSortActive="cognoms" [matSortDirection]="sortDirection"
             matSortDisableClear>
 
             <ng-container matColumnDef="cognoms">
-                <th mat-header-cell *matHeaderCellDef>Cognoms</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!sortable">Cognoms</th>
                 <td mat-cell *matCellDef="let row">{{row.cognoms}}</td>
             </ng-container>
 
@@ -129,7 +131,7 @@
             </ng-container>
 
             <ng-container matColumnDef="nick">
-                <th mat-header-cell *matHeaderCellDef>nick</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!sortable">nick</th>
                 <td mat-cell *matCellDef="let row">{{row.nick}}</td>
             </ng-container>
 
@@ -146,6 +148,15 @@
             <ng-container matColumnDef="dataBaixa">
                 <th mat-header-cell *matHeaderCellDef>Data baixa</th>
                 <td mat-cell *matCellDef="let row">{{row.dataBaixa | date: 'dd/MM/yyyy'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="activat">
+                <th mat-header-cell *matHeaderCellDef>Estat</th>
+                <td mat-cell *matCellDef="let row"><mat-icon *ngIf="row.activat === 'false'"
+                    matTooltip="Associat donat de baixa" class="member-deleted-icon">block</mat-icon>
+                    <mat-icon *ngIf="row.activat === 'true' && row.observacions && row.observacions.length>0"
+                    matTooltip="Associat amb avisos" class="member-warnings-icon">warning</mat-icon>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

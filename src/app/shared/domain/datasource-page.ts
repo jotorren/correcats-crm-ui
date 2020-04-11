@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 
 export enum SortOrder {
-  'asc',
-  'desc'
+  'asc' = 'asc',
+  'desc' = 'desc'
 }
 
 export interface Sort<T> {

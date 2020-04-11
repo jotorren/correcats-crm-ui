@@ -1,22 +1,24 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { SearchCriteria } from '../../shared';
+import { MatSort, SortDirection } from '@angular/material/sort';
+import { MatButton } from '@angular/material/button';
+import { SearchCriteria, Config } from '../../shared';
+import { SearchOperator } from '../../shared/domain/search-criteria';
 import { MemberService } from '../member.service';
 import { LogService } from 'src/app/shared/log/log.service';
 import { MemberErrorStateMatcher } from 'src/app/shared/error.state.matcher';
 import { AssociadaListItem } from '../associada.list.item';
-import { PageRequest } from 'src/app/shared/domain/datasource-page';
+import { PageRequest, SortOrder } from 'src/app/shared/domain/datasource-page';
 import { MembersDataSource } from './member-find-datasource';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-member-find',
   templateUrl: './member-find.component.html',
   styleUrls: ['./member-find.component.scss']
 })
-export class MemberFindComponent implements OnInit, OnDestroy {
+export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
   private mobileQueryListener: () => void;
 
@@ -25,12 +27,15 @@ export class MemberFindComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('searchbutton') searchButton: MatButton;
 
-  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'email', 'dataAlta', 'dataBaixa'];
-  private mobileDisplayedColumns: string[] = ['cognoms', 'nom', 'nick'];
+  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'email', 'dataAlta', 'dataBaixa', 'activat'];
+  private mobileDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'activat'];
 
   data: MembersDataSource;
-  private fields = ['id', 'nom', 'cognoms', 'nick', 'email', 'activat', 'dataAlta', 'dataBaixa'];
+  private fields = ['id', 'nom', 'cognoms', 'nick', 'email', 'activat', 'dataAlta', 'dataBaixa', 'observacions'];
+  sortable = false;
+  sortDirection = 'asc';
 
   constructor(
     private api: MemberService,
@@ -89,7 +94,13 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (currentPage && currentCriteria) {
       this.log.debug('Restoring component state');
       this.data.loadData(this.fields, currentPage, currentCriteria);
+      this.sortable = true;
+      this.sortDirection = this.data.pageable.sort.order;
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.sort.sortChange.subscribe(() => this.doSearch());
   }
 
   ngOnDestroy(): void {
@@ -123,7 +134,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (!this.findForm.value.wodeleted) {
       conds.push({
         key: 'activat',
-        operation: 'EQ',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.activat.default].code,
         value: true
       });
     }
@@ -131,7 +142,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.sexe) {
       conds.push({
         key: 'sexe',
-        operation: 'EQ',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.sexe.default].code,
         value: this.findForm.value.sexe
       });
     }
@@ -139,7 +150,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.nom) {
       conds.push({
         key: 'nom',
-        operation: 'CONTAINS',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.nom.default].code,
         value: this.findForm.value.nom
       });
     }
@@ -147,7 +158,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.cognoms) {
       conds.push({
         key: 'cognoms',
-        operation: 'CONTAINS',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.cognoms.default].code,
         value: this.findForm.value.cognoms
       });
     }
@@ -155,7 +166,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.nick) {
       conds.push({
         key: 'nick',
-        operation: 'CONTAINS',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.nick.default].code,
         value: this.findForm.value.nick
       });
     }
@@ -163,7 +174,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.email) {
       conds.push({
         key: 'email',
-        operation: 'CONTAINS',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.email.default].code,
         value: this.findForm.value.email
       });
     }
@@ -171,7 +182,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.codiPostal) {
       conds.push({
         key: 'codiPostal',
-        operation: 'EQ',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.codiPostal.default].code,
         value: this.findForm.value.codiPostal
       });
     }
@@ -179,7 +190,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.poblacio) {
       conds.push({
         key: 'poblacio',
-        operation: 'CONTAINS',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.poblacio.default].code,
         value: this.findForm.value.poblacio
       });
     }
@@ -187,7 +198,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.nif) {
       conds.push({
         key: 'nif',
-        operation: 'EQ',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.nif.default].code,
         value: this.findForm.value.nif
       });
     }
@@ -195,7 +206,7 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     if (this.findForm.value.quotaAlta) {
       conds.push({
         key: 'quotaAlta',
-        operation: 'EQ',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.quotaAlta.default].code,
         value: parseFloat(this.findForm.value.quotaAlta)
       });
     }
@@ -203,30 +214,32 @@ export class MemberFindComponent implements OnInit, OnDestroy {
     return conds;
   }
 
+  onClickReset(event) {
+    this.data.reset();
+    this.findForm.reset();
+    this.findForm.get('sexe').setValue('');
+    this.sortable = false;
+    this.searchButton.focus();
+  }
+
   onFormSubmit() {
-    // this.doSearch = true;
+    this.doSearch();
+  }
+
+  doSearch() {
     const sc = this.buildCriteria(this.findForm.value);
-    this.log.debug(JSON.stringify(sc));
+    this.log.debug('Looking for a member with ' + JSON.stringify(sc));
 
-    // export interface Sort<T> {
-    //   property: keyof T;
-    //   order: 'asc' | 'desc';
-    // }
-
-    this.log.debug(this.sort.active + ' ' + this.sort.direction);
     const pr: PageRequest<AssociadaListItem> = {
       page: 0,
-      size: this.paginator.pageSize,
-      // sort: {
-      //   property: this.sort.active,
-      //   order: this.sort.direction
-      // }
+      size: this.mobileQuery.matches ? Config.ui.members.list.mobilePageSize : Config.ui.members.list.pageSize,
+      sort: {
+        property: this.sort.active as keyof AssociadaListItem,
+        order: this.sort.direction as SortOrder
+      }
     };
 
     this.data.loadData(this.fields, pr, sc);
-  }
-
-  onClickReset(event) {
-    this.data.reset();
+    this.sortable = true;
   }
 }
