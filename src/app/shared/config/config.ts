@@ -1,3 +1,6 @@
+import { SortOrder } from '../domain/datasource-page';
+import { SearchOperator } from '../domain/search-criteria';
+
 export let Config = {
 
     log: [
@@ -69,9 +72,9 @@ export let Config = {
         },
         members: {
             url: {
-                // base: 'https://localhost:8290/api',
+                base: 'https://localhost:8290/api',
                 // base: 'https://82.98.146.11:8090/api',
-                base: 'https://backoffice.corredors.cat:8090/api',
+                // base: 'https://backoffice.corredors.cat:8090/api',
                 list: '/?v=1&offset={offset}&limit={limit}',
                 item: '/{id}?v=1',
                 register: '/register/{id}?v=1',
@@ -99,36 +102,84 @@ export let Config = {
                     inForumGroupButNotMember: 5,
                 },
                 operators: {
-                    equals: { code: 'EQ', desc: 'igual a' },
-                    isnull: { code: 'NULL', desc: 'és nul' },
-                    in: { code: 'IN', desc: 'pertany al conjunt' },
-                    not: { code: 'NOT', desc: 'no és' },
-                    gt: { code: 'GT', desc: 'més gran que' },
-                    gte: { code: 'GTE', desc: 'més gran o igual que' },
-                    lt: { code: 'LT', desc: 'més petit que' },
-                    lte: { code: 'LTE', desc: 'més petit o igual que' },
-                    like: { code: 'LIKE', desc: 'és semblant a' },
-                    startsWith: { code: 'STARTS_WITH', desc: 'comença per' },
-                    endsWith: { code: 'ENDS_WITH', desc: 'acaba amb' },
-                    contains: { code: 'CONTAINS', desc: 'conté' }
+                    equals: { code: SearchOperator.EQ, desc: 'igual a' },
+                    isnull: { code: SearchOperator.NULL, desc: 'és nul' },
+                    in: { code: SearchOperator.IN, desc: 'pertany al conjunt' },
+                    not: { code: SearchOperator.NOT, desc: 'no és' },
+                    gt: { code: SearchOperator.GT, desc: 'més gran que' },
+                    gte: { code: SearchOperator.GTE, desc: 'més gran o igual que' },
+                    lt: { code: SearchOperator.LT, desc: 'més petit que' },
+                    lte: { code: SearchOperator.LTE, desc: 'més petit o igual que' },
+                    like: { code: SearchOperator.LIKE, desc: 'és semblant a' },
+                    startsWith: { code: SearchOperator.STARTS_WITH, desc: 'comença per' },
+                    endsWith: { code: SearchOperator.ENDS_WITH, desc: 'acaba amb' },
+                    contains: { code: SearchOperator.CONTAINS, desc: 'conté' }
                 },
                 fields: {
-                    nom: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    cognoms: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    nick: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    email: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    sexe: ['equals'],
-                    nif: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    iban: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    telefon: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    adreca: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    codiPostal: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    poblacio: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
-                    activat: ['equals'],
-                    quotaAlta: ['equals', 'gt', 'gte', 'lt', 'lte'],
-                    dataAlta: ['equals', 'gt', 'gte', 'lt', 'lte'],
-                    dataBaixa: ['equals', 'isnull', 'gt', 'gte', 'lt', 'lte'],
-                    observacions: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                    nom: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
+                    cognoms: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
+                    nick: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
+                    email: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
+                    sexe: {
+                        all: ['equals'],
+                        default: 'equals'
+                    },
+                    nif: {
+                        all: ['equals'],
+                        default: 'equals'
+                    },
+                    iban: {
+                        all: ['equals'],
+                        default: 'equals'
+                    },
+                    telefon: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
+                    adreca: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
+                    codiPostal: {
+                        all: ['equals'],
+                        default: 'equals'
+                    },
+                    poblacio: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
+                    activat: {
+                        all: ['equals'],
+                        default: 'equals'
+                    },
+                    quotaAlta: {
+                        all: ['equals', 'gt', 'gte', 'lt', 'lte'],
+                        default: 'equals'
+                    },
+                    dataAlta: {
+                        all: ['equals', 'gt', 'gte', 'lt', 'lte'],
+                        default: 'gte'
+                    },
+                    dataBaixa: {
+                        all: ['equals', 'isnull', 'gt', 'gte', 'lt', 'lte'],
+                        default: 'lte'
+                    },
+                    observacions: {
+                        all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
+                        default: 'contains'
+                    },
                 }
             },
 

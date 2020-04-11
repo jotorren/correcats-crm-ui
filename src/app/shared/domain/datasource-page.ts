@@ -1,8 +1,13 @@
 import { Observable } from 'rxjs';
 
+export enum SortOrder {
+  'asc',
+  'desc'
+}
+
 export interface Sort<T> {
   property: keyof T;
-  order: 'asc' | 'desc';
+  order: SortOrder;
 }
 
 export interface PageRequest<T> {

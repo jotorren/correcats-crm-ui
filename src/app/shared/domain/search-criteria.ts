@@ -1,5 +1,20 @@
+export enum SearchOperator {
+    'EQ' = 'EQ',
+    'IN' = 'IN',
+    'NOT' = 'NOT',
+    'GT' = 'GT',
+    'LT' = 'LT',
+    'GTE' = 'GTE',
+    'LTE' = 'LTE',
+    'LIKE' = 'LIKE',
+    'STARTS_WITH' = 'STARTS_WITH',
+    'ENDS_WITH' = 'ENDS_WITH',
+    'CONTAINS' = 'CONTAINS',
+    'NULL' = 'NULL'
+}
+
 export interface SearchCriteria {
     key: string;
-    operation: 'EQ' | 'IN' | 'NOT' | 'GT' | 'LT' | 'GTE' | 'LTE' | 'LIKE' | 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
+    operation: SearchOperator;
     value: any;
 }
