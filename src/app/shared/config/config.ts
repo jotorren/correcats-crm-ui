@@ -82,7 +82,7 @@ export let Config = {
                 verify: '/consistency?v=1&nick={nick}&email={email}',
                 verifiedNicks: '/consistency/nicks?v=1',
                 verifiedMails: '/consistency/emails?v=1',
-                search: '/search?v=1&fields={fields}&search={search}&offset={offset}&limit={limit}',
+                search: '/search?v=1&fields={fields}&offset={offset}&limit={limit}',
                 export: '/export?v=1&queryType={queryType}',
                 ready: '/export/ready?v=1&file=',
                 live: '/export/live?v=1',
@@ -149,7 +149,8 @@ export let Config = {
         members: {
             list: {
                 debounceTime: 500,
-                pageSize: 7
+                pageSize: 10,
+                mobilePageSize: 7,
             }
         }
     }

@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
-import { Config, Result, PageBean } from '../shared';
+import { Config, Result, PageBean, SearchCriteria } from '../shared';
 import { ServerSideEventsService } from '../shared/sse.service';
 import { PageRequest, Page } from '../shared/domain/datasource-page';
 import { AssociadaListItem } from './associada.list.item';
 import { LogService } from '../shared/log/log.service';
 
 export interface MemberQuery {
-  search: '';
+  search: string;
 }
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable({
@@ -21,8 +21,8 @@ const httpOptions = {
 })
 export class MemberService {
 
-  private emptyResult: Result = {code: 0, message: '', result: []};
-  private emptyPage: Page<AssociadaListItem> = {content: [], number: 0, size: 0, totalElements: 0};
+  private emptyResult: Result = { code: 0, message: '', result: [] };
+  private emptyPage: Page<AssociadaListItem> = { content: [], number: 0, size: 0, totalElements: 0 };
 
   constructor(
     private http: HttpClient,
@@ -32,8 +32,7 @@ export class MemberService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      this.log.error(error); // log to console instead
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -47,7 +46,7 @@ export class MemberService {
       Config.api.members.url.list.replace('{offset}', offset + '').replace('{limit}', request.size + '');
 
     if (query.search) {
-        url = url + '&search=' + query.search;
+      url = url + '&search=' + query.search;
     }
 
     return this.http.get<Result>(url, httpOptions)
@@ -99,8 +98,37 @@ export class MemberService {
     return this.http.post<Result>(url, form, httpOptions);
   }
 
-  search(fields: string[], criteria: any, clause: string,
-         offset: number, limit: number, sortBy: string, asc: string): Observable<Result> {
+  search(fields: string[], request: PageRequest<AssociadaListItem>, criteria: SearchCriteria[]): Observable<Page<AssociadaListItem>> {
+    const offset = (request.page * request.size);
+
+    let url = Config.api.members.url.base +
+      Config.api.members.url.search
+        .replace('{fields}', fields.join(','))
+        .replace('{offset}', offset + '')
+        .replace('{limit}', request.size + '');
+
+    if (request.sort) {
+      url += '&sortBy=' + request.sort.property;
+      url += '&asc=' + (request.sort.order === 'asc');
+    }
+
+    return this.http.post<Result>(url, criteria, httpOptions)
+      .pipe(
+        map(members => {
+          const pageBean: PageBean<AssociadaListItem> = members.result;
+          return {
+            content: pageBean.included,
+            number: request.page,
+            size: request.size,
+            totalElements: pageBean.total
+          };
+        }),
+        catchError(this.handleError<Page<AssociadaListItem>>('getMembers', this.emptyPage))
+      );
+  }
+
+  searchList(fields: string[], criteria: any, clause: string,
+             offset: number, limit: number, sortBy: string, asc: string): Observable<Result> {
     let url = Config.api.members.url.base +
       Config.api.members.url.search
         .replace('{fields}', fields.join(','))
@@ -128,7 +156,7 @@ export class MemberService {
       Config.api.members.url.export.replace('{queryType}', qt + '');
 
     if (fields) {
-        url += '&fields=' + fields.join(',');
+      url += '&fields=' + fields.join(',');
     }
 
     if (clause && clause === 'OR') {
@@ -136,11 +164,11 @@ export class MemberService {
     }
 
     if (sortBy) {
-        url += '&sortBy=' + sortBy;
+      url += '&sortBy=' + sortBy;
     }
 
     if (asc) {
-        url += '&asc=' + (asc === 'ASC');
+      url += '&asc=' + (asc === 'ASC');
     }
 
     return this.http.post<Result>(url, criteria, httpOptions);
@@ -154,17 +182,17 @@ export class MemberService {
   live(): Observable<string> {
     const url = Config.api.members.url.base + Config.api.members.url.live;
     return new Observable<string>(observer => {
-        this.sseService.getServerSentEvent(url).subscribe(
-            response => {
-                observer.next(response.data);
-            },
-            error => {
-                observer.error(error);
-            },
-            () => {
-                observer.complete();
-            }
-        );
+      this.sseService.getServerSentEvent(url).subscribe(
+        response => {
+          observer.next(response.data);
+        },
+        error => {
+          observer.error(error);
+        },
+        () => {
+          observer.complete();
+        }
+      );
     });
   }
 
@@ -177,14 +205,14 @@ export class MemberService {
 
     this.http.get(url, myOptions).subscribe(
       (response: any) => {
-          const dataType = response.type;
-          const binaryData = [];
-          binaryData.push(response);
-          const downloadLink = document.createElement('a');
-          downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
-          downloadLink.setAttribute('download', Config.api.members.downloadFileName);
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
+        const dataType = response.type;
+        const binaryData = [];
+        binaryData.push(response);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: dataType }));
+        downloadLink.setAttribute('download', Config.api.members.downloadFileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
       }
     );
   }
