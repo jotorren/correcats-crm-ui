@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     .pipe(first())
     .subscribe(
       resok => {
-        this.router.navigate(['/members-list']);
+        this.router.navigate(['/member-find']);
       },
       resko => {
         let messages;

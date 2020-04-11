@@ -90,7 +90,7 @@ const routes: Routes = [
     }
   },
   { path: '',
-    redirectTo: '/members-list',
+    redirectTo: '/member-find',
     pathMatch: 'full'
   }
 ];
