@@ -14,8 +14,9 @@
   <div class="toolbar">
     <mat-form-field class="search full-width" [floatLabel]="'always'">
       <mat-icon matPrefix>search</mat-icon>
-      <input #search (input)="inputChanged({search: search.value})" type="text" matInput placeholder="Search" 
-      [formControl]="searchControl">
+      <mat-label>Cerca</mat-label>
+      <input #search (input)="inputChanged({search: search.value})" type="text" matInput 
+      placeholder="Escriu qualsevol part del nom, cognoms o nick" [formControl]="searchControl">
     </mat-form-field>
   </div>
   <div class="member-table-container">
