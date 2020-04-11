@@ -115,17 +115,17 @@
 
     <mat-card-actions align="end">
       <div fxLayout="wrap" class="full-width">
-        <div fxFlex="0 1 40%" fxLayoutAlign="start">
-          <a mat-flat-button color="primary" (click)="onClickBack()">
-            <mat-icon>arrow_back</mat-icon> Torna
-          </a>
-        </div>
-        <div fxFlex="0 1 60%" fxLayoutAlign="end">
+        <div fxFlex="0 1 60%" fxLayoutAlign="start">
           <a mat-flat-button color="accent" (click)="unregisterMember(member.id)" *ngIf="member.activat===true">
             <mat-icon>delete</mat-icon> Baixa
           </a>
           <a mat-flat-button color="primary" disabled="true" [routerLink]="['/member-details', member.id]">
             <mat-icon>edit</mat-icon> Edita
+          </a>
+        </div>
+        <div fxFlex="0 1 40%" fxLayoutAlign="end">
+          <a mat-flat-button color="primary" (click)="onClickBack()">
+            <mat-icon>arrow_back</mat-icon> Torna
           </a>
         </div>
       </div>
