@@ -8,6 +8,7 @@ import { AlertService } from '../../shared/alert/alert.service';
 import { Config, SearchOperator } from '../../shared';
 import { MemberService } from '../member.service';
 import { LogService } from 'src/app/shared/log/log.service';
+import { AppGlobalService } from 'src/app/app.global.service';
 
 @Component({
   selector: 'app-member-export',
@@ -66,12 +67,15 @@ export class MemberExportComponent implements OnInit {
   sub: Subscription;
 
   constructor(
+    private app: AppGlobalService,
     private api: MemberService,
     private alerter: AlertService,
     private breakpointObserver: BreakpointObserver,
     private snackBar: MatSnackBar,
     private log: LogService
-  ) { }
+  ) {
+    this.app.setTitle('Genera i descarrega el teu fitxer');
+  }
 
   ngOnInit(): void {
     this.breakpointObserver.observe([

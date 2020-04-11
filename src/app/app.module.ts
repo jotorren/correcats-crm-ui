@@ -17,6 +17,7 @@ import { CoreModule } from './core';
 import { SharedModule } from './shared';
 import { MembersModule } from './members';
 import { AppRoutingModule } from './app-routing.module';
+import { AppGlobalService } from './app.global.service';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -45,7 +46,8 @@ import { AppComponent } from './app.component';
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }
+    },
+    AppGlobalService
   ],
   bootstrap: [AppComponent]
 })

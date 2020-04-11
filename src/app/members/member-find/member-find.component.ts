@@ -12,6 +12,7 @@ import { AssociadaListItem } from '../associada.list.item';
 import { PageRequest, SortOrder } from 'src/app/shared/domain/datasource-page';
 import { MembersDataSource } from './member-find-datasource';
 import { MatPaginator } from '@angular/material/paginator';
+import { AppGlobalService } from 'src/app/app.global.service';
 
 @Component({
   selector: 'app-member-find',
@@ -38,11 +39,13 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
   sortDirection = 'asc';
 
   constructor(
+    private app: AppGlobalService,
     private api: MemberService,
     private formBuilder: FormBuilder,
     private log: LogService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher) {
+    this.app.setTitle('Localitza un associat');
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this.mobileQueryListener);

@@ -99,7 +99,7 @@
             </mat-list>
             <mat-list>
                 <mat-list-item *ngFor="let link of downloadableFiles">
-                    <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega">
+                    <mat-icon mat-list-icon class="do-action" (click)="onClickDownload(link)" matTooltip="Descarrega" color="primary">
                         save
                     </mat-icon>
                     <div class="filename">{{link}}</div>

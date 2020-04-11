@@ -6,6 +6,7 @@ import { AlertService } from '../../shared/alert/alert.service';
 import { Config } from '../../shared';
 import { MemberService } from '../member.service';
 import { LogService } from 'src/app/shared/log/log.service';
+import { AppGlobalService } from 'src/app/app.global.service';
 
 @Component({
   selector: 'app-member-report',
@@ -22,11 +23,14 @@ export class MemberReportComponent implements OnInit {
   sub: Subscription;
 
   constructor(
+    private app: AppGlobalService,
     private api: MemberService,
     private alerter: AlertService,
     private snackBar: MatSnackBar,
     private log: LogService
-  ) { }
+  ) {
+    this.app.setTitle('Descarrega un fitxer predefinit');
+  }
 
   ngOnInit(): void {
     this.sub = this.api.live()

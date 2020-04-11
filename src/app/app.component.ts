@@ -1,20 +1,26 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from './shared/security/authentication.service';
+import { AppGlobalService } from './app.global.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
 
   private mobileQueryListener: () => void;
 
+  commandSubscription: Subscription;
+  title = '<<< Active component title >>>';
+
   constructor(
+    private globalService: AppGlobalService,
     private authService: AuthenticationService,
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
@@ -26,8 +32,17 @@ export class AppComponent implements OnDestroy {
 
   }
 
+  ngOnInit() {
+    // subscribe to new alert notifications
+    this.commandSubscription = this.globalService.onCommand(0)
+        .subscribe(title => {
+          this.title = title.value;
+        });
+  }
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this.mobileQueryListener);
+    this.commandSubscription.unsubscribe();
   }
 
   get logged(): boolean {

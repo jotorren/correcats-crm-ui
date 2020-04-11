@@ -17,6 +17,7 @@ import { PostalCodesDialogComponent } from '../../shared/dialog/postalcodes-dial
 import { MemberService } from '../member.service';
 import { MemberValidatorService } from '../member-validator.service';
 import { LogService } from 'src/app/shared/log/log.service';
+import { AppGlobalService } from 'src/app/app.global.service';
 
 @Component({
   selector: 'app-member-add',
@@ -55,6 +56,7 @@ export class MemberAddComponent implements OnInit {
   // get formArray(): AbstractControl | null { return this.memberForm.get('formArray'); }
 
   constructor(
+    private app: AppGlobalService,
     private router: Router,
     private api: MemberService,
     private formBuilder: FormBuilder,
@@ -64,7 +66,9 @@ export class MemberAddComponent implements OnInit {
     private dialog: MatDialog,
     private validators: MemberValidatorService,
     private breakpointObserver: BreakpointObserver,
-    private log: LogService) { }
+    private log: LogService) {
+      this.app.setTitle('Alta d\' un nou associat');
+    }
 
   ngOnInit(): void {
     this.breakpointObserver.observe([

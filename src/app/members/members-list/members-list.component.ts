@@ -11,6 +11,7 @@ import { LogService } from 'src/app/shared/log/log.service';
 import { MatInput } from '@angular/material/input';
 import { FormControl } from '@angular/forms';
 import { SortOrder } from 'src/app/shared/domain/datasource-page';
+import { AppGlobalService } from 'src/app/app.global.service';
 
 @Component({
   selector: 'app-members-list',
@@ -44,10 +45,12 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   sortField = 'cognoms';
   sortDirection = 'asc';
 
-  constructor(private api: MemberService,
+  constructor(private app: AppGlobalService,
+              private api: MemberService,
               private log: LogService,
               changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher) {
+    this.app.setTitle('Llista de tots els associats');
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this.mobileQueryListener);
