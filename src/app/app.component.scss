@@ -20,6 +20,7 @@ $primary: map-get($crm-app-theme, primary);
 .content-toolbar {
   height: 32px;
   color: white;
+  font-size: 16px;
   background-color: mat-color($primary);
 }
 

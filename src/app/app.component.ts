@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private mobileQueryListener: () => void;
 
   commandSubscription: Subscription;
-  title = '<<< Active component title >>>';
+  title = '';
 
   constructor(
     private globalService: AppGlobalService,
