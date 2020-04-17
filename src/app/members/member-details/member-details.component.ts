@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
@@ -11,6 +11,8 @@ import { Associada } from '../associada';
 import { Config, Result, ConfirmDialogModel, ConfirmDialogComponent } from '../../shared';
 import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
+import { MemberEditComponent } from '../member-edit/member-edit.component';
+import { LogService } from 'src/app/shared/log/log.service';
 
 @Component({
   selector: 'app-member-details',
@@ -22,6 +24,8 @@ export class MemberDetailsComponent implements OnInit {
   private pan = new Subject<string>();
 
   @ViewChild('usertabs') tabs: MatTabGroup;
+
+  editMode = false;
 
   smallScreen: boolean;
   member: Associada;
@@ -36,7 +40,8 @@ export class MemberDetailsComponent implements OnInit {
     public dialog: MatDialog,
     private alerter: AlertService,
     private breakpointObserver: BreakpointObserver,
-    private location: Location) { }
+    private location: Location,
+    private log: LogService) { }
 
   ngOnInit(): void {
     this.breakpointObserver.observe([
@@ -69,6 +74,33 @@ export class MemberDetailsComponent implements OnInit {
 
   onClickBack() {
     this.location.back();
+  }
+
+  onClickEdit(event) {
+    this.editMode = true;
+  }
+
+  onClickCancelEdit(event) {
+    this.editMode = false;
+  }
+
+  onClickEditSave($event) {
+    this.editMode = false;
+  }
+
+  onClickEditField(field) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '450px';
+    dialogConfig.data = {form: this.member, name: field};
+
+    const dialogRef = this.dialog.open(MemberEditComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.log.debug();
+      }
+    });
   }
 
   onPanLeft(event) {

@@ -13,42 +13,45 @@
       <div mat-card-avatar [ngClass]="{'member-deleted' : member.activat === false,
       'member-male' : member.activat === true && member.sexe === 'H', 
       'member-female' : member.activat === true && member.sexe === 'D'}">
+      <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('sexe')">edit</mat-icon>      
       </div>
-      <mat-card-title>{{member.nick}}</mat-card-title>
-      <mat-card-subtitle>{{member.cognoms}}, {{member.nom}}</mat-card-subtitle>
+      <mat-card-title>{{member.nick}} <mat-icon 
+        *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('nick')">edit</mat-icon></mat-card-title>
+      <mat-card-subtitle>{{member.cognoms}}, {{member.nom}} <mat-icon 
+        *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('nom')">edit</mat-icon></mat-card-subtitle>
     </mat-card-header>
 
     <ng-template #basicdata>
-      <dl>
-        <dt>eMail:</dt>
+      <dl class="width-95">
+        <dt>eMail: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('email')">edit</mat-icon></dt>
         <dd>{{member.email}}</dd>
-        <dt>NIF:</dt>
+        <dt>NIF: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('nif')">edit</mat-icon></dt>
         <dd>{{member.nif}}</dd>
-        <dt>IBAN:</dt>
+        <dt>IBAN: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('iban')">edit</mat-icon></dt>
         <dd>{{member.iban}}</dd>
       </dl>
     </ng-template>
 
     <ng-template #contactdata>
-      <dl>
-        <dt>Telèfon:</dt>
+      <dl class="width-95">
+        <dt>Telèfon: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('telefon')">edit</mat-icon></dt>
         <dd>{{member.telefon}}</dd>
-        <dt>Adreça:</dt>
+        <dt>Adreça: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('adreca')">edit</mat-icon></dt>
         <dd>{{member.adreca}}</dd>
-        <dt>Codi postal:</dt>
+        <dt>Codi postal: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('codiPostal')">edit</mat-icon></dt>
         <dd>{{member.codiPostal}}</dd>
-        <dt>Població:</dt>
+        <dt>Població: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('poblacio')">edit</mat-icon></dt>
         <dd>{{member.poblacio}}</dd>
       </dl>
     </ng-template>
 
     <ng-template #otherdata>
-      <dl>
-        <dt>Quota pagada al TPV:</dt>
+      <dl class="width-95">
+        <dt>Quota pagada al TPV: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('quotaAlta')">edit</mat-icon></dt>
         <dd>{{member.quotaAlta}} €</dd>
-        <dt>Data del pagament:</dt>
+        <dt>Data del pagament: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataAlta')">edit</mat-icon></dt>
         <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
-        <dt>Observacions:</dt>
+        <dt>Observacions: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('observacions')">edit</mat-icon></dt>
         <dd>{{member.observacions}}</dd>
       </dl>
     </ng-template>
@@ -98,7 +101,7 @@
     <ng-template [ngIf]="smallScreen" [ngIfElse]="bigScreen">
       <mat-card-content (panleft)="onPanLeft($event)" (panright)="onPanRight($event)">
         <mat-tab-group #usertabs>
-          <mat-tab label="Bàsica" class="full-width">
+          <mat-tab label="Bàsica">
             <ng-container *ngTemplateOutlet="basicdata"></ng-container>
           </mat-tab>
 
@@ -116,12 +119,18 @@
     <mat-card-actions align="end">
       <div fxLayout="wrap" class="full-width">
         <div fxFlex="0 1 60%" fxLayoutAlign="start">
-          <a mat-flat-button color="accent" (click)="unregisterMember(member.id)" *ngIf="member.activat===true">
+          <a *ngIf="!editMode && member.activat===true" mat-flat-button color="accent" (click)="unregisterMember(member.id)">
             <mat-icon>delete</mat-icon> Baixa
           </a>
-          <a mat-flat-button color="primary" disabled="true" [routerLink]="['/member-details', member.id]">
+          <button *ngIf="editMode" matTooltip="Cancel·la" mat-flat-button color="accent" (click)="onClickCancelEdit($event)" type="button">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button *ngIf="!editMode" mat-flat-button color="primary" (click)="onClickEdit($event)" type="button">
             <mat-icon>edit</mat-icon> Edita
-          </a>
+          </button>
+          <button *ngIf="editMode" matTooltip="Desa els canvis" mat-flat-button color="primary" (click)="onClickEditSave($event)" type="button">
+            <mat-icon>save</mat-icon>
+          </button>
         </div>
         <div fxFlex="0 1 40%" fxLayoutAlign="end">
           <a mat-flat-button color="primary" (click)="onClickBack()">

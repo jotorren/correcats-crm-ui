@@ -11,34 +11,12 @@
   justify-content: center;
 }
 
-.home {
-  margin-right: 10px;
+.wrap-mat-radio-label {
+  padding-right: 10px;
+  font-size: 14px !important;
+  height: 32px;
 }
 
-/* Structure */
-.member-container {
-  position: relative;
-  padding: 5px;
-}
-
-.member-full-width {
-  width: 100%;
-}
-
-.member-full-width:nth-last-child(0) {
-  margin-bottom: 10px;
-}
-
-.mat-flat-button {
-  margin: 5px;
-}
-
-.button-row {
-  margin: 10px 0;
-}
-
-.member-form {
-  min-width: 150px;
-  max-width: 500px;
+.full-width {
   width: 100%;
 }
