@@ -7,13 +7,13 @@
         <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
             <div fxFlex="0 1 50%" fxFlex.xs="0 1 auto" fxLayoutAlign="start">
                 <mat-radio-group formControlName="sexe">
-                    <mat-radio-button value="">Tots</mat-radio-button>
-                    <mat-radio-button value="D">Dona</mat-radio-button>
-                    <mat-radio-button value="H">Home</mat-radio-button>
+                    <mat-radio-button value="" class="member-form-field">Tots</mat-radio-button>
+                    <mat-radio-button value="D" class="member-form-field">Dona</mat-radio-button>
+                    <mat-radio-button value="H" class="member-form-field">Home</mat-radio-button>
                 </mat-radio-group>
             </div>
             <div fxFlex="0 1 50%" fxFlex.xs="0 1 auto" fxLayoutAlign="end" fxLayoutAlign.xs="start">
-                <mat-slide-toggle formControlName="wodeleted">
+                <mat-slide-toggle formControlName="wodeleted" class="member-form-field">
                     Inclou els associats donats de baixa
                 </mat-slide-toggle>
             </div>
@@ -22,14 +22,14 @@
             <div fxFlex="0 1 20%" fxFlex.xs="0 1 auto">
                 <mat-form-field appearance="fill" [floatLabel]="'always'">
                     <mat-label>Nom</mat-label>
-                    <input #nom matInput formControlName="nom" maxlength="255">
+                    <input #nom matInput formControlName="nom" placeholder="Nom" maxlength="255">
                     <mat-hint align="end">{{nom.value.length}} / 255</mat-hint>
                 </mat-form-field>
             </div>
             <div fxFlex="0 1 40%" fxFlex.xs="0 1 auto">
                 <mat-form-field appearance="fill" [floatLabel]="'always'">
                     <mat-label>Cognoms</mat-label>
-                    <input #cognoms matInput formControlName="cognoms" maxlength="255">
+                    <input #cognoms matInput formControlName="cognoms" placeholder="Cognoms" maxlength="255">
                     <mat-hint align="end">{{cognoms.value.length}} / 255</mat-hint>
                 </mat-form-field>
             </div>
@@ -38,7 +38,7 @@
                     <mat-label>
                         <mat-icon>account_circle</mat-icon> Nick
                     </mat-label>
-                    <input #nick matInput formControlName="nick" maxlength="32">
+                    <input #nick matInput formControlName="nick" placeholder="Nick" maxlength="32">
                     <mat-hint align="end">{{nick.value.length}} / 32</mat-hint>
                 </mat-form-field>
             </div>
@@ -96,14 +96,14 @@
                     <mat-label>
                         <mat-icon>euro</mat-icon> Quota pagada al TPV
                     </mat-label>
-                    <input matInput formControlName="quotaAlta" pattern="[0-9]*(\.[0-9]*)?">
+                    <input matInput formControlName="quotaAlta" placeholder="Quota" pattern="[0-9]*(\.[0-9]*)?">
                     <mat-error *ngIf="!findForm.get('quotaAlta').valid">Si us plau introdueix un número</mat-error>
                 </mat-form-field>
             </div>
         </div>
         <div fxLayout="wrap" class="full-width">
             <div fxFlex="0 1 50%" fxLayoutAlign="start">
-                <button mat-button mat-raised-button color="accent" matTooltip="Neteja el formulari" type="button"
+                <button mat-button mat-raised-button color="accent" matTooltip="Neteja els resultats" type="button"
                     (click)=" onClickReset($event)">
                     <mat-icon>clear</mat-icon> Neteja
                 </button>

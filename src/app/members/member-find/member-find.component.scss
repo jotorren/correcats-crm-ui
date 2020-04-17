@@ -17,6 +17,11 @@ justify-content: center;
 
 .member-find-container .mat-form-field {
     width: 98%;
+    font-size: small;
+}
+
+.member-form-field {
+    font-size: small;
 }
 
 // .member-find-container form > * {
@@ -55,6 +60,10 @@ table {
 .mat-row {
     height: 32px !important;
 }
+
+// .mat-cell {
+//     font-size: small !important;
+// }
 
 .full-width {
     width: 100%;
