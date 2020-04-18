@@ -3,6 +3,7 @@ import { CanActivate, CanActivateChild, CanLoad, Router, Route, ActivatedRouteSn
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs';
 import { LogService } from '../log/log.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthorizatorGuard implements CanActivate, CanActivateChild, CanLoad
     constructor(
         private authService: AuthenticationService,
         private router: Router,
-        private log: LogService) { }
+        private log: LogService,
+        private dialogRef: MatDialog) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
         return this.checkActivation(route);
@@ -34,6 +36,7 @@ export class AuthorizatorGuard implements CanActivate, CanActivateChild, CanLoad
 
         if (!this.authService.isLoggedIn()) {
             this.log.debug('not logged-in > redirect to login');
+            this.dialogRef.closeAll();
             this.router.navigate(['/login']);
         } else {
             this.log.debug('logged-in > checking expiration');
