@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { handle } from '../../shared/error/error-handlers';
@@ -13,7 +13,7 @@ import { AppGlobalService } from 'src/app/app.global.service';
   templateUrl: './member-report.component.html',
   styleUrls: ['./member-report.component.scss']
 })
-export class MemberReportComponent implements OnInit {
+export class MemberReportComponent implements OnInit, OnDestroy {
 
   isLoadingResults = false;
   durationInSeconds = 2;
@@ -38,7 +38,7 @@ export class MemberReportComponent implements OnInit {
         data => {
           this.requestedFiles = this.requestedFiles.filter(item => item !== data);
           this.downloadableFiles.unshift(data);
-          this.snackBar.open('El fitxer "' + data + '" ja es pot descarregar', 'OK', { duration: 4000,  verticalPosition: 'top' });
+          this.snackBar.open('El fitxer "' + data + '" ja es pot descarregar', 'OK', { duration: 4000, verticalPosition: 'top' });
         },
         err => {
           this.log.error(err);
@@ -48,6 +48,21 @@ export class MemberReportComponent implements OnInit {
           this.sub.unsubscribe();
         }
       );
+
+    const saved = sessionStorage.getItem('MemberReportComponent.downloadableFiles');
+    if (saved) {
+      this.downloadableFiles = JSON.parse(saved);
+    } else {
+      this.downloadableFiles = [];
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.downloadableFiles) {
+      sessionStorage.setItem('MemberReportComponent.downloadableFiles', JSON.stringify(this.downloadableFiles));
+    } else {
+      sessionStorage.removeItem('MemberReportComponent.downloadableFiles');
+    }
   }
 
   onClickGetAll(event) {

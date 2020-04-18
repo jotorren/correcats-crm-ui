@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatListOption } from '@angular/material/list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -15,7 +15,7 @@ import { AppGlobalService } from 'src/app/app.global.service';
   templateUrl: './member-export.component.html',
   styleUrls: ['./member-export.component.scss']
 })
-export class MemberExportComponent implements OnInit {
+export class MemberExportComponent implements OnInit, OnDestroy {
 
   smallScreen: boolean;
 
@@ -85,16 +85,36 @@ export class MemberExportComponent implements OnInit {
       this.smallScreen = result.matches;
     });
 
-    // Default selection
-    this.selectedFields = ['nom', 'cognoms', 'nick', 'iban'];
-    this.orderedFields = ['nom', 'cognoms', 'nick', 'iban'];
+    let saved = sessionStorage.getItem('MemberExportComponent.selectedFields');
+    if (saved) {
+      this.selectedFields = JSON.parse(saved);
+      this.orderedFields = JSON.parse(saved);
+    } else {
+      // Default selection
+      this.selectedFields = ['nom', 'cognoms', 'nick', 'iban'];
+      this.orderedFields = ['nom', 'cognoms', 'nick', 'iban'];
+    }
+
+    saved = sessionStorage.getItem('MemberExportComponent.criteria');
+    if (saved) {
+      this.criteria = JSON.parse(saved);
+    } else {
+      this.criteria = [];
+    }
+
+    saved = sessionStorage.getItem('MemberExportComponent.downloadableFiles');
+    if (saved) {
+      this.downloadableFiles = JSON.parse(saved);
+    } else {
+      this.downloadableFiles = [];
+    }
 
     this.sub = this.api.live()
       .subscribe(
         data => {
           this.requestedFiles = this.requestedFiles.filter(item => item !== data);
           this.downloadableFiles.unshift(data);
-          this.snackBar.open('El fitxer "' + data + '" ja es pot descarregar', 'OK', { duration: 4000,  verticalPosition: 'top' });
+          this.snackBar.open('El fitxer "' + data + '" ja es pot descarregar', 'OK', { duration: 4000, verticalPosition: 'top' });
         },
         err => {
           this.log.error(err);
@@ -104,6 +124,26 @@ export class MemberExportComponent implements OnInit {
           this.sub.unsubscribe();
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    if (this.selectedFields) {
+      sessionStorage.setItem('MemberExportComponent.selectedFields', JSON.stringify(this.selectedFields));
+    } else {
+      sessionStorage.removeItem('MemberExportComponent.selectedFields');
+    }
+
+    if (this.criteria) {
+      sessionStorage.setItem('MemberExportComponent.criteria', JSON.stringify(this.criteria));
+    } else {
+      sessionStorage.removeItem('MemberExportComponent.criteria');
+    }
+
+    if (this.downloadableFiles) {
+      sessionStorage.setItem('MemberExportComponent.downloadableFiles', JSON.stringify(this.downloadableFiles));
+    } else {
+      sessionStorage.removeItem('MemberExportComponent.downloadableFiles');
+    }
   }
 
   get filter() {
