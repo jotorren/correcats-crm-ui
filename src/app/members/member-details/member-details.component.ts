@@ -103,7 +103,7 @@ export class MemberDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         for (const mbf of Object.keys(dialogResult)) {
-          if (mbf === 'dataAlta' || mbf === 'dataBaixa') {
+          if ((mbf === 'dataAlta' || mbf === 'dataBaixa') && dialogResult[mbf]) {
             this.member[mbf] = moment(dialogResult[mbf]).format('DD/MM/YYYY');
           } else {
             this.member[mbf] = dialogResult[mbf];
