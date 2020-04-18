@@ -176,6 +176,10 @@ export let Config = {
                         all: ['equals', 'isnull', 'gt', 'gte', 'lt', 'lte'],
                         default: 'lte'
                     },
+                    infantil: {
+                        all: ['equals'],
+                        default: 'equals'
+                    },
                     observacions: {
                         all: ['equals', 'like', 'startsWith', 'endsWith', 'contains'],
                         default: 'contains'

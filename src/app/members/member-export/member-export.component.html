@@ -38,7 +38,13 @@
               </div>
             </mat-selection-list>
           </mat-expansion-panel>
-          Sel.leccionades: <div mat-line class="fill-bold full-width mat-body-2">{{orderedFields}}</div>
+          Sel.leccionades:
+          <mat-list>
+            <mat-list-item class="fill-bold">
+              <mat-icon mat-list-icon class="delete-criteria">view_column</mat-icon>
+              <div class="mat-body-2">{{orderedFields}}</div>
+            </mat-list-item>
+          </mat-list>          
         </mat-card-content>
       </mat-card>
 
@@ -94,7 +100,7 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 </div>
-                <div *ngIf="!nullFilterValue && filterBy==='activat'">
+                <div *ngIf="!nullFilterValue && (filterBy==='activat' || filterBy==='infantil')">
                   <mat-radio-group [(ngModel)]="filterValue">
                     <mat-radio-button value="true"><span class="wrap-mat-radio-label">Sí</span></mat-radio-button>
                     <mat-radio-button value="false"><span class="wrap-mat-radio-label">No</span></mat-radio-button>

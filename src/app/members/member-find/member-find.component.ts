@@ -30,11 +30,11 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('searchbutton') searchButton: MatButton;
 
-  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'email', 'dataAlta', 'dataBaixa', 'activat'];
+  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'email', 'dataAlta', 'dataBaixa', 'activat', 'infantil'];
   private mobileDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'activat'];
 
   data: MembersDataSource;
-  private fields = ['id', 'nom', 'cognoms', 'nick', 'email', 'activat', 'dataAlta', 'dataBaixa', 'observacions'];
+  private fields = ['id', 'nom', 'cognoms', 'nick', 'email', 'activat', 'infantil', 'dataAlta', 'dataBaixa', 'observacions'];
   sortable = false;
   sortDirection = 'asc';
 
@@ -69,6 +69,7 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
       quotaAlta: [null, Validators.pattern],
       dataAlta: [null],
 
+      infantil: [false],
       observacions: [null, Validators.maxLength],
     });
 
@@ -211,6 +212,14 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
         key: 'quotaAlta',
         operation: Config.api.members.query.operators[Config.api.members.query.fields.quotaAlta.default].code,
         value: parseFloat(this.findForm.value.quotaAlta)
+      });
+    }
+
+    if (this.findForm.value.infantil) {
+      conds.push({
+        key: 'infantil',
+        operation: Config.api.members.query.operators[Config.api.members.query.fields.infantil.default].code,
+        value: true
       });
     }
 

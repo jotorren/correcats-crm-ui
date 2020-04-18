@@ -9,7 +9,7 @@ import { LogService } from '../shared/log/log.service';
 type AsyncValidator = (value: string, instance: MemberValidatorService) => Observable<Result>;
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable({
@@ -32,19 +32,19 @@ export class MemberValidatorService {
   isNickOk(nick: string, instance: MemberValidatorService): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.nick + nick;
     return instance.http.get<Result>(url, httpOptions).pipe(
-      tap(_ => this.log.debug(`verified nick=${nick}`))
+      tap(_ => instance.log.debug(`verified nick=${nick}`))
     );
   }
 
   isEmailOk(email: string, instance: MemberValidatorService): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.email + email;
     return instance.http.get<Result>(url, httpOptions).pipe(
-      tap(_ => this.log.debug(`verified emal=${email}`))
+      tap(_ => instance.log.debug(`verified emal=${email}`))
     );
   }
 
   private itemValidator(validatorMethod: AsyncValidator) {
-    return (control: FormControl): Observable<{[key: string]: any} | null> => {
+    return (control: FormControl): Observable<{ [key: string]: any } | null> => {
       this.log.debug('control[' + control.value + '] pristine: ' + control.pristine);
       if (control.pristine) {
         return of(null);
@@ -56,7 +56,7 @@ export class MemberValidatorService {
             if (res.result) {
               return null;
             } else {
-              return {api: res.result};
+              return { api: res.result };
             }
           }),
           catchError(this.handleError())
@@ -65,31 +65,39 @@ export class MemberValidatorService {
   }
 
   private handleError() {
-    return (err: any): Observable<{[key: string]: any} | null> => {
-
-      const httpCode = err.status;
-      const apiErrors = err.error.errors;
+    return (err: any): Observable<{ [key: string]: any } | null> => {
 
       let message = '';
-      switch (httpCode) {
-        case 404:
-          this.log.error('Nick no trobat a Joomla');
-          message = apiErrors[0].message;
-          break;
-        case 412:
-          this.log.error('Nick/eMail en ús');
-          message = apiErrors[0].message;
-          break;
-        case 500:
-          this.log.error('Error intern del sistema');
-          message = apiErrors[0].message;
-          break;
-        default:
-          message = err.message;
+
+      if (err.error && err.error.errors) {
+        const httpCode = err.status;
+        const apiErrors = err.error.errors;
+        switch (httpCode) {
+          case 404:
+            this.log.error('Nick no trobat a Joomla');
+            message = apiErrors[0].message;
+            break;
+          case 412:
+            this.log.error('Nick/eMail en ús');
+            message = apiErrors[0].message;
+            break;
+          case 500:
+            this.log.error('Error intern del sistema');
+            message = apiErrors[0].message;
+            break;
+          default:
+            message = 'Error intern del sistema';
+            this.log.error(err.message);
+            console.log(err);
+        }
+      } else {
+        message = 'Error intern del sistema';
+        this.log.error(err.message);
+        console.log(err);
       }
 
       // Let the app keep running by returning an empty result.
-      return of({api: message});
+      return of({ api: message });
     };
   }
 }

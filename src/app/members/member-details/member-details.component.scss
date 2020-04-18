@@ -88,6 +88,11 @@ $primary: map-get($crm-app-theme, primary);
   background-size: cover;
 }
 
+.member-child {
+  background-image: url('../../../assets/images/child.png');
+  background-size: cover;
+}
+
 .basic-header-image {
   background-image: url('../../../assets/images/personaldata3.png');
   background-size: cover;

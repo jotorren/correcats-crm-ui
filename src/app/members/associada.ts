@@ -15,5 +15,6 @@ export interface Associada {
   quotaAlta: number;
   dataAlta: string;
   dataBaixa: string;
+  infantil: boolean;
   observacions: string;
 }

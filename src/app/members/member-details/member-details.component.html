@@ -11,6 +11,7 @@
   <mat-card class="member-details-container mat-elevation-z8" [ngClass]="{'member-deleted-bg' : member.activat === false}">
     <mat-card-header>
       <div mat-card-avatar [ngClass]="{'member-deleted' : member.activat === false,
+      'member-child' : member.activat === true && member.infantil === true,
       'member-male' : member.activat === true && member.sexe === 'H', 
       'member-female' : member.activat === true && member.sexe === 'D'}">
       <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('sexe')">edit</mat-icon>      

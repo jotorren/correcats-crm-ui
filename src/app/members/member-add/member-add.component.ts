@@ -159,6 +159,7 @@ export class MemberAddComponent implements OnInit {
       quotaAlta: [null, Validators.pattern],
       dataAlta: [null],
 
+      infantil: [false],
       observacions: [null, Validators.maxLength],
     }, { updateOn: 'blur' });
 

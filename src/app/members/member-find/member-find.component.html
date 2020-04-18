@@ -13,11 +13,14 @@
                 </mat-radio-group>
             </div>
             <div fxFlex="0 1 50%" fxFlex.xs="0 1 auto" fxLayoutAlign="end" fxLayoutAlign.xs="start">
-                <mat-slide-toggle formControlName="wodeleted" class="member-form-field">
+                <mat-slide-toggle formControlName="infantil" class="member-form-field">
+                    Només associats infantils
+                </mat-slide-toggle>
+                <mat-slide-toggle formControlName="wodeleted" class="member-form-field2">
                     Inclou els associats donats de baixa
                 </mat-slide-toggle>
             </div>
-        </div>        
+        </div>
         <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
             <div fxFlex="0 1 20%" fxFlex.xs="0 1 auto">
                 <mat-form-field appearance="fill" [floatLabel]="'always'">
@@ -117,8 +120,8 @@
     </form>
 
     <div class="member-list-container">
-        <table mat-table [dataSource]="data" class="member-table" matSort matSortActive="cognoms" [matSortDirection]="sortDirection"
-            matSortDisableClear>
+        <table mat-table [dataSource]="data" class="member-table" matSort matSortActive="cognoms"
+            [matSortDirection]="sortDirection" matSortDisableClear>
 
             <ng-container matColumnDef="cognoms">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!sortable">Cognoms</th>
@@ -152,10 +155,19 @@
 
             <ng-container matColumnDef="activat">
                 <th mat-header-cell *matHeaderCellDef>Estat</th>
-                <td mat-cell *matCellDef="let row"><mat-icon *ngIf="row.activat === 'false'"
-                    matTooltip="Associat donat de baixa" class="member-deleted-icon">block</mat-icon>
+                <td mat-cell *matCellDef="let row">
+                    <mat-icon *ngIf="row.activat === 'false'" matTooltip="Associat donat de baixa"
+                        class="member-deleted-icon">block</mat-icon>
                     <mat-icon *ngIf="row.activat === 'true' && row.observacions && row.observacions.length>0"
-                    matTooltip="Associat amb avisos" class="member-warnings-icon">warning</mat-icon>
+                        matTooltip="Associat amb avisos" class="member-warnings-icon">warning</mat-icon>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="infantil">
+                <th mat-header-cell *matHeaderCellDef>Infantil?</th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-icon *ngIf="row.infantil === 'true'" matTooltip="Associat infantil" color="primary">child_care
+                    </mat-icon>
                 </td>
             </ng-container>
 
