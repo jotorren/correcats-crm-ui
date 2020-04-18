@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -13,6 +13,7 @@ import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
 import { MemberEditComponent } from '../member-edit/member-edit.component';
 import { LogService } from 'src/app/shared/log/log.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-member-details',
@@ -29,6 +30,7 @@ export class MemberDetailsComponent implements OnInit {
 
   smallScreen: boolean;
   member: Associada;
+  memberInmutable: Associada;
   isLoadingResults = false;
 
   durationInSeconds = 2;
@@ -41,7 +43,8 @@ export class MemberDetailsComponent implements OnInit {
     private alerter: AlertService,
     private breakpointObserver: BreakpointObserver,
     private location: Location,
-    private log: LogService) { }
+    private log: LogService,
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.breakpointObserver.observe([
@@ -53,6 +56,7 @@ export class MemberDetailsComponent implements OnInit {
 
     this.route.data.forEach((data: { api: Result }) => {
       this.member = data.api.result;
+      this.memberInmutable = { ...this.member };
     });
 
     this.pan
@@ -72,37 +76,6 @@ export class MemberDetailsComponent implements OnInit {
       });
   }
 
-  onClickBack() {
-    this.location.back();
-  }
-
-  onClickEdit(event) {
-    this.editMode = true;
-  }
-
-  onClickCancelEdit(event) {
-    this.editMode = false;
-  }
-
-  onClickEditSave($event) {
-    this.editMode = false;
-  }
-
-  onClickEditField(field) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '450px';
-    dialogConfig.data = {form: this.member, name: field};
-
-    const dialogRef = this.dialog.open(MemberEditComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult) {
-        this.log.debug();
-      }
-    });
-  }
-
   onPanLeft(event) {
     this.pan.next('next');
   }
@@ -111,7 +84,61 @@ export class MemberDetailsComponent implements OnInit {
     this.pan.next('previous');
   }
 
-  unregisterMember(id: any) {
+  onClickBack() {
+    this.location.back();
+  }
+
+  onClickEdit(event) {
+    this.editMode = true;
+  }
+
+  onClickEditField(field) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '450px';
+    dialogConfig.data = { form: this.member, name: field };
+
+    const dialogRef = this.dialog.open(MemberEditComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        for (const mbf of Object.keys(dialogResult)) {
+          if (mbf === 'dataAlta' || mbf === 'dataBaixa') {
+            this.member[mbf] = moment(dialogResult[mbf]).format('DD/MM/YYYY');
+          } else {
+            this.member[mbf] = dialogResult[mbf];
+          }
+        }
+      }
+    });
+  }
+
+  onClickEditCancel(event) {
+    this.member = { ...this.memberInmutable };
+    this.editMode = false;
+  }
+
+  onClickEditSave($event) {
+    this.isLoadingResults = true;
+
+    const memberId = this.member.id;
+    delete this.member.id;
+    this.api.updateMember(memberId, this.member)
+      .subscribe((resok: any) => {
+        this.member = resok.result;
+        this.memberInmutable = { ...this.member };
+        this.editMode = false;
+        this.isLoadingResults = false;
+      }, (resko: any) => {
+        handle(resko, this.durationInSeconds, this.alerter);
+        this.member = { ...this.memberInmutable };
+        this.editMode = false;
+        this.isLoadingResults = false;
+      }
+      );
+  }
+
+  onClickUnregisterMember(id: any) {
     const message = `Donar de baixa l'associat/da?`;
     const dialogData = new ConfirmDialogModel('Confirmació', message);
 
@@ -124,16 +151,16 @@ export class MemberDetailsComponent implements OnInit {
       if (dialogResult) {
         this.isLoadingResults = true;
         this.api.unregisterMember(id)
-          .subscribe(res => {
+          .subscribe(resok => {
+            this.member = resok.result;
+            this.memberInmutable = { ...this.member };
             this.isLoadingResults = false;
-            this.router.navigate(['/members-list']);
-          }, (err) => {
-            handle(err, this.durationInSeconds, this.alerter);
+          }, (resko) => {
+            handle(resko, this.durationInSeconds, this.alerter);
             this.isLoadingResults = false;
           }
           );
       }
     });
   }
-
 }

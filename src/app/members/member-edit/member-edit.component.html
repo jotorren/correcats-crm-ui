@@ -14,7 +14,7 @@
         maxlength="255">
       <mat-hint align="end">{{nom.value.length}} / 255</mat-hint>
       <mat-error>
-        <span *ngIf="!memberForm.get('nom').valid && memberForm.get('nom').touched">Si us plau introdueix el
+        <span *ngIf="memberForm.get('nom').dirty && !memberForm.get('nom').valid">Si us plau introdueix el
           nom</span>
       </mat-error>
     </mat-form-field>
@@ -25,7 +25,7 @@
         required maxlength="255">
       <mat-hint align="end">{{cognoms.value.length}} / 255</mat-hint>
       <mat-error>
-        <span *ngIf="!memberForm.get('cognoms').valid && memberForm.get('cognoms').touched">Si us plau introdueix els
+        <span *ngIf="memberForm.get('cognoms').dirty && !memberForm.get('cognoms').valid">Si us plau introdueix els
           cognoms</span>
       </mat-error>
     </mat-form-field>
@@ -37,9 +37,9 @@
         <mat-icon matSuffix>account_circle</mat-icon>
       <mat-hint align="end">{{nick.value.length}} / 32</mat-hint>
       <mat-error>
-        <span *ngIf="memberForm.get('nick').hasError('required') && memberForm.get('nick').touched">Si us plau
+        <span *ngIf="memberForm.get('nick').dirty && memberForm.get('nick').hasError('required')">Si us plau
           introdueix el nick</span>
-        <span *ngIf="memberForm.get('nick').hasError('api') && memberForm.get('nick').touched">
+        <span *ngIf="memberForm.get('nick').dirty && memberForm.get('nick').hasError('api')">
           {{memberForm.get('nick').getError('api')}}</span>
       </mat-error>
     </mat-form-field>
@@ -51,13 +51,13 @@
         <mat-icon matSuffix>alternate_email</mat-icon>
       <mat-hint align="end">{{email.value.length}} / 100</mat-hint>
       <mat-error>
-        <span *ngIf="memberForm.get('email').hasError('required') && memberForm.get('email').touched">
+        <span *ngIf="memberForm.get('email').dirty && memberForm.get('email').hasError('required')">
           Si us plau introdueix una adreça de correu vàlida
         </span>
-        <span *ngIf="memberForm.get('email').hasError('email') && memberForm.get('email').touched">
+        <span *ngIf="memberForm.get('email').dirty && memberForm.get('email').hasError('email')">
           El valor introduït no té el format correcte
         </span>
-        <span *ngIf="memberForm.get('email').hasError('api') && memberForm.get('email').touched">
+        <span *ngIf="memberForm.get('email').dirty && memberForm.get('email').hasError('api')">
           {{memberForm.get('email').getError('api')}}</span>
       </mat-error>
     </mat-form-field>
@@ -68,7 +68,7 @@
         maxlength="9">
       <mat-hint align="end">{{nif.value.length}} / 9</mat-hint>
       <mat-error>
-        <span *ngIf="!memberForm.get('nif').valid && memberForm.get('nif').touched">
+        <span *ngIf="memberForm.get('nif').dirty && memberForm.get('nif').hasError('pattern')">
           Si us plau introdueix un NIF amb el format 00000000T
         </span>
       </mat-error>
@@ -76,13 +76,13 @@
 
     <mat-form-field *ngIf="model.name === 'iban'" class="full-width">
       <mat-label>IBAN</mat-label>
-      <input #iban matInput placeholder="ESCC BBBB SSSS ZZZZ ZZZZ ZZZZ" formControlName="iban"
+      <input #iban matInput placeholder="ES00 1111 2222 3333 4444 5555" formControlName="iban"
         pattern="[a-zA-Z]{2}[0-9]{2}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}[\s]*[0-9]{4}"
         maxlength="32">
         <mat-icon matSuffix>account_balance</mat-icon>
       <mat-hint align="end">{{iban.value.length}} / 32</mat-hint>
       <mat-error>
-        <span *ngIf="!memberForm.get('iban').valid && memberForm.get('iban').touched">
+        <span *ngIf="memberForm.get('iban').dirty && memberForm.get('iban').hasError('pattern')">
           Si us plau introdueix un IBAN amb el format 'ES00 1111 2222 3333 4444 5555'
         </span>
       </mat-error>
@@ -104,7 +104,22 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-error>
-        <span *ngIf="!memberForm.get('dataAlta').valid && memberForm.get('dataAlta').touched">
+        <span *ngIf="memberForm.get('dataAlta').dirty && !memberForm.get('dataAlta').valid">
+          Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
+        </span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="model.name === 'dataBaixa'" class="full-width">
+      <mat-label>Data de la baixa</mat-label>
+      <input #dataBaixa matInput [matDatepicker]="picker2" placeholder="dd/mm/yyyy" formControlName="dataBaixa"
+        maxlength="10">
+      <mat-hint align="start">Selecciona o escriu dia o dia/mes</mat-hint>
+      <mat-hint align="end">{{dataBaixa.value.length}} / 10</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+      <mat-error>
+        <span *ngIf="memberForm.get('dataBaixa').dirty && !memberForm.get('dataBaixa').valid">
           Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
         </span>
       </mat-error>

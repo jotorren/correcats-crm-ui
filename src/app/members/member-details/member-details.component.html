@@ -23,36 +23,40 @@
 
     <ng-template #basicdata>
       <dl class="width-95">
+        <dt>Activat:</dt>
+        <dd><mat-slide-toggle [(ngModel)]="member.activat" [disabled]="member.activat || !editMode"></mat-slide-toggle> No / Sí</dd>           
         <dt>eMail: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('email')">edit</mat-icon></dt>
         <dd>{{member.email}}</dd>
         <dt>NIF: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('nif')">edit</mat-icon></dt>
-        <dd>{{member.nif}}</dd>
+        <dd>{{member.nif | default:'---'}}</dd>
         <dt>IBAN: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('iban')">edit</mat-icon></dt>
-        <dd>{{member.iban}}</dd>
+        <dd>{{member.iban | default:'---'}}</dd>     
       </dl>
     </ng-template>
 
     <ng-template #contactdata>
       <dl class="width-95">
         <dt>Telèfon: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('telefon')">edit</mat-icon></dt>
-        <dd>{{member.telefon}}</dd>
+        <dd>{{member.telefon | default:'---'}}</dd>
         <dt>Adreça: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('adreca')">edit</mat-icon></dt>
-        <dd>{{member.adreca}}</dd>
+        <dd>{{member.adreca | default:'---'}}</dd>
         <dt>Codi postal: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('codiPostal')">edit</mat-icon></dt>
-        <dd>{{member.codiPostal}}</dd>
+        <dd>{{member.codiPostal | default:'---'}}</dd>
         <dt>Població: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('poblacio')">edit</mat-icon></dt>
-        <dd>{{member.poblacio}}</dd>
+        <dd>{{member.poblacio | default:'---'}}</dd>
       </dl>
     </ng-template>
 
     <ng-template #otherdata>
       <dl class="width-95">
         <dt>Quota pagada al TPV: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('quotaAlta')">edit</mat-icon></dt>
-        <dd>{{member.quotaAlta}} €</dd>
-        <dt>Data del pagament: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataAlta')">edit</mat-icon></dt>
-        <dd>{{member.dataAlta | date:'dd/MM/yyyy' }}</dd>
+        <dd>{{member.quotaAlta | default:'---'}} €</dd>
+        <dt>Data d'alta: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataAlta')">edit</mat-icon></dt>
+        <dd>{{member.dataAlta | default:'---'}}</dd>
+        <dt>Data de baixa: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataBaixa')">edit</mat-icon></dt>
+        <dd>{{member.dataBaixa | default:'---'}}</dd>        
         <dt>Observacions: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('observacions')">edit</mat-icon></dt>
-        <dd>{{member.observacions}}</dd>
+        <dd>{{member.observacions | default:'---'}}</dd>
       </dl>
     </ng-template>
 
@@ -119,10 +123,10 @@
     <mat-card-actions align="end">
       <div fxLayout="wrap" class="full-width">
         <div fxFlex="0 1 60%" fxLayoutAlign="start">
-          <a *ngIf="!editMode && member.activat===true" mat-flat-button color="accent" (click)="unregisterMember(member.id)">
+          <a *ngIf="!editMode && member.activat===true" mat-flat-button color="accent" (click)="onClickUnregisterMember(member.id)">
             <mat-icon>delete</mat-icon> Baixa
           </a>
-          <button *ngIf="editMode" matTooltip="Cancel·la" mat-flat-button color="accent" (click)="onClickCancelEdit($event)" type="button">
+          <button *ngIf="editMode" matTooltip="Cancel·la" mat-flat-button color="accent" (click)="onClickEditCancel($event)" type="button">
             <mat-icon>cancel</mat-icon>
           </button>
           <button *ngIf="!editMode" mat-flat-button color="primary" (click)="onClickEdit($event)" type="button">

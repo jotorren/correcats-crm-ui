@@ -45,6 +45,11 @@ export class MemberValidatorService {
 
   private itemValidator(validatorMethod: AsyncValidator) {
     return (control: FormControl): Observable<{[key: string]: any} | null> => {
+      this.log.debug('control[' + control.value + '] pristine: ' + control.pristine);
+      if (control.pristine) {
+        return of(null);
+      }
+
       return validatorMethod(control.value, this)
         .pipe(
           map(res => {

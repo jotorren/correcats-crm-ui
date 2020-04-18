@@ -42,6 +42,7 @@ import { MemberExportComponent } from './member-export/member-export.component';
 import { SharedModule } from '../shared';
 import { MemberReportComponent } from './member-report/member-report.component';
 import { MemberFindComponent } from './member-find/member-find.component';
+import { DatePipe } from '@angular/common';
 
 export const MY_FORMATS = {
     parse: {
@@ -115,6 +116,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
         },
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+        DatePipe,
         { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
         MemberService,
         MemberValidatorService,
