@@ -215,11 +215,11 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
 
-    if (this.findForm.value.infantil) {
+    if (!this.findForm.value.infantil) {
       conds.push({
         key: 'infantil',
         operation: Config.api.members.query.operators[Config.api.members.query.fields.infantil.default].code,
-        value: true
+        value: false
       });
     }
 
