@@ -1,8 +1,11 @@
 export interface Associada {
   id: string;
+  activat: boolean;
   nom: string;
   cognoms: string;
   sexe: string;
+  infantil: boolean;
+  dataNaixement: string;
   nick: string;
   email: string;
   nif: string;
@@ -11,10 +14,8 @@ export interface Associada {
   adreca: string;
   codiPostal: string;
   poblacio: string;
-  activat: boolean;
   quotaAlta: number;
   dataAlta: string;
   dataBaixa: string;
-  infantil: boolean;
   observacions: string;
 }

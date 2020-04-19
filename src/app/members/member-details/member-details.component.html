@@ -50,8 +50,12 @@
 
     <ng-template #otherdata>
       <dl class="width-95">
-        <dt>Quota pagada al TPV: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('quotaAlta')">edit</mat-icon></dt>
-        <dd>{{member.quotaAlta | default:'---'}} €</dd>
+        <dt *ngIf="member.infantil === false">Quota pagada al TPV: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
+          (click)="onClickEditField('quotaAlta')">edit</mat-icon></dt>
+        <dd *ngIf="member.infantil === false">{{member.quotaAlta | default:'---'}} €</dd>
+        <dt *ngIf="member.infantil === true">Data de Naixement: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
+          (click)="onClickEditField('dataNaixement')">edit</mat-icon></dt>
+        <dd *ngIf="member.infantil === true">{{member.dataNaixement | default:'---'}}</dd>        
         <dt>Data d'alta: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataAlta')">edit</mat-icon></dt>
         <dd>{{member.dataAlta | default:'---'}}</dd>
         <dt>Data de baixa: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataBaixa')">edit</mat-icon></dt>

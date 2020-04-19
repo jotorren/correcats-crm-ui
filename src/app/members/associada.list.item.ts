@@ -1,12 +1,12 @@
 export interface AssociadaListItem {
     id: string;
+    activat: boolean;
     nom: string;
     cognoms: string;
+    infantil: boolean;
     nick: string;
     email: string;
-    activat: boolean;
     dataAlta: string;
     dataBaixa: string;
-    infantil: boolean;
     observacions: string;
   }

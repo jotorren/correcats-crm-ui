@@ -18,6 +18,7 @@ import { MemberService } from '../member.service';
 import { MemberValidatorService } from '../member-validator.service';
 import { LogService } from 'src/app/shared/log/log.service';
 import { AppGlobalService } from 'src/app/app.global.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-member-add',
@@ -141,9 +142,11 @@ export class MemberAddComponent implements OnInit {
     // });
 
     this.memberForm = this.formBuilder.group({
-      sexe: ['H'],
       nom: [null, Validators.required],
       cognoms: [null, Validators.required],
+      sexe: ['H'],
+      infantil: [false],
+      dataNaixement: [null],
       nick: [null, Validators.required, this.validators.nickValidator],
       email: [null, [
         Validators.required,
@@ -159,7 +162,6 @@ export class MemberAddComponent implements OnInit {
       quotaAlta: [null, Validators.pattern],
       dataAlta: [null],
 
-      infantil: [false],
       observacions: [null, Validators.maxLength],
     }, { updateOn: 'blur' });
 
@@ -269,11 +271,19 @@ export class MemberAddComponent implements OnInit {
     this.isLoadingResults = true;
 
     // To show a set of errors
-    let formData = {};
+    let formData: any = {};
     if (this.memberForm.value.codiPostal !== '666') {
-      formData = this.memberForm.value;
+      formData = {...this.memberForm.value};
     }
     //
+
+    // date to string converison dd/MM/yyyy
+    if (this.memberForm.value.dataAlta) {
+      formData.dataAlta = moment(this.memberForm.value.dataAlta).format('DD/MM/YYYY');
+    }
+    if (this.memberForm.value.dataNaixement) {
+      formData.dataNaixement = moment(this.memberForm.value.dataNaixement).format('DD/MM/YYYY');
+    }
 
     this.api.addMember(formData)
       .subscribe((resok: any) => {

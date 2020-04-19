@@ -9,6 +9,7 @@ import { Config, SearchOperator } from '../../shared';
 import { MemberService } from '../member.service';
 import { LogService } from 'src/app/shared/log/log.service';
 import { AppGlobalService } from 'src/app/app.global.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-member-export',
@@ -25,14 +26,15 @@ export class MemberExportComponent implements OnInit, OnDestroy {
   availableFields: string[] = [
     'nom',
     'email',
-    'telefon',
+    'adreca',
     'cognoms',
     'nif',
     'poblacio',
     'nick',
-    'adreca',
+    'dataNaixement',
     'codiPostal',
-    'iban'
+    'iban',
+    'telefon'
   ];
   defaultOrderedFields: string[] = [
     'nom',
@@ -41,6 +43,7 @@ export class MemberExportComponent implements OnInit, OnDestroy {
     'iban',
     'email',
     'nif',
+    'dataNaixement',
     'adreca',
     'telefon',
     'poblacio',
@@ -295,6 +298,13 @@ export class MemberExportComponent implements OnInit, OnDestroy {
         value: 'true',
         operationMap: Config.api.members.query.operators.equals.desc,
         valueMap: 'Sí'
+      },
+      {
+        key: 'infantil',
+        operation: Config.api.members.query.operators.equals.code,
+        value: 'false',
+        operationMap: Config.api.members.query.operators.equals.desc,
+        valueMap: 'No'
       }];
     }
 
@@ -308,7 +318,7 @@ export class MemberExportComponent implements OnInit, OnDestroy {
           value: (crit.value === 'true'),
         });
       } else if (crit.key === 'dataAlta' || crit.key === 'dataBaixa') {
-        // date to string conversion
+        // date to string conversion dd/MM/yyyy
         if (crit.operation === Config.api.members.query.operators.isnull.code) {
           search.push({
             key: crit.key,
@@ -319,7 +329,7 @@ export class MemberExportComponent implements OnInit, OnDestroy {
           search.push({
             key: crit.key,
             operation: crit.operation,
-            value: crit.value.toLocaleDateString('es-ES'),
+            value: moment(crit.value).format('DD/MM/YYYY'),
           });
         }
       } else {

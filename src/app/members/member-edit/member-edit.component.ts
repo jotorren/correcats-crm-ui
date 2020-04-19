@@ -34,10 +34,11 @@ export class MemberEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.memberForm = this.formBuilder.group({
-      sexe: [{value: this.model.form.sexe, disabled: this.model.name !== 'sexe'}],
-      infantil: [{value: this.model.form.infantil, disabled: this.model.name !== 'sexe'}],
       nom: [{value: this.model.form.nom, disabled: this.model.name !== 'nom'}, Validators.required],
       cognoms: [{value: this.model.form.cognoms, disabled: this.model.name !== 'nom'}, Validators.required],
+      sexe: [{value: this.model.form.sexe, disabled: this.model.name !== 'sexe'}],
+      infantil: [{value: this.model.form.infantil, disabled: this.model.name !== 'sexe'}],
+      dataNaixement: [{value: moment(this.model.form.dataNaixement, 'DD/MM/YYYY'), disabled: this.model.name !== 'dataNaixement'}],
       nick: [{value: this.model.form.nick, disabled: this.model.name !== 'nick'}, Validators.required, this.validators.nickValidator],
       email: [{value: this.model.form.email, disabled: this.model.name !== 'email'}, [
         Validators.required,
