@@ -30,6 +30,7 @@ export class MemberDetailsComponent implements OnInit {
 
   smallScreen: boolean;
   member: Associada;
+  age: number;
   memberInmutable: Associada;
   isLoadingResults = false;
   durationInSeconds = 2;
@@ -57,6 +58,9 @@ export class MemberDetailsComponent implements OnInit {
 
     this.route.data.forEach((data: { api: Result }) => {
       this.member = data.api.result;
+      if (this.member.dataNaixement) {
+        this.age = new Date().getFullYear() - new Date(this.member.dataNaixement).getFullYear();
+      }
       this.memberInmutable = { ...this.member };
     });
 
@@ -132,6 +136,9 @@ export class MemberDetailsComponent implements OnInit {
     this.api.updateMember(memberId, this.member)
       .subscribe((resok: any) => {
         this.member = resok.result;
+        if (this.member.dataNaixement) {
+          this.age = new Date().getFullYear() - new Date(this.member.dataNaixement).getFullYear();
+        }
         this.memberInmutable = { ...this.member };
         this.editMode = false;
         this.isLoadingResults = false;

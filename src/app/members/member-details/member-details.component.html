@@ -30,8 +30,11 @@
         <dd>{{member.email}}</dd>
         <dt>NIF: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('nif')">edit</mat-icon></dt>
         <dd>{{member.nif | default:'---'}}</dd>
-        <dt>IBAN: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('iban')">edit</mat-icon></dt>
-        <dd>{{member.iban | default:'---'}}</dd>     
+        <dt *ngIf="member.infantil === false">IBAN: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
+          (click)="onClickEditField('iban')">edit</mat-icon></dt>
+        <dd *ngIf="member.infantil === false">{{member.iban | default:'---'}}</dd>
+        <dt *ngIf="member.infantil === true">Edat:</dt>
+        <dd *ngIf="member.infantil === true">{{age | default:'---'}}</dd>          
       </dl>
     </ng-template>
 
