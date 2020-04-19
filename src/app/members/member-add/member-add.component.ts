@@ -147,11 +147,16 @@ export class MemberAddComponent implements OnInit {
       sexe: ['H'],
       infantil: [false],
       dataNaixement: [null],
-      nick: [null, Validators.required, this.validators.nickValidator],
-      email: [null, [
-        Validators.required,
-        Validators.email
-      ], this.validators.emailValidator],
+      nick: [null, {
+        validators: Validators.required,
+        asyncValidators: this.validators.nickValidator,
+        updateOn: 'blur'
+      }],
+      email: [null, {
+        validators: [Validators.required,Validators.email],
+        asyncValidators: this.validators.emailValidator,
+        updateOn: 'blur'
+      }],
       nif: [null, Validators.pattern],
       iban: [null, Validators.pattern],
 
@@ -163,7 +168,7 @@ export class MemberAddComponent implements OnInit {
       dataAlta: [null],
 
       observacions: [null, Validators.maxLength],
-    }, { updateOn: 'blur' });
+    }, { updateOn: 'change' });
 
     this.filteredCodes = this.memberForm.get('codiPostal').valueChanges
       .pipe(
@@ -179,6 +184,7 @@ export class MemberAddComponent implements OnInit {
         //   this.isLoadingResults = true;
         // }),
         switchMap(value => {
+          console.log(this.memberForm.value.codiPostal + ' ' + this.memberForm.value.poblacio);
           if (this.memberForm.value.codiPostal) {
             return [this.cities];
           } else if (value && value.length > 2) {
