@@ -234,7 +234,7 @@
               <mat-icon>verified_user</mat-icon>
             </button>
             <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit"
-              [disabled]="!memberForm.valid">
+              [disabled]="!memberForm.valid ||!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])">
               <mat-icon>save</mat-icon>
             </button>
           </div>
@@ -266,7 +266,7 @@
               <mat-icon>verified_user</mat-icon>
             </button>
             <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit"
-              [disabled]="!memberForm.valid">
+            [disabled]="!memberForm.valid ||!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])">
               <mat-icon>save</mat-icon>
             </button>
           </div>

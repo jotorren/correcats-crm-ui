@@ -57,6 +57,14 @@ export let Config = {
             check: {
                 endpoint: 'https://backoffice.corredors.cat:8090/health/alive'
             }
+        },
+        roles: {
+            ADMIN: 'administradora',
+            SECRETARIA: 'secretaria',
+            JUNTA: 'junta',
+            ORGANITZADORA: 'organitzadora',
+            ASSOCIADA: 'associada',
+            PUBLICA: 'publica',
         }
     },
 

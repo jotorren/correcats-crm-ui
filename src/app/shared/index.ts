@@ -7,3 +7,4 @@ export * from './domain/search-criteria';
 
 export * from './dialog/confirm-dialog.component';
 export * from './security/authentication.service';
+export * from './security/jwt-helper';

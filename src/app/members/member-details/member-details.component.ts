@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, tap, map, filter } from 'rxjs/operators';
 import { MemberService } from '../member.service';
 import { Associada } from '../associada';
-import { Config, Result, ConfirmDialogModel, ConfirmDialogComponent } from '../../shared';
+import { Config, Result, ConfirmDialogModel, ConfirmDialogComponent, AuthenticationService } from '../../shared';
 import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
 import { MemberEditComponent } from '../member-edit/member-edit.component';
@@ -32,10 +32,11 @@ export class MemberDetailsComponent implements OnInit {
   member: Associada;
   memberInmutable: Associada;
   isLoadingResults = false;
-
   durationInSeconds = 2;
+  roles = Config.security.roles;
 
   constructor(
+    public authService: AuthenticationService,
     private route: ActivatedRoute,
     private api: MemberService,
     private router: Router,

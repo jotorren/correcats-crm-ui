@@ -30,9 +30,6 @@ export class AuthorizatorGuard implements CanActivate, CanActivateChild, CanLoad
 
     private checkActivation(route: Route | ActivatedRouteSnapshot): boolean | Observable<boolean> {
         this.log.debug('checkActivation for ' + route);
-        if (route.data.roles && route.data.roles.length > 0) {
-            this.log.debug('that route requires ' + route.data.roles);
-        }
 
         if (!this.authService.isLoggedIn()) {
             this.log.debug('not logged-in > redirect to login');
@@ -40,9 +37,15 @@ export class AuthorizatorGuard implements CanActivate, CanActivateChild, CanLoad
             this.router.navigate(['/login']);
         } else {
             this.log.debug('logged-in > checking expiration');
-            return this.authService.checkToken();
+            if (this.authService.checkToken()) {
+                if (route.data.roles && route.data.roles.length > 0) {
+                    this.log.debug('that route requires ' + route.data.roles);
+                    return this.authService.hasAnyRole(route.data.roles);
+                }
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 }

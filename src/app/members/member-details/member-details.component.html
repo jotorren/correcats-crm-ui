@@ -128,16 +128,20 @@
     <mat-card-actions align="end">
       <div fxLayout="wrap" class="full-width">
         <div fxFlex="0 1 60%" fxLayoutAlign="start">
-          <a *ngIf="!editMode && member.activat===true" mat-flat-button color="accent" (click)="onClickUnregisterMember(member.id)">
+          <a *ngIf="!editMode && member.activat===true" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])"
+          mat-flat-button color="accent" (click)="onClickUnregisterMember(member.id)">
             <mat-icon>delete</mat-icon> Baixa
           </a>
-          <button *ngIf="editMode" matTooltip="Cancel·la" mat-flat-button color="accent" (click)="onClickEditCancel($event)" type="button">
-            <mat-icon>cancel</mat-icon>
-          </button>
-          <button *ngIf="!editMode" mat-flat-button color="primary" (click)="onClickEdit($event)" type="button">
+          <button *ngIf="!editMode" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])" 
+          mat-flat-button color="primary" (click)="onClickEdit($event)" type="button">
             <mat-icon>edit</mat-icon> Edita
           </button>
-          <button *ngIf="editMode" matTooltip="Desa els canvis" mat-flat-button color="primary" (click)="onClickEditSave($event)" type="button">
+          <button *ngIf="editMode" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])"
+          matTooltip="Cancel·la" mat-flat-button color="accent" (click)="onClickEditCancel($event)" type="button">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button *ngIf="editMode" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])"
+          matTooltip="Desa els canvis" mat-flat-button color="primary" (click)="onClickEditSave($event)" type="button">
             <mat-icon>save</mat-icon>
           </button>
         </div>

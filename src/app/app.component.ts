@@ -4,6 +4,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from './shared/security/authentication.service';
 import { AppGlobalService } from './app.global.service';
+import { Config } from './shared/config/config';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +19,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   commandSubscription: Subscription;
   title = '';
+  roles = Config.security.roles;
 
   constructor(
-    private globalService: AppGlobalService,
-    private authService: AuthenticationService,
     private router: Router,
+    private globalService: AppGlobalService,
+    public authService: AuthenticationService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher) {
 

@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
     private log: LogService) { }
 
   ngOnInit() {
+    sessionStorage.clear(); // to remove previously saved components state
+
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

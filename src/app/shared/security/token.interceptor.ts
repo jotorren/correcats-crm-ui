@@ -54,8 +54,11 @@ export class TokenInterceptor implements HttpInterceptor {
           return next.handle(this.addToken(request, res.access_token));
         }),
         catchError(error => {
-          this.log.error('unable to refresh ' + request.url + ' > redirecting to login' );
-          this.authService.logout();
+          this.log.error(error.message);
+          if (error.status !== 403) {
+            this.log.error('unable to refresh ' + request.url + ' > redirecting to login' );
+            this.authService.logout();
+          }
           return throwError(error);
         })
       );

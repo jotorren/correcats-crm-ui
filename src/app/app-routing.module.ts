@@ -9,8 +9,8 @@ import { MemberDetailsComponent } from './members/member-details/member-details.
 import { MemberAddComponent } from './members/member-add/member-add.component';
 import { MemberReportComponent } from './members/member-report/member-report.component';
 import { MemberExportComponent } from './members/member-export/member-export.component';
-import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberFindComponent } from './members/member-find/member-find.component';
+import { Config } from './shared';
 
 const routes: Routes = [
   {
@@ -26,7 +26,12 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'List of Members',
-      roles: []
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA,
+        Config.security.roles.ORGANITZADORA
+      ]
     }
   },
   {
@@ -35,19 +40,12 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'Member Details',
-      roles: []
-    },
-    resolve: {
-      api: MemberDetailsResolve
-    }
-  },
-  {
-    path: 'member-edit/:id',
-    component: MemberEditComponent,
-    canActivate: [ AuthorizatorGuard ],
-    data: {
-      title: 'Edit Member',
-      roles: []
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA,
+        Config.security.roles.ORGANITZADORA
+      ]
     },
     resolve: {
       api: MemberDetailsResolve
@@ -59,7 +57,11 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'Add New Member',
-      roles: []
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA
+      ]
     }
   },
   {
@@ -68,7 +70,11 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'Default export data to CSV',
-      roles: []
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA
+      ]
     }
   },
   {
@@ -77,7 +83,11 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'Custom export data to CSV',
-      roles: []
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA
+      ]
     }
   },
   {
@@ -86,7 +96,11 @@ const routes: Routes = [
     canActivate: [ AuthorizatorGuard ],
     data: {
       title: 'Look for a member',
-      roles: []
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA
+      ]
     }
   },
   { path: '',

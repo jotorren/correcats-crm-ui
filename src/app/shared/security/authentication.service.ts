@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Config } from '../config/config';
-import { Result } from '..';
+import { Result } from '../domain/result';
+import { JwtHelper } from '../security/jwt-helper';
 
 
 interface ServerResponse {
@@ -23,6 +24,7 @@ providedIn: 'root'
 })
 export class AuthenticationService {
     private config = Config.security.token;
+    private jwtHelper: JwtHelper = new JwtHelper();
 
     constructor(private httpClient: HttpClient, private router: Router) { }
 
@@ -42,6 +44,16 @@ export class AuthenticationService {
 
     isLoggedIn() {
         return (null != this.getToken());
+    }
+
+    getUserRoles() {
+        const token = this.getToken();
+        if (token) {
+            const jwttoken = this.jwtHelper.decodeToken(token);
+            return jwttoken.resource_access[this.config.oidc.clientId].roles;
+        } else {
+            return [];
+        }
     }
 
     checkToken() {
@@ -74,7 +86,24 @@ export class AuthenticationService {
 
     logout() {
         this.removeTokens();
+        sessionStorage.clear(); // to remove previously saved components state
         this.router.navigate(['/login']);
+    }
+
+    hasAnyRole(roles: string[]): boolean {
+        if (undefined === roles || null === roles || roles.length === 0) {
+            return true;
+        }
+
+        const userRoles: string[] = this.getUserRoles();
+        if (userRoles) {
+            let found = false;
+            for (let i = 0; i < roles.length && !found; i++) {
+                found = userRoles.indexOf(roles[i]) > -1;
+            }
+            return found;
+        }
+        return false;
     }
 
     private handleError<T>(removeTokens: boolean, result?: T) {

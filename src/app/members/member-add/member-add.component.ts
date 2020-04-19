@@ -7,7 +7,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, from, Subject } from 'rxjs';
 import { debounceTime, tap, switchMap, finalize, map, startWith, filter } from 'rxjs/operators';
-import { Config, Result } from '../../shared';
+import { Config, Result, AuthenticationService } from '../../shared';
 import { MemberErrorStateMatcher } from '../../shared/error.state.matcher';
 import { ErrorListComponent } from '../../shared/error/error.component';
 import { handle } from '../../shared/error/error-handlers';
@@ -53,10 +53,12 @@ export class MemberAddComponent implements OnInit {
 
   isLoadingResults = false;
   matcher = new MemberErrorStateMatcher();
+  roles = Config.security.roles;
 
   // get formArray(): AbstractControl | null { return this.memberForm.get('formArray'); }
 
   constructor(
+    public authService: AuthenticationService,
     private app: AppGlobalService,
     private router: Router,
     private api: MemberService,

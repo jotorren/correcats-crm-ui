@@ -32,7 +32,7 @@ export class MemberService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      this.log.error(error); // log to console instead
+      this.log.error(error.message); // log to console instead
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
