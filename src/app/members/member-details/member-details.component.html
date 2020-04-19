@@ -127,7 +127,7 @@
 
     <mat-card-actions align="end">
       <div fxLayout="wrap" class="full-width">
-        <div fxFlex="0 1 60%" fxLayoutAlign="start">
+        <div fxFlex="0 1 50%" fxFlex.xs="0 1 70%" fxLayoutAlign="start">
           <a *ngIf="!editMode && member.activat===true" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])"
           mat-flat-button color="accent" (click)="onClickUnregisterMember(member.id)">
             <mat-icon>delete</mat-icon> Baixa
@@ -145,7 +145,7 @@
             <mat-icon>save</mat-icon>
           </button>
         </div>
-        <div fxFlex="0 1 40%" fxLayoutAlign="end">
+        <div fxFlex="0 1 50%" fxFlex.xs="0 1 auto" fxLayoutAlign="end">
           <a mat-flat-button color="primary" (click)="onClickBack()">
             <mat-icon>arrow_back</mat-icon> Torna
           </a>
