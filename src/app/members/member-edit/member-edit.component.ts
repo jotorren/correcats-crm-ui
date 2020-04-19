@@ -38,7 +38,7 @@ export class MemberEditComponent implements OnInit {
       cognoms: [{value: this.model.form.cognoms, disabled: this.model.name !== 'nom'}, Validators.required],
       sexe: [{value: this.model.form.sexe, disabled: this.model.name !== 'sexe'}],
       infantil: [{value: this.model.form.infantil, disabled: this.model.name !== 'sexe'}],
-      dataNaixement: [{value: moment(this.model.form.dataNaixement, 'DD/MM/YYYY'), disabled: this.model.name !== 'dataNaixement'}],
+      dataNaixement: [{value: new Date(this.model.form.dataNaixement), disabled: this.model.name !== 'dataNaixement'}],
       nick: [{value: this.model.form.nick, disabled: this.model.name !== 'nick'}, Validators.required, this.validators.nickValidator],
       email: [{value: this.model.form.email, disabled: this.model.name !== 'email'}, [
         Validators.required,
@@ -52,8 +52,8 @@ export class MemberEditComponent implements OnInit {
       codiPostal: [{value: this.model.form.codiPostal, disabled: this.model.name !== 'codiPostal'}],
       poblacio: [{value: this.model.form.poblacio, disabled: this.model.name !== 'poblacio'}],
       quotaAlta: [{value: this.model.form.quotaAlta, disabled: this.model.name !== 'quotaAlta'}, Validators.pattern],
-      dataAlta: [{value: moment(this.model.form.dataAlta, 'DD/MM/YYYY'), disabled: this.model.name !== 'dataAlta'}],
-      dataBaixa: [{value: moment(this.model.form.dataBaixa, 'DD/MM/YYYY'), disabled: this.model.name !== 'dataBaixa'}],
+      dataAlta: [{value: new Date(this.model.form.dataAlta), disabled: this.model.name !== 'dataAlta'}],
+      dataBaixa: [{value: new Date(this.model.form.dataBaixa), disabled: this.model.name !== 'dataBaixa'}],
       observacions: [{value: this.model.form.observacions, disabled: this.model.name !== 'observacions'}],
     }, { updateOn: 'change' });
   }

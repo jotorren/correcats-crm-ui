@@ -55,11 +55,11 @@
         <dd *ngIf="member.infantil === false">{{member.quotaAlta | default:'---'}} €</dd>
         <dt *ngIf="member.infantil === true">Data de Naixement: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
           (click)="onClickEditField('dataNaixement')">edit</mat-icon></dt>
-        <dd *ngIf="member.infantil === true">{{member.dataNaixement | default:'---'}}</dd>        
+        <dd *ngIf="member.infantil === true">{{member.dataNaixement | date: 'dd/MM/yyyy' | default:'---'}}</dd>        
         <dt>Data d'alta: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataAlta')">edit</mat-icon></dt>
-        <dd>{{member.dataAlta | default:'---'}}</dd>
+        <dd>{{member.dataAlta | date: 'dd/MM/yyyy' | default:'---'}}</dd>
         <dt>Data de baixa: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataBaixa')">edit</mat-icon></dt>
-        <dd>{{member.dataBaixa | default:'---'}}</dd>        
+        <dd>{{member.dataBaixa | date: 'dd/MM/yyyy' | default:'---'}}</dd>        
         <dt>Observacions: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('observacions')">edit</mat-icon></dt>
         <dd>{{member.observacions | default:'---'}}</dd>
       </dl>

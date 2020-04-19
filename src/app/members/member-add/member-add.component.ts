@@ -284,12 +284,12 @@ export class MemberAddComponent implements OnInit {
     //
 
     // date to string converison dd/MM/yyyy
-    if (this.memberForm.value.dataAlta) {
-      formData.dataAlta = moment(this.memberForm.value.dataAlta).format('DD/MM/YYYY');
-    }
-    if (this.memberForm.value.dataNaixement) {
-      formData.dataNaixement = moment(this.memberForm.value.dataNaixement).format('DD/MM/YYYY');
-    }
+    // if (this.memberForm.value.dataAlta) {
+    //   formData.dataAlta = moment(this.memberForm.value.dataAlta).format('DD/MM/YYYY');
+    // }
+    // if (this.memberForm.value.dataNaixement) {
+    //   formData.dataNaixement = moment(this.memberForm.value.dataNaixement).format('DD/MM/YYYY');
+    // }
 
     this.api.addMember(formData)
       .subscribe((resok: any) => {

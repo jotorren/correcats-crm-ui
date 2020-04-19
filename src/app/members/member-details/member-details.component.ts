@@ -105,8 +105,8 @@ export class MemberDetailsComponent implements OnInit {
         for (const mbf of Object.keys(dialogResult)) {
           if (mbf === 'dataAlta' || mbf === 'dataBaixa' || mbf === 'dataNaixement') {
             if (dialogResult[mbf] && dialogResult[mbf].isValid()){
-              // date to string conversion dd/MM/yyyy
-              this.member[mbf] = moment(dialogResult[mbf]).format('DD/MM/YYYY');
+              // this.member[mbf] = moment(dialogResult[mbf]).format('DD/MM/YYYY');
+              this.member[mbf] = dialogResult[mbf];
             } else {
               this.member[mbf] = null;
             }

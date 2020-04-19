@@ -318,7 +318,6 @@ export class MemberExportComponent implements OnInit, OnDestroy {
           value: (crit.value === 'true'),
         });
       } else if (crit.key === 'dataAlta' || crit.key === 'dataBaixa') {
-        // date to string conversion dd/MM/yyyy
         if (crit.operation === Config.api.members.query.operators.isnull.code) {
           search.push({
             key: crit.key,
@@ -329,7 +328,8 @@ export class MemberExportComponent implements OnInit, OnDestroy {
           search.push({
             key: crit.key,
             operation: crit.operation,
-            value: moment(crit.value).format('DD/MM/YYYY'),
+            value: crit.value,
+            // value: moment(crit.value).format('DD/MM/YYYY'),
           });
         }
       } else {
