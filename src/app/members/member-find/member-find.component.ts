@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSort, SortDirection } from '@angular/material/sort';
@@ -43,6 +43,7 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
     private api: MemberService,
     private formBuilder: FormBuilder,
     private log: LogService,
+    private el: ElementRef,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher) {
     this.app.setTitle('Localitza un associat');
@@ -54,23 +55,17 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.findForm = this.formBuilder.group({
       wodeleted: [false],
-      sexe: [''],
+
       nom: [null],
       cognoms: [null],
+      sexe: [''],
       nick: [null],
+      infantil: [false],
       email: [null, Validators.email],
       nif: [null, Validators.pattern],
-      iban: [null, Validators.pattern],
-
-      telefon: [null],
-      adreca: [null],
       codiPostal: [null],
       poblacio: [null],
-      quotaAlta: [null, Validators.pattern],
-      dataAlta: [null],
-
-      infantil: [false],
-      observacions: [null, Validators.maxLength],
+      quotaAlta: [null, Validators.pattern]
     });
 
     this.data = new MembersDataSource(this.api);
@@ -235,7 +230,13 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onFormSubmit() {
-    this.doSearch();
+    const invalidControl = this.el.nativeElement.querySelector('input.ng-invalid');
+    if (invalidControl) {
+      this.log.warn(invalidControl.labels[0].textContent + ': ' + invalidControl.validationMessage);
+      invalidControl.focus();
+    } else {
+      this.doSearch();
+    }
   }
 
   doSearch() {
@@ -253,5 +254,20 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.data.loadData(this.fields, pr, sc);
     this.sortable = true;
+  }
+
+  private findInvalidControlsRecursive(formToInvestigate: FormGroup): string[] {
+    const invalidControls: string[] = [];
+    const recursiveFunc = (form: FormGroup) => {
+      Object.keys(form.controls).forEach(field => {
+        const control = form.get(field);
+        if (control.invalid) { invalidControls.push(field); }
+        if (control instanceof FormGroup) {
+          recursiveFunc(control);
+        }
+      });
+    };
+    recursiveFunc(formToInvestigate);
+    return invalidControls;
   }
 }
