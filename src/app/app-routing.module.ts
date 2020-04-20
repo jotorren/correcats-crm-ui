@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthorizatorGuard } from './shared/security/authorizator.guard';
 import { LoginComponent } from './shared/security/login.component';
 import { MemberDetailsResolve } from './members/member-details/member-details.resolve';
-import { MembersListComponent } from './members/members-list/members-list.component';
+import { MembersListComponent } from './members/member-children-list/member-children-list.component';
 import { MemberChildAddComponent } from './members/member-child-add/member-child-add.component';
 import { MemberChildDetailsComponent } from './members/member-child-details/member-child-details.component';
 import { MemberDetailsComponent } from './members/member-details/member-details.component';

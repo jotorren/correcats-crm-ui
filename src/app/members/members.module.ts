@@ -34,7 +34,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { MemberAddComponent } from './member-add/member-add.component';
 import { MemberDetailsComponent } from './member-details/member-details.component';
 import { MemberEditComponent } from './member-edit/member-edit.component';
-import { MembersListComponent } from './members-list/members-list.component';
+import { MembersListComponent } from './member-children-list/member-children-list.component';
 import { MemberService } from './member.service';
 import { MemberValidatorService } from './member-validator.service';
 import { MemberDetailsResolve } from './member-details/member-details.resolve';

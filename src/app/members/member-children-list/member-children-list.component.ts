@@ -15,8 +15,8 @@ import { AppGlobalService } from 'src/app/app.global.service';
 
 @Component({
   selector: 'app-member-children-list',
-  templateUrl: './members-list.component.html',
-  styleUrls: ['./members-list.component.scss']
+  templateUrl: './member-children-list.component.html',
+  styleUrls: ['./member-children-list.component.scss']
 })
 export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
