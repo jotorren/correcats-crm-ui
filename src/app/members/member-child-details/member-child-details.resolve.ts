@@ -3,10 +3,10 @@ import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { MemberService } from '../member.service';
-import { Associada } from '../associada';
+import { AssociadaInfantil } from '../associada.infantil';
 
 @Injectable()
-export class MemberDetailsResolve implements Resolve<Associada> {
+export class MemberChildDetailsResolve implements Resolve<AssociadaInfantil> {
 
     constructor(private service: MemberService, private router: Router) {
     }
@@ -15,13 +15,13 @@ export class MemberDetailsResolve implements Resolve<Associada> {
         const id = route.params.id;
 
         if (id) {
-            const result = this.service.getMemberById(id);
+            const result = this.service.getChildMemberById(id);
             if (result) {
                 return result;
             }
         }
 
-        this.router.navigate(['/member-find']);
+        this.router.navigate(['/member-children-list']);
         return false;
     }
 }

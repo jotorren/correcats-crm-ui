@@ -72,8 +72,21 @@ export class MemberService {
     );
   }
 
+  getChildMemberById(id: string): Observable<Result> {
+    const url = Config.api.members.url.base + Config.api.members.url.childItem.replace('{id}', id);
+    return this.http.get<Result>(url, httpOptions).pipe(
+      tap(_ => this.log.debug(`fetched child member id=${id}`)),
+      catchError(this.handleError<Result>(`getChildMemberById id=${id}`, this.emptyResult))
+    );
+  }
+
   updateMember(id: string, form: any): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.item.replace('{id}', id);
+    return this.http.put<Result>(url, form, httpOptions);
+  }
+
+  updateChildMember(id: string, form: any): Observable<Result> {
+    const url = Config.api.members.url.base + Config.api.members.url.childItem.replace('{id}', id);
     return this.http.put<Result>(url, form, httpOptions);
   }
 
@@ -95,6 +108,11 @@ export class MemberService {
 
   addMember(form: any): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.create;
+    return this.http.post<Result>(url, form, httpOptions);
+  }
+
+  addChildMember(form: any): Observable<Result> {
+    const url = Config.api.members.url.base + Config.api.members.url.child;
     return this.http.post<Result>(url, form, httpOptions);
   }
 

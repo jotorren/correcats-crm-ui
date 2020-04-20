@@ -1,18 +1,14 @@
-export interface Associada {
+export interface AssociadaInfantil {
   id: string;
   activat: boolean;
   nom: string;
   cognoms: string;
   sexe: string;
   nick: string;
+  responsable: string;
   email: string;
-  nif: string;
-  iban: string;
-  telefon: string;
-  adreca: string;
-  codiPostal: string;
-  poblacio: string;
-  quotaAlta: number;
+  dni: string;
+  dataNaixement: string;
   dataAlta: string;
   dataBaixa: string;
   observacions: string;

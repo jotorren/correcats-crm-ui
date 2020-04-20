@@ -27,8 +27,10 @@
           *ngIf="authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])">Localitza un associat</a>
           <a mat-list-item routerLink="/member-add" (click)="snav.toggle()"
           *ngIf="authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])">Alta d'un nou associat</a>
-          <a mat-list-item routerLink="/members-list" (click)="snav.toggle()"
+          <a mat-list-item routerLink="/member-children-list" (click)="snav.toggle()"
           *ngIf="authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA,roles.ORGANITZADORA])">Llista d'associats infantils</a>
+          <a mat-list-item routerLink="/member-child-add" (click)="snav.toggle()"
+          *ngIf="authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])">Alta d'un nou associat infantil</a>          
           <a mat-list-item routerLink="/members-report" (click)="snav.toggle()"
           *ngIf="authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])">Descarrega un fitxer predefinit</a>
           <a mat-list-item routerLink="/members-export" (click)="snav.toggle()"

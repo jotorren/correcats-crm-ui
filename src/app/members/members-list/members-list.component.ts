@@ -14,7 +14,7 @@ import { SortOrder } from 'src/app/shared/domain/datasource-page';
 import { AppGlobalService } from 'src/app/app.global.service';
 
 @Component({
-  selector: 'app-members-list',
+  selector: 'app-member-children-list',
   templateUrl: './members-list.component.html',
   styleUrls: ['./members-list.component.scss']
 })

@@ -5,12 +5,15 @@ import { AuthorizatorGuard } from './shared/security/authorizator.guard';
 import { LoginComponent } from './shared/security/login.component';
 import { MemberDetailsResolve } from './members/member-details/member-details.resolve';
 import { MembersListComponent } from './members/members-list/members-list.component';
+import { MemberChildAddComponent } from './members/member-child-add/member-child-add.component';
+import { MemberChildDetailsComponent } from './members/member-child-details/member-child-details.component';
 import { MemberDetailsComponent } from './members/member-details/member-details.component';
 import { MemberAddComponent } from './members/member-add/member-add.component';
 import { MemberReportComponent } from './members/member-report/member-report.component';
 import { MemberExportComponent } from './members/member-export/member-export.component';
 import { MemberFindComponent } from './members/member-find/member-find.component';
 import { Config } from './shared';
+import { MemberChildDetailsResolve } from './members/member-child-details/member-child-details.resolve';
 
 const routes: Routes = [
   {
@@ -21,7 +24,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'members-list',
+    path: 'member-children-list',
     component: MembersListComponent,
     canActivate: [ AuthorizatorGuard ],
     data: {
@@ -32,6 +35,36 @@ const routes: Routes = [
         Config.security.roles.JUNTA,
         Config.security.roles.ORGANITZADORA
       ]
+    }
+  },
+  {
+    path: 'member-child-add',
+    component: MemberChildAddComponent,
+    canActivate: [ AuthorizatorGuard ],
+    data: {
+      title: 'Add New Child Member',
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA
+      ]
+    }
+  },
+  {
+    path: 'member-child-details/:id',
+    component: MemberChildDetailsComponent,
+    canActivate: [ AuthorizatorGuard ],
+    data: {
+      title: 'Member Child Details',
+      roles: [
+        Config.security.roles.ADMIN,
+        Config.security.roles.SECRETARIA,
+        Config.security.roles.JUNTA,
+        Config.security.roles.ORGANITZADORA
+      ]
+    },
+    resolve: {
+      api: MemberChildDetailsResolve
     }
   },
   {

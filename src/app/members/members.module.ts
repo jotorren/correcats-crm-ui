@@ -43,6 +43,10 @@ import { SharedModule } from '../shared';
 import { MemberReportComponent } from './member-report/member-report.component';
 import { MemberFindComponent } from './member-find/member-find.component';
 import { DatePipe } from '@angular/common';
+import { MemberChildAddComponent } from './member-child-add/member-child-add.component';
+import { MemberChildDetailsComponent } from './member-child-details/member-child-details.component';
+import { MemberChildDetailsResolve } from './member-child-details/member-child-details.resolve';
+import { MemberChildEditComponent } from './member-child-edit/member-child-edit.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -101,7 +105,10 @@ export class MyHammerConfig extends HammerGestureConfig  {
         MembersListComponent,
         MemberExportComponent,
         MemberReportComponent,
-        MemberFindComponent
+        MemberFindComponent,
+        MemberChildAddComponent,
+        MemberChildDetailsComponent,
+        MemberChildEditComponent
     ],
     exports: [
         MemberAddComponent,
@@ -120,7 +127,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
         { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
         MemberService,
         MemberValidatorService,
-        MemberDetailsResolve
+        MemberDetailsResolve,
+        MemberChildDetailsResolve
     ],
     entryComponents: []
 })

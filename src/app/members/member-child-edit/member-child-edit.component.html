@@ -1,0 +1,147 @@
+<h2 mat-dialog-title>Edita</h2>
+
+<div mat-dialog-content>
+    <form [formGroup]="memberForm">
+
+        <mat-form-field *ngIf="model.name === 'nom'" class="full-width">
+            <mat-label>Nom</mat-label>
+            <input #nom matInput placeholder="Nom" formControlName="nom" [errorStateMatcher]="matcher" required
+                maxlength="255">
+            <mat-hint align="end">{{nom.value.length}} / 255</mat-hint>
+            <mat-error>
+                <span *ngIf="memberForm.get('nom').dirty && !memberForm.get('nom').valid">Si us plau introdueix el
+                    nom</span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'nom'" class="full-width">
+            <mat-label>Cognoms</mat-label>
+            <input #cognoms matInput placeholder="Cognoms" formControlName="cognoms" [errorStateMatcher]="matcher"
+                required maxlength="255">
+            <mat-hint align="end">{{cognoms.value.length}} / 255</mat-hint>
+            <mat-error>
+                <span *ngIf="memberForm.get('cognoms').dirty && !memberForm.get('cognoms').valid">Si us plau introdueix
+                    els
+                    cognoms</span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-radio-group formControlName="sexe" *ngIf="model.name === 'sexe'">
+            <mat-radio-button value="D"><span class="wrap-mat-radio-label">Dona</span></mat-radio-button>
+            <mat-radio-button value="H"><span class="wrap-mat-radio-label">Home</span></mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field *ngIf="model.name === 'nick'" class="full-width">
+            <mat-label>Nick</mat-label>
+            <input #nick matInput placeholder="Nick" formControlName="nick" [errorStateMatcher]="matcher" required
+                maxlength="32">
+            <mat-icon matSuffix>account_circle</mat-icon>
+            <mat-hint align="end">{{nick.value.length}} / 32</mat-hint>
+            <mat-error>
+                <span *ngIf="memberForm.get('nick').dirty && memberForm.get('nick').hasError('required')">Si us plau
+                    introdueix el nick</span>
+                <span *ngIf="memberForm.get('nick').dirty && memberForm.get('nick').hasError('api')">
+                    {{memberForm.get('nick').getError('api')}}</span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'responsable'" class="full-width">
+            <mat-label>Responsable</mat-label>
+            <input #responsable matInput placeholder="Mare/Pare/Tutor" formControlName="responsable"
+                [errorStateMatcher]="matcher" required maxlength="32">
+            <mat-icon matSuffix>account_circle</mat-icon>
+            <mat-hint align="end">{{responsable.value.length}} / 32</mat-hint>
+            <mat-error>
+                <span
+                    *ngIf="memberForm.get('responsable').dirty && memberForm.get('responsable').hasError('required')">Si
+                    us plau introdueix el nick de la mare/pare/tutor</span>
+                <span *ngIf="memberForm.get('responsable').dirty && memberForm.get('responsable').hasError('api')">
+                    {{memberForm.get('responsable').getError('api')}}</span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'email'" class="full-width">
+            <mat-label>eMail</mat-label>
+            <input #email matInput placeholder="Ex. me@example.com" formControlName="email"
+                [errorStateMatcher]="matcher" required maxlength="100">
+            <mat-icon matSuffix>alternate_email</mat-icon>
+            <mat-hint align="end">{{email.value.length}} / 100</mat-hint>
+            <mat-error>
+                <span *ngIf="memberForm.get('email').dirty && memberForm.get('email').hasError('email')">
+                    El valor introduït no té el format correcte
+                </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'dni'" class="full-width">
+            <mat-label>DNI</mat-label>
+            <input #dni matInput placeholder="00000000T" formControlName="dni" pattern="[0-9]{8}[a-zA-Z]{1}"
+                maxlength="9">
+            <mat-hint align="end">{{dni.value.length}} / 9</mat-hint>
+            <mat-error>
+                <span *ngIf="memberForm.get('dni').dirty && memberForm.get('dni').hasError('pattern')">
+                    Si us plau introdueix un DNI amb el format 00000000T
+                </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'dataAlta'" class="full-width">
+            <mat-label>Data del pagament</mat-label>
+            <input #dataAlta matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" formControlName="dataAlta"
+                maxlength="10">
+            <mat-hint align="start">Selecciona o escriu dia o dia/mes</mat-hint>
+            <mat-hint align="end">{{dataAlta.value.length}} / 10</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>
+                <span *ngIf="memberForm.get('dataAlta').dirty && !memberForm.get('dataAlta').valid">
+                    Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
+                </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'dataBaixa'" class="full-width">
+            <mat-label>Data de la baixa</mat-label>
+            <input #dataBaixa matInput [matDatepicker]="picker2" placeholder="dd/mm/yyyy" formControlName="dataBaixa"
+                maxlength="10">
+            <mat-hint align="start">Selecciona o escriu dia o dia/mes</mat-hint>
+            <mat-hint align="end">{{dataBaixa.value.length}} / 10</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-error>
+                <span *ngIf="memberForm.get('dataBaixa').dirty && !memberForm.get('dataBaixa').valid">
+                    Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
+                </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'dataNaixement'" class="full-width">
+            <mat-label>Data de Naixement</mat-label>
+            <input #dataNaixement matInput [matDatepicker]="picker3" placeholder="dd/mm/yyyy" formControlName="dataNaixement"
+                maxlength="10">
+            <mat-hint align="start">Selecciona o escriu dia o dia/mes/any</mat-hint>
+            <mat-hint align="end">{{dataNaixement.value.length}} / 10</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+            <mat-error>
+                <span *ngIf="memberForm.get('dataNaixement').dirty && !memberForm.get('dataNaixement').valid">
+                    Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
+                </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="model.name === 'observacions'" class="full-width">
+            <mat-label>Observacions</mat-label>
+            <textarea #observacions matInput rows="12" formControlName="observacions" placeholder="Observacions"
+                maxlength="1024"></textarea>
+            <mat-hint align="end">{{observacions.value.length}} / 1024</mat-hint>
+        </mat-form-field>
+
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="onDismiss()">Cancel·la</button>
+    <button mat-raised-button [disabled]="memberForm.dirty && !memberForm.valid" color="primary"
+        (click)="onConfirm()">Ok</button>
+</div>
