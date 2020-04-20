@@ -28,7 +28,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   searchControl = new FormControl();
   private modelChanged: Subject<string> = new Subject<string>();
   private subscription: Subscription;
-  private pan = new Subject<string>();
+  // private pan = new Subject<string>();
   private subscription2: Subscription;
 
   private myPageSize = Config.ui.members.list.pageSize;
@@ -45,7 +45,8 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   sortField = 'cognoms';
   sortDirection = 'asc';
 
-  constructor(private app: AppGlobalService,
+  constructor(
+    private app: AppGlobalService,
     private api: MemberService,
     private log: LogService,
     changeDetectorRef: ChangeDetectorRef,
@@ -83,21 +84,21 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
         this.query(data);
       });
 
-    this.subscription2 = this.pan
-      .pipe(
-        debounceTime(Config.ui.debounceTime)
-      )
-      .subscribe(action => {
-        if (action === 'previous') {
-          if (this.paginator.hasPreviousPage()) {
-            this.paginator.previousPage();
-          }
-        } else {
-          if (this.paginator.hasNextPage()) {
-            this.paginator.nextPage();
-          }
-        }
-      });
+    // this.subscription2 = this.pan
+    //   .pipe(
+    //     debounceTime(Config.ui.debounceTime)
+    //   )
+    //   .subscribe(action => {
+    //     if (action === 'previous') {
+    //       if (this.paginator.hasPreviousPage()) {
+    //         this.paginator.previousPage();
+    //       }
+    //     } else {
+    //       if (this.paginator.hasNextPage()) {
+    //         this.paginator.nextPage();
+    //       }
+    //     }
+    //   });
   }
 
   ngAfterViewInit(): void {
@@ -138,11 +139,11 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modelChanged.next(value);
   }
 
-  onPanLeft(event) {
-    this.pan.next('next');
-  }
+  // onPanLeft(event) {
+  //   this.pan.next('next');
+  // }
 
-  onPanRight(event) {
-    this.pan.next('previous');
-  }
+  // onPanRight(event) {
+  //   this.pan.next('previous');
+  // }
 }
