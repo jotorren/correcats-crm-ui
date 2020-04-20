@@ -22,8 +22,8 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
   private mobileQueryListener: () => void;
 
-  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'responsable', 'dataNaixement', 'infantil'];
-  private mobileDisplayedColumns: string[] = ['cognoms', 'nom', 'nick'];
+  private defaultDisplayedColumns: string[] = ['infantil', 'cognoms', 'nom', 'nick', 'responsable', 'dataNaixement'];
+  private mobileDisplayedColumns: string[] = ['infantil', 'nick', 'responsable'];
 
   searchControl = new FormControl();
   private modelChanged: Subject<string> = new Subject<string>();
