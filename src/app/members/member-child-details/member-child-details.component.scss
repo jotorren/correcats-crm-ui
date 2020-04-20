@@ -75,3 +75,8 @@ $primary: map-get($crm-app-theme, primary);
     background-image: url('../../../assets/images/child.png');
     background-size: cover;
 }
+
+.member-deleted {
+    background-image: url('../../../assets/images/cancel-icon.jpg');
+    background-size: cover;
+}
