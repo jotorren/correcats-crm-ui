@@ -85,7 +85,8 @@
                 </div>
                 <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
                     <mat-form-field class="fill" [floatLabel]="'always'" fxFlex="0 1 25%" fxFlex.xs="0 1 auto">
-                        <mat-label><mat-icon>pregnant_woman</mat-icon> Data de Naixement</mat-label>
+                        <mat-label>
+                            &nbsp;&nbsp;&nbsp;<mat-icon>pregnant_woman</mat-icon> Data de Naixement</mat-label>
                         <input #dataNaixement matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy"
                             formControlName="dataNaixement" maxlength="10">
                         <mat-hint align="start">Selecciona o escriu dia/mes/any</mat-hint>
@@ -103,7 +104,8 @@
             </div>
             <div fxFlex="0 1 30%" fxFlex.xs="0 1 auto">
                 <mat-form-field appearance="fill" class="full-width" [floatLabel]="'always'">
-                    <mat-label>Observacions</mat-label>
+                    <mat-label><mat-icon>comment</mat-icon> 
+                        Observacions</mat-label>
                     <textarea #observacions matInput rows="12" formControlName="observacions" placeholder="Observacions"
                         maxlength="1024"></textarea>
                     <mat-hint align="end">{{observacions.value.length}} / 1024</mat-hint>
