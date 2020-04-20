@@ -23,7 +23,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   private mobileQueryListener: () => void;
 
   private defaultDisplayedColumns: string[] = ['infantil', 'cognoms', 'nom', 'nick', 'responsable', 'dataNaixement'];
-  private mobileDisplayedColumns: string[] = ['infantil', 'nick', 'responsable'];
+  private mobileDisplayedColumns: string[] = ['infantil', 'cognoms', 'nom'];
 
   searchControl = new FormControl();
   private modelChanged: Subject<string> = new Subject<string>();
