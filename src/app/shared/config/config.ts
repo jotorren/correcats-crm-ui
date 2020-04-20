@@ -87,6 +87,7 @@ export let Config = {
                 child: '/child?v=1',
                 childItem: '/child/{id}?v=1',
                 childNick: '/child/nick?v=1&nick=',
+                childResponsable: '/child/responsable?v=1&nick=',
                 item: '/{id}?v=1',
                 register: '/register/{id}?v=1',
                 unregister: '/unregister/{id}?v=1',

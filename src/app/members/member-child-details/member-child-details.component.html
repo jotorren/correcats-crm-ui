@@ -84,25 +84,23 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
-    <div fxLayout="wrap" class="full-width">
-      <div fxFlex="0 1 50%" fxLayoutAlign="start">
+    <div fxLayout="wrap" class="full-width">    
+      <div fxFlex="0 1 100%" fxLayoutAlign="end">
+        <a mat-flat-button color="accent" (click)="onClickBack()">
+          <mat-icon>arrow_back</mat-icon> Enrera
+        </a>        
         <button *ngIf="!editMode" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])"
           mat-flat-button color="primary" (click)="onClickEdit($event)" type="button">
           <mat-icon>edit</mat-icon> Edita
         </button>
         <button *ngIf="editMode" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA,roles.JUNTA])"
           matTooltip="Cancel·la" mat-flat-button color="accent" (click)="onClickEditCancel($event)" type="button">
-          <mat-icon>cancel</mat-icon>
+          <mat-icon>cancel</mat-icon> Cancel·la
         </button>
         <button *ngIf="editMode" [disabled]="!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])"
           matTooltip="Desa els canvis" mat-flat-button color="primary" (click)="onClickEditSave($event)" type="button">
-          <mat-icon>save</mat-icon>
+          <mat-icon>save</mat-icon> Desa
         </button>
-      </div>
-      <div fxFlex="0 1 50%" fxLayoutAlign="end">
-        <a mat-flat-button color="primary" (click)="onClickBack()">
-          <mat-icon>arrow_back</mat-icon> Torna
-        </a>
       </div>
     </div>
   </mat-card-actions>

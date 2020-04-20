@@ -1,1 +1,129 @@
-<p>member-child-add works!</p>
+<!-- <div class="member-container mat-elevation-z8"> -->
+<div class="member-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<mat-card class="member-child-container mat-elevation-z8">
+    <form [formGroup]="childForm" (ngSubmit)="onFormSubmit()">
+        <mat-radio-group formControlName="sexe">
+            <mat-radio-button value="D" class="member-form-field">Nena</mat-radio-button>
+            <mat-radio-button value="H" class="member-form-field">Nen</mat-radio-button>
+        </mat-radio-group>
+        <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+            <div fxFlex="0 1 70%" fxFlex.xs="0 1 auto">
+                <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+                    <mat-form-field appearance="fill" [floatLabel]="'always'" fxFlex="0 1 40%" fxFlex.xs="0 1 auto">
+                        <mat-label>Nom</mat-label>
+                        <input #nom matInput formControlName="nom" placeholder="Nom" maxlength="255" required>
+                        <mat-hint align="end">{{nom.value.length}} / 255</mat-hint>
+                        <mat-error>
+                            <span *ngIf="!childForm.get('nom').valid && childForm.get('nom').touched">Si us plau
+                                introdueix el nom</span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" [floatLabel]="'always'" fxFlex="0 1 60%" fxFlex.xs="0 1 auto">
+                        <mat-label>Cognoms</mat-label>
+                        <input #cognoms matInput formControlName="cognoms" placeholder="Cognoms" maxlength="255" required>
+                        <mat-hint align="end">{{cognoms.value.length}} / 255</mat-hint>
+                        <mat-error>
+                            <span *ngIf="!childForm.get('cognoms').valid && childForm.get('cognoms').touched">Si us plau
+                                introdueix els cognoms</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+                    <mat-form-field appearance="fill" [floatLabel]="'always'" fxFlex="0 1 25%" fxFlex.xs="0 1 auto">
+                        <mat-label>
+                            <mat-icon>account_circle</mat-icon> Nick
+                        </mat-label>
+                        <input #nick matInput formControlName="nick" placeholder="Nick" maxlength="32" required>
+                        <mat-hint align="end">{{nick.value.length}} / 32</mat-hint>
+                        <mat-error>
+                            <span *ngIf="childForm.get('nick').hasError('required') && childForm.get('nick').touched">Si
+                                us plau introdueix el nick</span>
+                            <span *ngIf="childForm.get('nick').hasError('api') && childForm.get('nick').touched">
+                                {{childForm.get('nick').getError('api')}}</span>                                
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" [floatLabel]="'always'" fxFlex="0 1 25%" fxFlex.xs="0 1 auto">
+                        <mat-label>
+                            <mat-icon>account_circle</mat-icon> Mare/Pare/Tutor
+                        </mat-label>
+                        <input #responsable matInput placeholder="Nick Mare/Pare/Tutor" formControlName="responsable"
+                            [errorStateMatcher]="matcher" maxlength="100" required>
+                        <mat-hint align="end">{{responsable.value.length}} / 32</mat-hint>
+                        <mat-error>
+                            <span *ngIf="childForm.get('responsable').hasError('required') && childForm.get('responsable').touched">Si
+                                us plau introdueix el nick de la mare/pare/tutor</span>
+                            <span *ngIf="childForm.get('responsable').hasError('api') && childForm.get('responsable').touched">
+                                {{childForm.get('responsable').getError('api')}}</span>                                  
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" [floatLabel]="'always'" fxFlex="0 1 10%" fxFlex.xs="0 1 auto">
+                        <mat-label>DNI</mat-label>
+                        <input #dni matInput placeholder="00000000T" formControlName="dni" pattern="[0-9]{8}[a-zA-Z]{1}"
+                            maxlength="9">
+                        <mat-hint align="end">{{dni.value.length}} / 9</mat-hint>
+                        <mat-error>
+                            <span *ngIf="!childForm.get('dni').valid && childForm.get('dni').touched">
+                                Si us plau introdueix un DNI amb el format 00000000T
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" [floatLabel]="'always'" fxFlex="0 1 40%" fxFlex.xs="0 1 auto">
+                        <mat-label>
+                            <mat-icon>alternate_email</mat-icon> eMail
+                        </mat-label>
+                        <input #email matInput placeholder="Ex. me@example.com" formControlName="email"
+                            [errorStateMatcher]="matcher" maxlength="100">
+                        <mat-hint align="end">{{email.value.length}} / 100</mat-hint>
+                        <mat-error>
+                            <span *ngIf="childForm.get('email').hasError('email') && childForm.get('email').touched">
+                                El valor introduït no té el format correcte
+                            </span>
+                        </mat-error>
+                    </mat-form-field>                                      
+                </div>
+                <div fxLayout="wrap" fxLayout.xs="column" class="full-width">
+                    <mat-form-field class="fill" [floatLabel]="'always'" fxFlex="0 1 25%" fxFlex.xs="0 1 auto">
+                        <mat-label><mat-icon>pregnant_woman</mat-icon> Data de Naixement</mat-label>
+                        <input #dataNaixement matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy"
+                            formControlName="dataNaixement" maxlength="10">
+                        <mat-hint align="start">Selecciona o escriu dia/mes/any</mat-hint>
+                        <mat-hint align="end">{{dataNaixement.value.length}} / 10</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error>
+                            <span
+                                *ngIf="!childForm.get('dataNaixement').valid && childForm.get('dataNaixement').touched">
+                                Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxFlex="0 1 30%" fxFlex.xs="0 1 auto">
+                <mat-form-field appearance="fill" class="full-width" [floatLabel]="'always'">
+                    <mat-label>Observacions</mat-label>
+                    <textarea #observacions matInput rows="10" formControlName="observacions" placeholder="Observacions"
+                        maxlength="1024"></textarea>
+                    <mat-hint align="end">{{observacions.value.length}} / 1024</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="wrap" class="full-width">
+            <div fxFlex="0 1 50%" fxLayoutAlign="start">
+                <button mat-button mat-raised-button color="accent" matTooltip="Neteja els resultats" type="button"
+                    (click)=" onClickReset($event)">
+                    <mat-icon>clear</mat-icon> Neteja
+                </button>
+            </div>
+            <div fxFlex="0 1 50%" fxLayoutAlign="end">
+                <button #searchbutton mat-button mat-raised-button color="primary" matTooltip="Desa els canvis"
+                    type="submit" [disabled]="!childForm.valid ||!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])">
+                    <mat-icon>save</mat-icon> Desa
+                </button>
+            </div>
+        </div>
+    </form>
+</mat-card>
+<!-- </div> -->

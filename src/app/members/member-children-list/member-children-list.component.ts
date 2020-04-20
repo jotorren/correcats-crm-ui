@@ -22,7 +22,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
   private mobileQueryListener: () => void;
 
-  private defaultDisplayedColumns: string[] = ['infantil', 'cognoms', 'nom', 'nick', 'responsable', 'dataNaixement'];
+  private defaultDisplayedColumns: string[] = ['infantil', 'cognoms', 'nom', 'nick', 'responsable', 'dataNaixement', 'activat'];
   private mobileDisplayedColumns: string[] = ['infantil', 'cognoms', 'nom'];
 
   searchControl = new FormControl();
@@ -33,12 +33,13 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private myPageSize = Config.ui.members.list.pageSize;
   data: PaginatedDataSource<AssociadaListItem, MemberQuery>;
-  // data = new PaginatedDataSource<AssociadaListItem, MemberQuery>(
+  // data = new PaginatedDataSource<AssociadaListem, MemberQuery>(
   //   (request, query) => this.api.getMembers(request, query),
   //   {property: 'cognoms', order: 'asc'},
   //   {search: ''},
   //   this.myPageSize
   // );
+  wdeleted = false;
 
   @ViewChild('search') search: MatInput;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -63,16 +64,33 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     let filter = '';
-    const saved = sessionStorage.getItem('MembersListComponent.search');
+    let saved = sessionStorage.getItem('MembersListComponent.search');
     if (saved) {
       this.log.debug('Restoring datasource filter value ' + saved);
       filter = saved;
+    }
+
+    saved = sessionStorage.getItem('MembersListComponent.wdeleted');
+    if (saved) {
+      this.log.debug('Restoring [with deleted] value ' + saved);
+      this.wdeleted = saved === 'true';
+      filter = saved + ';' + filter;
+      sessionStorage.removeItem('MembersListComponent.wdeleted');
+    }
+
+    let currentPage = 0;
+    saved = sessionStorage.getItem('MembersListComponent.pageIndex');
+    if (saved) {
+      this.log.debug('Restoring [current page] value ' + saved);
+      currentPage = parseInt(saved, 10);
+      sessionStorage.removeItem('MembersListComponent.pageIndex');
     }
 
     this.data = new PaginatedDataSource<AssociadaListItem, MemberQuery>(
       (request, query) => this.api.getMembers(request, query),
       { property: this.sortField as keyof AssociadaListItem, order: this.sortDirection as SortOrder },
       { search: filter },
+      currentPage,
       this.myPageSize
     );
 
@@ -115,6 +133,9 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
       sessionStorage.setItem('MembersListComponent.search', this.searchControl.value);
     }
 
+    sessionStorage.setItem('MembersListComponent.wdeleted', '' + this.wdeleted);
+    sessionStorage.setItem('MembersListComponent.pageIndex', '' + this.paginator.pageIndex);
+
     this.subscription.unsubscribe();
     // this.subscription2.unsubscribe();
   }
@@ -136,6 +157,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   inputChanged(value) {
+    value.search = this.wdeleted + ';' + value.search;
     this.modelChanged.next(value);
   }
 

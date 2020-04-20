@@ -49,6 +49,11 @@ export class MemberService {
       url = url + '&search=' + query.search;
     }
 
+    if (request.sort) {
+      url += '&sortBy=' + request.sort.property;
+      url += '&asc=' + (request.sort.order === SortOrder.asc);
+    }
+
     return this.http.get<Result>(url, httpOptions)
       .pipe(
         map(members => {

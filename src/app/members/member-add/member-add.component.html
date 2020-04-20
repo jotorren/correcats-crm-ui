@@ -181,7 +181,7 @@
           <ng-container *ngTemplateOutlet="step1"></ng-container>
           <div class="button-row">
             <button mat-button mat-raised-button color="primary" matStepperNext type="button"
-              class="do-action">Següent</button>
+              class="do-action">Següent <mat-icon>arrow_forward</mat-icon></button>
           </div>
         </mat-step>
         <mat-step [stepControl]="memberForm">
@@ -189,9 +189,9 @@
           <ng-container *ngTemplateOutlet="step2"></ng-container>
           <div class="button-row">
             <button mat-button mat-raised-button color="accent" matStepperPrevious type="button"
-              class="do-action spaced-button">Enrera</button>
+              class="do-action spaced-button"><mat-icon>arrow_back</mat-icon> Enrera</button>
             <button mat-button mat-raised-button color="primary" matStepperNext type="button"
-              class="do-action">Següent</button>
+              class="do-action">Següent <mat-icon>arrow_forward</mat-icon></button>
           </div>
         </mat-step>
         <mat-step [stepControl]="memberForm">
@@ -199,9 +199,9 @@
           <ng-container *ngTemplateOutlet="step3"></ng-container>
           <div class="button-row">
             <button mat-button mat-raised-button color="accent" matStepperPrevious type="button"
-              class="do-action spaced-button">Enrera</button>
+              class="do-action spaced-button"><mat-icon>arrow_back</mat-icon> Enrera</button>
             <button mat-button mat-raised-button color="primary" matStepperNext type="button"
-              class="do-action">Següent</button>
+              class="do-action">Següent <mat-icon>arrow_forward</mat-icon></button>
           </div>
         </mat-step>
         <mat-step [stepControl]="memberForm">
@@ -209,15 +209,15 @@
           <ng-container *ngTemplateOutlet="step4"></ng-container>
           <div class="button-row">
             <button mat-button mat-raised-button color="accent" matStepperPrevious type="button"
-              class="spaced-button">Enrera</button>
+              class="spaced-button"><mat-icon>arrow_back</mat-icon> Enrera</button>
             <button mat-button mat-raised-button color="primary" type="button"
               matTooltip="Verifica al fòrum el nick i l'email" (click)="onVerifyData()"
               [disabled]="!memberForm.get('nick').valid || !memberForm.get('email').valid" class="spaced-button">
-              <mat-icon>verified_user</mat-icon>
+              <mat-icon>verified_user</mat-icon> Verifica
             </button>
             <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit"
               [disabled]="!memberForm.valid ||!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])">
-              <mat-icon>save</mat-icon>
+              <mat-icon>save</mat-icon> Desa
             </button>
           </div>
         </mat-step>
@@ -245,11 +245,11 @@
             <button mat-button mat-raised-button color="primary" type="button"
               matTooltip="Verifica al fòrum el nick i l'email" (click)="onVerifyData()"
               [disabled]="!memberForm.get('nick').valid || !memberForm.get('email').valid" class="spaced-button">
-              <mat-icon>verified_user</mat-icon>
+              <mat-icon>verified_user</mat-icon> Verifica
             </button>
-            <button mat-button mat-raised-button color="primary" matTooltip="Guarda els canvis" type="submit"
+            <button mat-button mat-raised-button color="primary" matTooltip="Desa els canvis" type="submit"
             [disabled]="!memberForm.valid ||!authService.hasAnyRole([roles.ADMIN,roles.SECRETARIA])">
-              <mat-icon>save</mat-icon>
+              <mat-icon>save</mat-icon> Desa
             </button>
           </div>
         </mat-step>

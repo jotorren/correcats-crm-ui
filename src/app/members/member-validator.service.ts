@@ -29,6 +29,14 @@ export class MemberValidatorService {
     return this.itemValidator(this.isEmailOk);
   }
 
+  get childNickValidator() {
+    return this.itemValidator(this.isChildNickOk);
+  }
+
+  get childResponsableValidator() {
+    return this.itemValidator(this.isChildResponsableOk);
+  }
+
   isNickOk(nick: string, instance: MemberValidatorService): Observable<Result> {
     const url = Config.api.members.url.base + Config.api.members.url.nick + nick;
     return instance.http.get<Result>(url, httpOptions).pipe(
@@ -40,6 +48,20 @@ export class MemberValidatorService {
     const url = Config.api.members.url.base + Config.api.members.url.email + email;
     return instance.http.get<Result>(url, httpOptions).pipe(
       tap(_ => instance.log.debug(`verified emal=${email}`))
+    );
+  }
+
+  isChildNickOk(nick: string, instance: MemberValidatorService): Observable<Result> {
+    const url = Config.api.members.url.base + Config.api.members.url.childNick + nick;
+    return instance.http.get<Result>(url, httpOptions).pipe(
+      tap(_ => instance.log.debug(`verified child nick=${nick}`))
+    );
+  }
+
+  isChildResponsableOk(nick: string, instance: MemberValidatorService): Observable<Result> {
+    const url = Config.api.members.url.base + Config.api.members.url.childResponsable + nick;
+    return instance.http.get<Result>(url, httpOptions).pipe(
+      tap(_ => instance.log.debug(`verified child responsable=${nick}`))
     );
   }
 

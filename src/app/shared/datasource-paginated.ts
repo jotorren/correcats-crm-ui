@@ -22,6 +22,7 @@ export class PaginatedDataSource<T, Q> implements SimpleDataSource<T> {
     private endpoint: PaginatedEndpoint<T, Q>,
     initialSort: Sort<T>,
     initialQuery: Q,
+    initialPage: number,
     public pageSize = 20) {
       this.query = new BehaviorSubject<Q>(initialQuery);
       const param$ = combineLatest([
@@ -30,7 +31,7 @@ export class PaginatedDataSource<T, Q> implements SimpleDataSource<T> {
       ]);
       this.page$ = param$.pipe(
         switchMap(([query, sort]) => this.pageNumber.pipe(
-          startWith(0),
+          startWith(initialPage),
           switchMap(page => this.endpoint({page, sort, size: this.pageSize}, query)
             .pipe(indicate(this.loading))
           )
@@ -47,6 +48,7 @@ export class PaginatedDataSource<T, Q> implements SimpleDataSource<T> {
     const lastQuery = this.query.getValue();
     const nextQuery = {...lastQuery, ...query};
     this.query.next(nextQuery);
+    this.pageNumber.next(0);
   }
 
   fetch(page: number): void {

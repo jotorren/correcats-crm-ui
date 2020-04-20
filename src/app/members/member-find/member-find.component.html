@@ -157,14 +157,8 @@
                         class="member-deleted-icon">block</mat-icon>
                     <mat-icon *ngIf="row.activat === 'true' && row.observacions && row.observacions.length>0"
                         matTooltip="Associat amb avisos" class="member-warnings-icon">warning</mat-icon>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="infantil">
-                <th mat-header-cell *matHeaderCellDef>Infantil?</th>
-                <td mat-cell *matCellDef="let row">
-                    <mat-icon *ngIf="row.infantil === 'true'" matTooltip="Associat infantil" color="primary">child_care
-                    </mat-icon>
+                    <mat-icon *ngIf="row.activat === 'true' && !row.observacions" matTooltip="Associat activat"
+                        color="primary">directions_run</mat-icon>                        
                 </td>
             </ng-container>
 

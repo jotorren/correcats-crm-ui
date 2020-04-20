@@ -13,6 +13,10 @@
 //   height: 70%;
 // }
 
+.member-form-field {
+  font-size: small;
+}
+
 table {
   width: 100%;
 }
@@ -41,3 +45,12 @@ table {
 .do-action {
   cursor: pointer;
 }
+
+.member-deleted {
+  background-color: tan;
+}
+
+.member-deleted-icon {
+  color: red;
+}
+

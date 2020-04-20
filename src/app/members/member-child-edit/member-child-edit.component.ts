@@ -31,8 +31,9 @@ export class MemberChildEditComponent implements OnInit {
       nom: [{ value: this.model.form.nom, disabled: this.model.name !== 'nom' }, Validators.required],
       cognoms: [{ value: this.model.form.cognoms, disabled: this.model.name !== 'nom' }, Validators.required],
       sexe: [{ value: this.model.form.sexe, disabled: this.model.name !== 'sexe' }],
-      nick: [{ value: this.model.form.nick, disabled: this.model.name !== 'nick' }, Validators.required],
-      responsable: [{ value: this.model.form.responsable, disabled: this.model.name !== 'responsable' }, Validators.required],
+      nick: [{value: this.model.form.nick, disabled: this.model.name !== 'nick'}, Validators.required, this.validators.childNickValidator],
+      responsable: [{ value: this.model.form.responsable, disabled: this.model.name !== 'responsable'},
+        Validators.required, this.validators.childResponsableValidator],
       email: [{ value: this.model.form.email, disabled: this.model.name !== 'email' }, Validators.email],
       dni: [{ value: this.model.form.nif, disabled: this.model.name !== 'dni' }, Validators.pattern],
       dataNaixement: [{
