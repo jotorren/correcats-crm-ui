@@ -166,8 +166,9 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/member-details/', row.id]"
                 class="do-action" [ngClass]="{'member-deleted': row.activat !== 'true'}"></tr>
         </table>
-        <mat-paginator *ngIf="data.page$ | async as page" [length]="page.totalElements" [pageSize]="page.size"
-            [pageIndex]="page.number" (page)="data.fetch($event.pageIndex)" [hidePageSize]="true"></mat-paginator>
+        <mat-paginator *ngIf="data.page$ | async as page" [length]="page.totalElements" [pageSize]="page.size" 
+            [pageIndex]="page.number" showFirstLastButtons="true" (page)="data.fetch($event.pageIndex)" 
+            [hidePageSize]="true"></mat-paginator>
     </div>
 </mat-card>
 <!-- </div> -->
