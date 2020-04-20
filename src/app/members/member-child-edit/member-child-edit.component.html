@@ -75,8 +75,7 @@
 
         <mat-form-field *ngIf="model.name === 'dni'" class="full-width">
             <mat-label>DNI</mat-label>
-            <input #dni matInput placeholder="00000000T" formControlName="dni" pattern="[0-9]{8}[a-zA-Z]{1}"
-                maxlength="9">
+            <input #dni matInput placeholder="00000000T" formControlName="dni" pattern="[0-9]{8}[a-zA-Z]{1}" maxlength="9">
             <mat-hint align="end">{{dni.value.length}} / 9</mat-hint>
             <mat-error>
                 <span *ngIf="memberForm.get('dni').dirty && memberForm.get('dni').hasError('pattern')">
