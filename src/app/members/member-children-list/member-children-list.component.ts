@@ -29,7 +29,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   private modelChanged: Subject<string> = new Subject<string>();
   private subscription: Subscription;
   // private pan = new Subject<string>();
-  private subscription2: Subscription;
+  // private subscription2: Subscription;
 
   private myPageSize = Config.ui.members.list.pageSize;
   data: PaginatedDataSource<AssociadaListItem, MemberQuery>;
@@ -116,7 +116,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.subscription.unsubscribe();
-    this.subscription2.unsubscribe();
+    // this.subscription2.unsubscribe();
   }
 
   get displayedColumns(): string[] {
