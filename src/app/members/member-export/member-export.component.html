@@ -100,7 +100,7 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 </div>
-                <div *ngIf="!nullFilterValue && (filterBy==='activat' || filterBy==='infantil')">
+                <div *ngIf="!nullFilterValue && (filterBy==='activat')">
                   <mat-radio-group [(ngModel)]="filterValue">
                     <mat-radio-button value="true"><span class="wrap-mat-radio-label">Sí</span></mat-radio-button>
                     <mat-radio-button value="false"><span class="wrap-mat-radio-label">No</span></mat-radio-button>

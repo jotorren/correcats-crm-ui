@@ -29,24 +29,6 @@
       <mat-radio-button value="D"><span class="wrap-mat-radio-label">Dona</span></mat-radio-button>
       <mat-radio-button value="H"><span class="wrap-mat-radio-label">Home</span></mat-radio-button>
     </mat-radio-group>
-    <mat-slide-toggle formControlName="infantil" *ngIf="model.name === 'sexe'">
-      Infantil
-    </mat-slide-toggle>
-
-    <mat-form-field *ngIf="model.name === 'dataNaixement'" class="full-width">
-      <mat-label>Data de Naixement</mat-label>
-      <input #dataNaixement matInput [matDatepicker]="picker3" placeholder="dd/mm/yyyy" formControlName="dataNaixement"
-        maxlength="10">
-      <mat-hint align="start">Selecciona o escriu dia o dia/mes</mat-hint>
-      <mat-hint align="end">{{dataNaixement.value.length}} / 10</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-      <mat-datepicker #picker3></mat-datepicker>
-      <mat-error>
-        <span *ngIf="memberForm.get('dataNaixement').dirty && !memberForm.get('dataNaixement').valid">
-          Si us plau introdueix una data vàlida amb el format 'dd/mm/yyyy'
-        </span>
-      </mat-error>
-    </mat-form-field>
 
     <mat-form-field *ngIf="model.name === 'nick'" class="full-width">
       <mat-label>Nick</mat-label>

@@ -1,10 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { MatSort, SortDirection } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatButton } from '@angular/material/button';
 import { SearchCriteria, Config } from '../../shared';
-import { SearchOperator } from '../../shared/domain/search-criteria';
 import { MemberService } from '../member.service';
 import { LogService } from 'src/app/shared/log/log.service';
 import { MemberErrorStateMatcher } from 'src/app/shared/error.state.matcher';
@@ -30,11 +29,11 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('searchbutton') searchButton: MatButton;
 
-  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'email', 'dataAlta', 'dataBaixa', 'activat', 'infantil'];
+  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'email', 'dataAlta', 'dataBaixa', 'activat'];
   private mobileDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'activat'];
 
   data: MembersDataSource;
-  private fields = ['id', 'nom', 'cognoms', 'nick', 'email', 'activat', 'infantil', 'dataAlta', 'dataBaixa', 'observacions'];
+  private fields = ['id', 'nom', 'cognoms', 'nick', 'email', 'activat', 'dataAlta', 'dataBaixa', 'observacions'];
   sortable = false;
   sortDirection = 'asc';
 
@@ -60,7 +59,6 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
       cognoms: [null],
       sexe: [''],
       nick: [null],
-      infantil: [false],
       email: [null, Validators.email],
       nif: [null, Validators.pattern],
       codiPostal: [null],
@@ -207,14 +205,6 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
         key: 'quotaAlta',
         operation: Config.api.members.query.operators[Config.api.members.query.fields.quotaAlta.default].code,
         value: parseFloat(this.findForm.value.quotaAlta)
-      });
-    }
-
-    if (!this.findForm.value.infantil) {
-      conds.push({
-        key: 'infantil',
-        operation: Config.api.members.query.operators[Config.api.members.query.fields.infantil.default].code,
-        value: false
       });
     }
 

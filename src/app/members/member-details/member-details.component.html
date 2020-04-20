@@ -11,7 +11,6 @@
   <mat-card class="member-details-container mat-elevation-z8" [ngClass]="{'member-deleted-bg' : member.activat === false}">
     <mat-card-header>
       <div mat-card-avatar [ngClass]="{'member-deleted' : member.activat === false,
-      'member-child' : member.activat === true && member.infantil === true,
       'member-male' : member.activat === true && member.sexe === 'H', 
       'member-female' : member.activat === true && member.sexe === 'D'}">
       <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('sexe')">edit</mat-icon>      
@@ -30,11 +29,9 @@
         <dd>{{member.email}}</dd>
         <dt>NIF: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('nif')">edit</mat-icon></dt>
         <dd>{{member.nif | default:'---'}}</dd>
-        <dt *ngIf="member.infantil === false">IBAN: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
+        <dt>IBAN: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
           (click)="onClickEditField('iban')">edit</mat-icon></dt>
-        <dd *ngIf="member.infantil === false">{{member.iban | default:'---'}}</dd>
-        <dt *ngIf="member.infantil === true">Edat:</dt>
-        <dd *ngIf="member.infantil === true">{{age | default:'---'}}</dd>          
+        <dd>{{member.iban | default:'---'}}</dd>        
       </dl>
     </ng-template>
 
@@ -53,12 +50,9 @@
 
     <ng-template #otherdata>
       <dl class="width-95">
-        <dt *ngIf="member.infantil === false">Quota pagada al TPV: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
+        <dt>Quota pagada al TPV: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
           (click)="onClickEditField('quotaAlta')">edit</mat-icon></dt>
-        <dd *ngIf="member.infantil === false">{{member.quotaAlta | default:'---'}} €</dd>
-        <dt *ngIf="member.infantil === true">Data de Naixement: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" 
-          (click)="onClickEditField('dataNaixement')">edit</mat-icon></dt>
-        <dd *ngIf="member.infantil === true">{{member.dataNaixement | date: 'dd/MM/yyyy' | default:'---'}}</dd>        
+        <dd>{{member.quotaAlta | default:'---'}} €</dd>      
         <dt>Data d'alta: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataAlta')">edit</mat-icon></dt>
         <dd>{{member.dataAlta | date: 'dd/MM/yyyy' | default:'---'}}</dd>
         <dt>Data de baixa: <mat-icon *ngIf="editMode" class="editable-field" matTooltip="Edita" (click)="onClickEditField('dataBaixa')">edit</mat-icon></dt>

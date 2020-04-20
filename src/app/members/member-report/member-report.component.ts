@@ -70,8 +70,7 @@ export class MemberReportComponent implements OnInit, OnDestroy {
     this.isLoadingResults = true;
     this.api.export(Config.api.members.query.type.search,
       ['cognoms', 'nom', 'nick', 'email', 'iban'],
-      [{ key: 'activat', operation: Config.api.members.query.operators.equals.code, value: true },
-       { key: 'infantil', operation: Config.api.members.query.operators.equals.code, value: false }],
+      [{ key: 'activat', operation: Config.api.members.query.operators.equals.code, value: true }],
       null, 'cognoms', null)
       .subscribe((resok: any) => {
         if (resok.result) {

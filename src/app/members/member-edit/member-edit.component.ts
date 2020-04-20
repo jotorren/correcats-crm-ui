@@ -6,7 +6,6 @@ import { LogService } from 'src/app/shared/log/log.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Associada } from '../associada';
 import { MemberValidatorService } from '../member-validator.service';
-import * as moment from 'moment';
 
 interface EditModel {
   form: Associada;
@@ -37,9 +36,6 @@ export class MemberEditComponent implements OnInit {
       nom: [{value: this.model.form.nom, disabled: this.model.name !== 'nom'}, Validators.required],
       cognoms: [{value: this.model.form.cognoms, disabled: this.model.name !== 'nom'}, Validators.required],
       sexe: [{value: this.model.form.sexe, disabled: this.model.name !== 'sexe'}],
-      infantil: [{value: this.model.form.infantil, disabled: this.model.name !== 'sexe'}],
-      dataNaixement: [{value: this.model.form.dataNaixement ? new Date(this.model.form.dataNaixement) : null,
-        disabled: this.model.name !== 'dataNaixement'}],
       nick: [{value: this.model.form.nick, disabled: this.model.name !== 'nick'}, Validators.required, this.validators.nickValidator],
       email: [{value: this.model.form.email, disabled: this.model.name !== 'email'}, [
         Validators.required,

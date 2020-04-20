@@ -18,7 +18,6 @@ import { MemberService } from '../member.service';
 import { MemberValidatorService } from '../member-validator.service';
 import { LogService } from 'src/app/shared/log/log.service';
 import { AppGlobalService } from 'src/app/app.global.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-member-add',
@@ -147,8 +146,6 @@ export class MemberAddComponent implements OnInit {
       nom: [null, Validators.required],
       cognoms: [null, Validators.required],
       sexe: ['H'],
-      infantil: [false],
-      dataNaixement: [null],
       nick: [null, {
         validators: Validators.required,
         asyncValidators: this.validators.nickValidator,
@@ -288,9 +285,6 @@ export class MemberAddComponent implements OnInit {
     // date to string converison dd/MM/yyyy
     // if (this.memberForm.value.dataAlta) {
     //   formData.dataAlta = moment(this.memberForm.value.dataAlta).format('DD/MM/YYYY');
-    // }
-    // if (this.memberForm.value.dataNaixement) {
-    //   formData.dataNaixement = moment(this.memberForm.value.dataNaixement).format('DD/MM/YYYY');
     // }
 
     this.api.addMember(formData)

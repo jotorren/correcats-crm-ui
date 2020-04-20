@@ -22,7 +22,7 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
   private mobileQueryListener: () => void;
 
-  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'email', 'dataAlta', 'infantil'];
+  private defaultDisplayedColumns: string[] = ['cognoms', 'nom', 'nick', 'responsable', 'dataNaixement', 'infantil'];
   private mobileDisplayedColumns: string[] = ['cognoms', 'nom', 'nick'];
 
   searchControl = new FormControl();
@@ -46,11 +46,11 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
   sortDirection = 'asc';
 
   constructor(private app: AppGlobalService,
-              private api: MemberService,
-              private log: LogService,
-              changeDetectorRef: ChangeDetectorRef,
-              media: MediaMatcher) {
-    this.app.setTitle('Llista de tots els associats');
+    private api: MemberService,
+    private log: LogService,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher) {
+    this.app.setTitle('Llista de tots els associats infantils');
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this.mobileQueryListener);
@@ -124,6 +124,10 @@ export class MembersListComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return this.defaultDisplayedColumns;
     }
+  }
+
+  age(dataNaixement) {
+    return dataNaixement ? new Date().getFullYear() - new Date(dataNaixement).getFullYear() : null;
   }
 
   query(value) {

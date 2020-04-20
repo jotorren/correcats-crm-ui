@@ -13,7 +13,6 @@ import { handle } from '../../shared/error/error-handlers';
 import { AlertService } from '../../shared/alert/alert.service';
 import { MemberEditComponent } from '../member-edit/member-edit.component';
 import { LogService } from 'src/app/shared/log/log.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-member-details',
@@ -30,7 +29,6 @@ export class MemberDetailsComponent implements OnInit {
 
   smallScreen: boolean;
   member: Associada;
-  age: number;
   memberInmutable: Associada;
   isLoadingResults = false;
   durationInSeconds = 2;
@@ -58,9 +56,6 @@ export class MemberDetailsComponent implements OnInit {
 
     this.route.data.forEach((data: { api: Result }) => {
       this.member = data.api.result;
-      if (this.member.dataNaixement) {
-        this.age = new Date().getFullYear() - new Date(this.member.dataNaixement).getFullYear();
-      }
       this.memberInmutable = { ...this.member };
     });
 
@@ -108,7 +103,7 @@ export class MemberDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         for (const mbf of Object.keys(dialogResult)) {
-          if (mbf === 'dataAlta' || mbf === 'dataBaixa' || mbf === 'dataNaixement') {
+          if (mbf === 'dataAlta' || mbf === 'dataBaixa') {
             if (dialogResult[mbf] && dialogResult[mbf].isValid()){
               // this.member[mbf] = moment(dialogResult[mbf]).format('DD/MM/YYYY');
               this.member[mbf] = dialogResult[mbf];
@@ -136,9 +131,6 @@ export class MemberDetailsComponent implements OnInit {
     this.api.updateMember(memberId, this.member)
       .subscribe((resok: any) => {
         this.member = resok.result;
-        if (this.member.dataNaixement) {
-          this.age = new Date().getFullYear() - new Date(this.member.dataNaixement).getFullYear();
-        }
         this.memberInmutable = { ...this.member };
         this.editMode = false;
         this.isLoadingResults = false;

@@ -9,7 +9,6 @@ import { Config, SearchOperator } from '../../shared';
 import { MemberService } from '../member.service';
 import { LogService } from 'src/app/shared/log/log.service';
 import { AppGlobalService } from 'src/app/app.global.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-member-export',
@@ -29,12 +28,11 @@ export class MemberExportComponent implements OnInit, OnDestroy {
     'adreca',
     'cognoms',
     'nif',
-    'poblacio',
-    'nick',
-    'dataNaixement',
     'codiPostal',
+    'nick',
+    'telefon',
+    'poblacio',
     'iban',
-    'telefon'
   ];
   defaultOrderedFields: string[] = [
     'nom',
@@ -43,7 +41,6 @@ export class MemberExportComponent implements OnInit, OnDestroy {
     'iban',
     'email',
     'nif',
-    'dataNaixement',
     'adreca',
     'telefon',
     'poblacio',
@@ -55,7 +52,7 @@ export class MemberExportComponent implements OnInit, OnDestroy {
 
   @ViewChild('allSelected') private allSelected: MatListOption;
 
-  filterFields = ['sexe', 'infantil', 'activat', 'dataAlta', 'dataBaixa'];
+  filterFields = ['sexe', 'activat', 'dataAlta', 'dataBaixa'];
   filterOps = [];
 
   filterBy: string;
@@ -196,9 +193,6 @@ export class MemberExportComponent implements OnInit, OnDestroy {
       } else if (event.value === 'sexe') {
         this.filterOp = Config.api.members.query.operators[Config.api.members.query.fields.sexe.default].code;
         this.filterValue = 'D';
-      } else if (event.value === 'infantil') {
-        this.filterOp = Config.api.members.query.operators[Config.api.members.query.fields.infantil.default].code;
-        this.filterValue = 'true';
       } else if (event.value === 'dataAlta') {
         this.filterOp = Config.api.members.query.operators[Config.api.members.query.fields.dataAlta.default].code;
         const currentYear = new Date().getFullYear();
@@ -245,7 +239,7 @@ export class MemberExportComponent implements OnInit, OnDestroy {
       let literal2;
       if (this.filterBy === 'dataAlta' || this.filterBy === 'dataBaixa') {
         literal2 = new Date(this.filterValue).toLocaleDateString('es-ES');
-      } else if (this.filterBy === 'sexe' || this.filterBy === 'activat' || this.filterBy === 'infantil') {
+      } else if (this.filterBy === 'sexe' || this.filterBy === 'activat' ) {
         literal2 = Config.api.members.map[this.filterValue];
       } else {
         literal2 = this.filterValue;
@@ -298,19 +292,12 @@ export class MemberExportComponent implements OnInit, OnDestroy {
         value: 'true',
         operationMap: Config.api.members.query.operators.equals.desc,
         valueMap: 'Sí'
-      },
-      {
-        key: 'infantil',
-        operation: Config.api.members.query.operators.equals.code,
-        value: 'false',
-        operationMap: Config.api.members.query.operators.equals.desc,
-        valueMap: 'No'
       }];
     }
 
     const search = [];
     this.criteria.forEach(crit => {
-      if (crit.key === 'activat' || crit.key === 'infantil') {
+      if (crit.key === 'activat') {
         // string to boolean conversion
         search.push({
           key: crit.key,
