@@ -94,6 +94,11 @@ export class MemberFindComponent implements OnInit, OnDestroy, AfterViewInit {
       this.sortable = true;
       this.sortDirection = this.data.pageable.sort.order;
     }
+
+    Object.keys(this.findForm.value).forEach(field => {
+      const control = this.findForm.get(field);
+      control.valueChanges.subscribe(value => { this.data.reset(); });
+    });
   }
 
   ngAfterViewInit(): void {
